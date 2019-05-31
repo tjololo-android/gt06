@@ -1,27 +1,56 @@
 package com.yusun.cartracker.model;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class TaskMgr extends Object{
-	private static TaskMgr _this;
-	public static TaskMgr instance(){
-		return _this;
+import com.yusun.cartracker.CarContext;
+
+import android.os.Handler;
+import android.os.HandlerThread;
+
+public class TaskMgr{
+	Handler mHandler;
+	public static final int RESULT_SUCESS = 0;
+	public static final int RESULT_TIMEOUT = 1;
+	private final Map<Integer, Task> mTasks = new ConcurrentHashMap<Integer, Task>();	
+	public void reg(Task task){
+		mTasks.put(task.getId(), task);
 	}
-	
-	private final Set<Task> Tasks = new HashSet<Task>();
-	public void add(Task t){
-		Tasks.add(t);
-	}
-	public void delete(Task t){
-		Tasks.remove(t);
-	}
-	public void exec(){
-		Iterator<Task> it = Tasks.iterator();
-		while(it.hasNext()){
-			Task t = it.next();
-			t.exec();
+	public Task get(int cmd){
+		return mTasks.get(cmd);
+	}	
+	public void init(){
+		HandlerThread ht = new HandlerThread("worker");
+		ht.start();
+		mHandler = new Handler(ht.getLooper()){
+			@Override
+			public void handleMessage(android.os.Message msg) {
+				onTimeout(msg.what);
+				super.handleMessage(msg);
+			}
+		};
+	}	
+	public void onEcho(int cmd) {
+		mHandler.removeMessages(cmd);
+		Task t = get(cmd);
+		if(null != t){
+			t.onComplete(RESULT_SUCESS);
 		}
+	}	
+	void onTimeout(int cmd){
+		Task t = get(cmd);
+		if(null != t){
+			t.onComplete(RESULT_TIMEOUT);
+		}
+	}
+
+	public void sendMessage(Task task){
+		mHandler.post(task);
+	}
+	void sendMessage(Message msg){
+		CarContext.instance().getClient().sendMessage(msg);
+	}
+	void sendEmptyMessageDelayed(int id, int timeout){
+		
 	}
 }

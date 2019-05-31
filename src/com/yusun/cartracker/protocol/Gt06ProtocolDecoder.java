@@ -2,7 +2,6 @@ package com.yusun.cartracker.protocol;
 
 import java.net.SocketAddress;
 
-import com.yusun.cartracker.model.EchoMgr;
 import com.yusun.cartracker.protocol.abs.BaseProtocolDecoder;
 
 import io.netty.buffer.ByteBuf;
@@ -24,9 +23,9 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder{
         }
         
         int len = buf.readByte();
-        int type = buf.readByte();
+        int type = buf.readByte();      
         
-        EchoMgr.instance().onEcho(type);
+        onReceiveCmd(type, null);	//TODO
 
         return null;
     }

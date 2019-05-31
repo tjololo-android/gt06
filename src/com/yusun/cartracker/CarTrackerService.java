@@ -1,4 +1,4 @@
-package com.yusun.cartracker.Services;
+package com.yusun.cartracker;
 
 import com.yusun.cartracker.netty.Client;
 
@@ -19,13 +19,17 @@ public class CarTrackerService extends Service {
 	    @Override
 	    public void onCreate() {
 	        Log.i(TAG, "service create");
-
             PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
             wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
             wakeLock.acquire();
 
+            CarContext.instance().init();
+            
             client = new Client();
-            client.start("www.18gps.net", 7018);
+            client.start("www.18gps.net", 7018);            
+            
+            CarContext.instance().setClient(client);
+            CarContext.instance().getmProtocolMgr().init();            
 	    }
 
 	    @Override

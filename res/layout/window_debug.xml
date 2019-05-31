@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/lay"
+    android:background="#dddddd"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/btn_toplay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exit" />
+
+        <Button
+            android:id="@+id/btn_move"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/move" />
+
+        <Button
+            android:id="@+id/btn_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/val_int" />
+
+        <TextView
+            android:id="@+id/btn_num1"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="0"
+            android:textColor="@color/red" />
+
+        <TextView
+            android:id="@+id/btn_num2"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="0"
+            android:textColor="@color/red" />
+
+        <TextView
+            android:id="@+id/btn_num3"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="0"
+            android:textColor="@color/red" />
+
+        <TextView
+            android:id="@+id/btn_num4"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="0"
+            android:textColor="@color/red" />
+
+        <Button
+            android:id="@+id/btn_req"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/req" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/grid_function"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:horizontalSpacing="2dp"
+        android:numColumns="8"
+        android:verticalSpacing="2dp" >
+    </GridView>
+
+</LinearLayout>

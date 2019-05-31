@@ -1,0 +1,358 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black"
+    tools:context="com.ime.core.car.sdk.activity.MainActivity" >
+
+    <TextView
+        android:id="@+id/infoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scrollbars="vertical"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+        
+         <Button
+            android:id="@+id/updateMcu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="updateMcu"
+            android:textColor="@color/white" />
+        
+        <Button
+            android:id="@+id/OpenRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="OpenRadio"
+            android:textColor="@color/white" />
+        
+        <Button
+            android:id="@+id/CloseRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="CloseRadio"
+            android:textColor="@color/white" />
+                
+        <Button
+            android:id="@+id/SetRadioBand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="SetRadioBand"
+            android:textColor="@color/white" />
+                
+        <Button
+            android:id="@+id/GetRadioBandInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="GetRadioBandInfo"
+            android:textColor="@color/white" />
+                
+        <Button
+            android:id="@+id/SetRadioHz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="SetRadioHz"
+            android:textColor="@color/white" />
+                
+        <Button
+            android:id="@+id/GetRadioHz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="GetRadioHz"
+            android:textColor="@color/white" />
+                
+        <Button
+            android:id="@+id/SearchNextChannel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="SearchNextChannel"
+            android:textColor="@color/white" />
+                
+        <Button
+            android:id="@+id/StartRadioBrowse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="StartRadioBrowse"
+            android:textColor="@color/white" />
+                
+        <Button
+            android:id="@+id/StopRadioBrowse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="StopRadioBrowse"
+            android:textColor="@color/white" />
+        </LinearLayout>
+        
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="203dp"
+        android:layout_marginRight="187dp"
+        android:layout_toLeftOf="@+id/linearLayout3"
+        android:orientation="vertical" >
+        
+        <Button
+            android:id="@+id/SetEQVol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="SetEQVol"
+            android:textColor="@color/white" />
+                
+        <Button
+            android:id="@+id/GetEQVol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="GetEQVol"
+            android:textColor="@color/white" />
+                
+        <Button
+            android:id="@+id/SetEQMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="SetEQMode"
+            android:textColor="@color/white" />
+                
+        <Button
+            android:id="@+id/GetEQMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="GetEQMode"
+            android:textColor="@color/white" />
+                
+        <Button
+            android:id="@+id/SetEQInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="SetEQInfo"
+            android:textColor="@color/white" />
+                        
+        <Button
+            android:id="@+id/GetEQInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="GetEQInfo"
+            android:textColor="@color/white" />
+                        
+        <Button
+            android:id="@+id/SetEQBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="SetEQBalance"
+            android:textColor="@color/white" />
+                        
+        <Button
+            android:id="@+id/GetEQBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="GetEQBalance"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/StartRadioScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="StartRadioScan"
+            android:textColor="@color/white" />
+        
+        <Button
+            android:id="@+id/StopRadioScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="StopRadioScan"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/SetKeyboardInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="SetKeyboardInfo"
+            android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="203dp"
+        android:layout_marginRight="360dp"
+        android:layout_toLeftOf="@+id/linearLayout2"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/GetMcuInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="GetMcuInfo"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/SetReverseVol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="SetReverseVol"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/GetReverseVol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="GetReverseVol"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/GetCarInfor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="GetCarInfor"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/SetVolume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="SetVolume"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/GetVolume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="GetVolume"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/SetFactoryInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="SetFactoryInfo"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/GetFactoryInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="GetFactoryInfo"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/ResetEQInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="ResetEQInfo"
+            android:textColor="@color/white" />
+        
+        <Button
+            android:id="@+id/GetRadioList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="GetRadioList"
+            android:textColor="@color/white" />
+        
+        <Button
+            android:id="@+id/CanboxInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="Canbox"
+            android:textColor="@color/white" />
+        
+        </LinearLayout>
+        
+        <LinearLayout
+        android:id="@+id/linearLayout0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/linearLayout1"
+        android:orientation="vertical" >
+        
+            <Button
+            android:id="@+id/updateCan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UpdateCan"
+            android:textColor="@color/white" />
+                <EditText
+            android:id="@+id/set_vol_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="25"
+            android:textColor="@color/white" />
+                  <Button
+            android:id="@+id/set_eq_vol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SetLogFilter"
+            android:textColor="@color/white" />
+                      <Button
+            android:id="@+id/btn_check_Data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_check_data"
+            android:textColor="@color/white" />
+                      <Button
+            android:id="@+id/btn_check_debug"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="StartDebug"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_install_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upgrade_protocl"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+        
+</RelativeLayout>

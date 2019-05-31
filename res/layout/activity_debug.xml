@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/btn_toplay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始调试" />
+        <Button
+            android:id="@+id/btn_restart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="重置数据" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="生成报告" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/grid_function"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:horizontalSpacing="2dp"
+        android:numColumns="10"
+        android:verticalSpacing="2dp" >
+    </GridView>
+
+</LinearLayout>

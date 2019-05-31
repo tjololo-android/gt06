@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/item_can_debug" >
+
+    <TextView
+        android:id="@+id/tv_fun_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:lines="2"
+        android:text="" />
+    
+      <TextView
+        android:id="@+id/tv_fun_values"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:textColor="@color/red"
+        android:text="" />
+
+    <RadioGroup
+        android:id="@+id/debug_state_rg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/rb_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/debug_success" />
+
+        <RadioButton
+            android:id="@+id/rb_data_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/debug_error" />
+
+        <RadioButton
+            android:id="@+id/rb_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/debug_no_reponse" />
+    </RadioGroup>
+
+</LinearLayout>

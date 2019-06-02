@@ -3,6 +3,8 @@ package com.yusun.cartracker.model;
 import java.util.Arrays;
 import java.util.Date;
 
+import com.yusun.cartracker.position.Position;
+
 import io.netty.buffer.ByteBuf;
 
 public class MessagePosition extends Message{

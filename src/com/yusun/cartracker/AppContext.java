@@ -1,18 +1,27 @@
 package com.yusun.cartracker;
 
 import com.yusun.cartracker.model.CmdMgr;
-import com.yusun.cartracker.model.NetworkManager.NetworkHandler;
 import com.yusun.cartracker.model.TaskMgr;
 import com.yusun.cartracker.netty.NettyClient;
+import com.yusun.cartracker.position.NetworkManager.NetworkHandler;
 import com.yusun.cartracker.protocol.abs.ProtocolMgr;
+import com.yusun.cartracker.util.Logger;
+
+import android.content.Context;
 
 public class AppContext implements NetworkHandler{
-	public void init(){		
+	Logger logger = new Logger(AppContext.class);
+	
+	public void init(){
+		logger.info("init+++");
+		
 		mCmdMgr = new CmdMgr();
 		mTaskMgr = new TaskMgr();
 		mTaskMgr.init();
 		mProtocolMgr = new ProtocolMgr();
 		mProtocolMgr.init();
+		
+		logger.info("init---");
 	}
 	
 	
@@ -64,5 +73,13 @@ public class AppContext implements NetworkHandler{
 	}
 	public NettyClient getClient() {
 		return mClient;
+	}
+	
+	private Context mContext;
+	public void setContext(Context context) {
+		mContext = context;
+	}
+	public Context getContext(){
+		return mContext;
 	}
 }

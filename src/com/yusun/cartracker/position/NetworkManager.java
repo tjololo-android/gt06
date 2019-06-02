@@ -1,4 +1,4 @@
-package com.yusun.cartracker.model;
+package com.yusun.cartracker.position;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -6,31 +6,42 @@ import com.yusun.cartracker.model.Message;
 import com.yusun.cartracker.model.MessageHeartbeat;
 import com.yusun.cartracker.model.MessageLogin;
 import com.yusun.cartracker.model.MessagePosition;
+import com.yusun.cartracker.model.Sender;
 import com.yusun.cartracker.model.Task;
 import com.yusun.cartracker.model.TaskMgr;
+import com.yusun.cartracker.position.Position;
+import com.yusun.cartracker.position.TrackingController;
 import com.yusun.cartracker.protocol.abs.BaseProtocol;
+import com.yusun.cartracker.util.Logger;
 
 import io.netty.channel.Channel;
-import io.netty.channel.socket.SocketChannel;
 
 public class Gt06Protocol extends BaseProtocol{
+	Logger logger = new Logger(Gt06Protocol.class);
 	TaskMgr mTaskMgr; 
 	@Override
 	public void onInitChannel(Channel sc) {
+		logger.info("onInitChanne+++");
 		sc.pipeline().addLast(new Gt06FrameDecoder());
 		sc.pipeline().addLast(new Gt06ProtocolDecoder());
 		sc.pipeline().addLast(new Gt06ProtocolEncoder());
+		logger.info("onInitChanne---");
 	}
 	@Override
 	public void init(){		
+		logger.info("init+++");
 		mTaskMgr = AppContext.instance().getmTaskMgr();
 		mTaskMgr.reg(TaskLogin);
-		mTaskMgr.reg(TaskPosition);
+		mTaskMgr.reg(taskPosition);
 		mTaskMgr.reg(TaskHeartbeat);
+		mSenderListener = new TrackingController(AppContext.instance().getContext(), mSender);
+		logger.info("init---reg task end");
 	}	
 	@Override
 	public void start() {
+		logger.info("start");
 		mTaskMgr.post(TaskLogin);
+		mSenderListener.start();
 	}
 	@Override
 	public void stop() {
@@ -61,28 +72,9 @@ public class Gt06Protocol extends BaseProtocol{
 		}
 	};
 	
-	public void startOtherTask(){
-		mTaskMgr.post(TaskPosition);
+	public void startOtherTask(){		
 		mTaskMgr.post(TaskHeartbeat);
 	}
-
-	Task TaskPosition = new Task(Gt06ProtocolConstant.MSG_GPS_LBS_2) {
-		int PERIOD = 3*60*1000;
-		public Message getMessage() {
-			MessagePosition msg = new MessagePosition(getId());
-			msg.position = Hardware.getPosition();
-			msg.mcc = Hardware.getmcc();
-			msg.mnc = Hardware.getmnc();
-			msg.lac = Hardware.getlac();
-			msg.cellId = Hardware.getcellId();
-			return msg;
-		}
-
-		@Override
-		public void onComplete(int result) {
-			mTaskMgr.postDelayed(this, PERIOD);
-		}
-	};
 	Task TaskHeartbeat = new Task(Gt06ProtocolConstant.MSG_HEARTBEAT) {
 		int PERIOD = 3*60*1000;
 		int MAX_COUNT = 3;
@@ -115,5 +107,48 @@ public class Gt06Protocol extends BaseProtocol{
 			}
 		}
 	};
+	
+	
+	TrackingController mSenderListener = null;
+	Sender mSender = new Sender(){
+
+		@Override
+		public void send(Position pos) {
+			logger.info("report positiion+++");
+			taskPosition.setPosition(pos);
+			mTaskMgr.post(taskPosition);
+		}
+		
+	};	
+    TaskPosition taskPosition = new TaskPosition(Gt06ProtocolConstant.MSG_GPS_LBS_2);
+    class TaskPosition extends Task{
+    	Position pos;
+    	public TaskPosition(int id) {
+			super(id);
+		}		
+    	
+		@Override
+		public void onComplete(int result) {
+			logger.info("report positiion---");
+			if(null != mSenderListener){
+				mSenderListener.onComplete(TaskMgr.RESULT_SUCESS==result, pos);		
+			}
+		}
+
+		@Override
+		public Message getMessage() {
+			MessagePosition msg = new MessagePosition(getId());
+			msg.position = pos;
+			msg.mcc = Hardware.getmcc();
+			msg.mnc = Hardware.getmnc();
+			msg.lac = Hardware.getlac();
+			msg.cellId = Hardware.getcellId();	
+			return msg;
+		}
+		
+		void setPosition(Position pos){
+			this.pos = pos;		
+		}    	
+    }
 
 }

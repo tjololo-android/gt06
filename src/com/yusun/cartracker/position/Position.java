@@ -1,4 +1,4 @@
-package com.yusun.cartracker.model;
+package com.yusun.cartracker.position;
 
 import android.location.Location;
 import android.location.LocationManager;

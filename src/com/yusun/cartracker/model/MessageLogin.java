@@ -9,7 +9,6 @@ public class MessageLogin extends Message{
 		super(id);
 		// TODO Auto-generated constructor stub
 	}
-	public String Imei;
 	public String DeviceType;
 	public int Language;	
 	

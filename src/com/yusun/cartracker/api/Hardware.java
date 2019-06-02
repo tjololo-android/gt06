@@ -1,7 +1,7 @@
 package com.yusun.cartracker.api;
 
-import com.yusun.cartracker.model.Position;
 import com.yusun.cartracker.model.TimeZone;
+import com.yusun.cartracker.position.Position;
 
 public class Hardware {
 	public static String getImei(){

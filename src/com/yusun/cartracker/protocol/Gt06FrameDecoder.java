@@ -1,16 +1,19 @@
 package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.protocol.abs.BaseFrameDecoder;
+import com.yusun.cartracker.util.Logger;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 
 public class Gt06FrameDecoder extends BaseFrameDecoder {
-
+	Logger logger = new Logger(Gt06FrameDecoder.class);
+	
     @Override
-    protected Object decode(
-            ChannelHandlerContext ctx, Channel channel, ByteBuf buf) throws Exception {
+    protected Object decode(ChannelHandlerContext ctx, Channel channel, ByteBuf buf) throws Exception {
+    	
+    	logger.info("decode");
 
         if (buf.readableBytes() < 5) {
             return null;

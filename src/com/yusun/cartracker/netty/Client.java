@@ -1,6 +1,6 @@
 package com.yusun.cartracker.netty;
 
-import com.yusun.cartracker.CarContext;
+import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.protocol.abs.BaseProtocol;
 import com.yusun.cartracker.protocol.abs.ProtocolMgr;
 
@@ -22,7 +22,7 @@ public class Client {
 		.handler(new ChannelInitializer<SocketChannel>() { 
 			@Override
 			protected void initChannel(SocketChannel sc) throws Exception {
-				BaseProtocol bs = CarContext.instance().getmProtocolMgr().getmProtocol();
+				BaseProtocol bs = AppContext.instance().getmProtocolMgr().getmProtocol();
 				bs.onInitChannel(sc);
 				Client.this.sc = sc;
 			}			

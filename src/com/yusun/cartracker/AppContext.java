@@ -3,10 +3,10 @@ package com.yusun.cartracker;
 import com.yusun.cartracker.model.CmdMgr;
 import com.yusun.cartracker.model.NetworkManager.NetworkHandler;
 import com.yusun.cartracker.model.TaskMgr;
-import com.yusun.cartracker.netty.Client;
+import com.yusun.cartracker.netty.NettyClient;
 import com.yusun.cartracker.protocol.abs.ProtocolMgr;
 
-public class CarContext implements NetworkHandler{
+public class AppContext implements NetworkHandler{
 	public void init(){		
 		mCmdMgr = new CmdMgr();
 		mTaskMgr = new TaskMgr();
@@ -20,7 +20,7 @@ public class CarContext implements NetworkHandler{
 	private TaskMgr mTaskMgr;
 	private ProtocolMgr mProtocolMgr;
 	
-	private CarContext(){
+	private AppContext(){
 		
 	}
 	public CmdMgr getmCmdMgr() {
@@ -50,19 +50,19 @@ public class CarContext implements NetworkHandler{
         this.isOnline = isOnline;
     }
 	
-	private static CarContext _this;
-	public static CarContext instance(){
+	private static AppContext _this;
+	public static AppContext instance(){
 		if(null == _this){
-			_this = new CarContext();			
+			_this = new AppContext();			
 		}
 		return _this;
 	}
 	
-	private Client mClient;
-	public void setClient(Client client){
+	private NettyClient mClient;
+	public void setClient(NettyClient client){
 		mClient = client;
 	}
-	public Client getClient() {
+	public NettyClient getClient() {
 		return mClient;
 	}
 }

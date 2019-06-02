@@ -3,7 +3,7 @@ package com.yusun.cartracker.model;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.yusun.cartracker.CarContext;
+import com.yusun.cartracker.AppContext;
 
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -44,11 +44,14 @@ public class TaskMgr{
 		}
 	}
 
-	public void sendMessage(Task task){
+	public void post(Task task){
 		mHandler.post(task);
 	}
+	public void postDelayed(Task task, long delayMillis){
+		mHandler.postDelayed(task, delayMillis);
+	}
 	void sendMessage(Message msg){
-		CarContext.instance().getClient().sendMessage(msg);
+		AppContext.instance().getClient().sendMessage(msg);
 	}
 	void sendEmptyMessageDelayed(int id, int timeout){
 		

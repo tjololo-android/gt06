@@ -1,6 +1,6 @@
 package com.yusun.cartracker.model;
 
-import com.yusun.cartracker.CarContext;
+import com.yusun.cartracker.AppContext;
 
 public abstract class Task implements Runnable{
 	private int TIME_OUT = -1;
@@ -16,7 +16,7 @@ public abstract class Task implements Runnable{
 	}		
 	@Override
 	public void run() {
-		TaskMgr tm = CarContext.instance().getmTaskMgr(); 
+		TaskMgr tm = AppContext.instance().getmTaskMgr(); 
 		Message msg = getMessage();
 		tm.sendMessage(msg);
 		if(-1 != TIME_OUT){

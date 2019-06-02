@@ -145,7 +145,7 @@ public class TrackingController implements PositionProvider.PositionListener, Ne
                     if (result != null) {                        
                         send(result);                        
                     } else {
-                    	send(getFackPos());
+                    	//send(getFackPos());
                         isWaiting = true;
                     }
                 } else {

@@ -33,6 +33,9 @@ public class TaskMgr{
 			}
 		};
 	}	
+	public void uninit(){
+		mHandler.removeCallbacksAndMessages(null);
+	}
 	public void onEcho(int cmd) {
 		logger.info("onEcho cmd="+Integer.toHexString(cmd));
 		mHandler.removeMessages(cmd);

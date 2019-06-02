@@ -7,6 +7,7 @@ import com.yusun.cartracker.util.Logger;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -14,6 +15,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class NettyClient {
 	Logger logger = new Logger(NettyClient.class);	
 	private Channel channel;
+	private NioEventLoopGroup group;	
 	private String HOST;
 	private int PORT;
 	public NettyClient(String host, int port){
@@ -23,8 +25,8 @@ public class NettyClient {
     public void start() {
     	logger.info("start+++");
     	
-        Bootstrap bootstrap = new Bootstrap();
-        NioEventLoopGroup group = new NioEventLoopGroup();
+    	Bootstrap bootstrap = new Bootstrap();
+    	group = new NioEventLoopGroup();
 
         bootstrap.group(group)
                 .channel(NioSocketChannel.class)
@@ -37,18 +39,29 @@ public class NettyClient {
                     }                    
                 });
 
-        channel = bootstrap.connect(HOST, PORT).channel();
+        try {
+			ChannelFuture cf = bootstrap.connect(HOST, PORT).sync();
+			if(cf.isSuccess()){
+				channel = cf.channel();
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
         logger.info("start---channel="+channel);
     }
-	public void sendMessage(Object msg){
-		logger.info("sendMessage"+msg.toString());
-		channel.writeAndFlush(msg);
-	}
-	public Channel getChannel(){
-		return channel;
+	public void sendMessage(Object msg){		
+		if(null != channel){
+			logger.info("sendMessage"+msg.toString());
+			channel.writeAndFlush(msg);
+		}else{
+			logger.info("sendMessage error channel=null");			
+		}
 	}
 	public void stop() {
-		// TODO Auto-generated method stub
-		
+		logger.info("stop shutdownGracefully");
+		if(null != channel){
+			channel.closeFuture();
+			group.shutdownGracefully();
+		}
 	}
 }

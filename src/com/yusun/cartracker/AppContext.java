@@ -24,6 +24,14 @@ public class AppContext implements NetworkHandler{
 		logger.info("init---");
 	}
 	
+	public void uninit(){
+		logger.info("uninit+++");
+		if(null != mTaskMgr){
+			mTaskMgr.uninit();
+		}
+		logger.info("uninit---");
+	}
+	
 	
 	private CmdMgr mCmdMgr;
 	private TaskMgr mTaskMgr;

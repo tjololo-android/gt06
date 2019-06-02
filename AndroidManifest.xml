@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yusun.cartracker"
-    android:versionCode="119"
-    android:versionName="3.119" >
+    android:versionCode="001"
+    android:versionName="1.001" >
 
 
     <uses-sdk
@@ -65,5 +65,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </service>
+                
+     	<receiver
+            android:name=".BootCompleteReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />                
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

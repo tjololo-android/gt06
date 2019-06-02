@@ -27,35 +27,7 @@ public class MainService extends Service {
             PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
             wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
             wakeLock.acquire();
-            
-            HandlerThread ht = new HandlerThread("worker");
-            ht.start();
-            Handler handler = new Handler(ht.getLooper());
-            handler.post(new Runnable(){            
-            	@Override
-            	public void run(){
-		            AppContext.instance().setContext(MainService.this.getApplicationContext());
-		            AppContext.instance().init();
-		            
-		            //NettyServer server = new NettyServer();
-		            //server.start();
-		            
-		            try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		            
-		            client = new NettyClient("www.18gps.net", 7018);
-		            //client = new NettyClient("127.0.0.1", 7018);
-		            client.start();  
-		            
-		            
-		            AppContext.instance().setClient(client);  
-		            AppContext.instance().getmProtocolMgr().getmProtocol().start();            
-            	}
-            });
+            startWork();
         }
 	    @Override
 	    public IBinder onBind(Intent intent) {
@@ -71,16 +43,56 @@ public class MainService extends Service {
 	    }
 
 	    @Override
-	    public void onDestroy() {
-	    	logger.info("onDestroy");	
+	public void onDestroy() {
+		logger.info("onDestroy");
 
-	        stopForeground(true);
+		stopForeground(true);
 
-	        if (wakeLock != null && wakeLock.isHeld()) {
-	            wakeLock.release();
-	        }
-	        if (client != null) {
-	        	client.stop();
-	        }
-	    }  
+		stopWork();
+	}
+
+	void startWork() {
+		logger.info("startWork");
+		HandlerThread ht = new HandlerThread("worker");
+		ht.start();
+		Handler handler = new Handler(ht.getLooper());
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				AppContext.instance().setContext(MainService.this.getApplicationContext());
+				AppContext.instance().init();
+
+				// NettyServer server = new NettyServer();
+				// server.start();
+
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				client = new NettyClient("www.18gps.net", 7018);
+				// client = new NettyClient("127.0.0.1", 7018);
+				client.start();
+
+				AppContext.instance().setClient(client);
+				AppContext.instance().getmProtocolMgr().getmProtocol().start();
+			}
+		});
+	}
+
+	void stopWork() {
+		logger.info("stopWork");
+
+		AppContext.instance().uninit();
+
+		if (client != null) {
+			client.stop();
+		}
+
+		if (wakeLock != null && wakeLock.isHeld()) {
+			wakeLock.release();
+		}
+	}
 }

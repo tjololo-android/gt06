@@ -12,9 +12,9 @@ import android.util.Log;
 
 public class Logger {
 	private Class<?> clazz = Logger.class;	 
-	static String mLogFile = Environment.getExternalStorageDirectory() + "/"+System.currentTimeMillis()+"tracker.log";
+	static String mLogFile = Environment.getExternalStorageDirectory() + "/tracker"+System.currentTimeMillis()+".log";
 	static FileOutputStream mOut=null;
-	static boolean mLogToFile=false;
+	static boolean mLogToFile=true;
 	static boolean debug = true;
 	public static void logToFile(boolean toFile){		
 		mLogToFile = toFile;		
@@ -50,15 +50,17 @@ public class Logger {
 	static void writeToLogFile(String str){
 		
 		if(!mLogToFile)return ;
+		if(null == mOut){
+			createLogFile();
+		}
 		
 		try {			
 			
-			SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");   
+			SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			String simpleDate = simpleDateFormat.format(new Date(System.currentTimeMillis())); 
 			mOut.write((simpleDate+"  :  "+str+"\r\n").getBytes());
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println("write log error");
 		}
 	}
@@ -69,63 +71,51 @@ public class Logger {
 	}	
 
 	public void info(String mess){
-		sendLogString(clazz.getName()+":"+ mess+"\r\n");
-		Log.i(clazz.getName(),""+ mess);
+		writeToLogFile(clazz.getSimpleName()+":"+ mess);
+		Log.i(clazz.getSimpleName(),""+ mess);
 	}
 	
 	public void info(String mess, Throwable tr){
-		Log.i(clazz.getName(), ""+mess, tr);
+		Log.i(clazz.getSimpleName(), ""+mess, tr);
 	}
 	
 	public void debug(String mess){
-		sendLogString(clazz.getName()+":"+ mess+"\r\n");
-		Log.d(clazz.getName(),""+ mess);
+		writeToLogFile(clazz.getSimpleName()+":"+ mess);
+		Log.d(clazz.getSimpleName(),""+ mess);
 	}
 	
 	public void debug(String msg,Throwable tr){
-		Log.d(clazz.getName(), ""+msg,tr);
+		Log.d(clazz.getSimpleName(), ""+msg,tr);
 	}
 	
 	public void error(String msg){
-		sendLogString(clazz.getName()+":"+ msg+"\r\n");
-		Log.e(clazz.getName(), ""+msg);
+		writeToLogFile(clazz.getSimpleName()+":"+ msg);
+		Log.e(clazz.getSimpleName(), ""+msg);
 	}
 	
 	public void error(String msg, Throwable tr){
-		Log.e(clazz.getName(), ""+msg, tr);
+		Log.e(clazz.getSimpleName(), ""+msg, tr);
 	}
 	
 	public void warning(String msg){
-		sendLogString(clazz.getName()+":"+ msg+"\r\n");
-		Log.w(clazz.getName(), ""+msg);
+		writeToLogFile(clazz.getSimpleName()+":"+ msg);
+		Log.w(clazz.getSimpleName(), ""+msg);
 	}
 	
 	public void warning(String msg, Throwable tr){
-		Log.w(clazz.getName(), ""+msg, tr);
+		Log.w(clazz.getSimpleName(), ""+msg, tr);
 	}
 	
 	public String getStackTraceString(Throwable tr){
 		return Log.getStackTraceString(tr);
 	}
 	
-	
-	void sendLogString(String msg)
-	{
-		writeToLogFile(msg);
-		
-		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");   
-		String simpleDate = simpleDateFormat.format(new Date(System.currentTimeMillis()));  
-
-		msg="["+simpleDate+"]"+msg;		
-
-	}
-	
-	public void printFuncName(){
+/*	public void printFuncName(){
 		try{
 			String name = Thread.currentThread().getStackTrace()[3].getMethodName();
 			info(name);
 		}catch(Exception e){
 			
 		}
-	}
+	}*/
 }

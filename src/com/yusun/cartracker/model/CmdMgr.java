@@ -1,16 +1,32 @@
 package com.yusun.cartracker.model;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import android.os.Handler;
+import android.os.HandlerThread;
 
-import android.provider.CalendarContract.Instances;
-
-public class CmdMgr{
-	private final Map<Integer, Command> mCammonds = new ConcurrentHashMap<Integer, Command>();	
-	public void reg(Command cmd){
-		mCammonds.put(cmd.getCmd(), cmd);
+public class CmdMgr extends BaseMgr{
+	Handler mHandler;
+	@Override
+	public void init() {
+		HandlerThread ht = new HandlerThread("cmdMgr");
+		mHandler = new Handler(ht.getLooper());
 	}
-	public Command get(int cmd){
-		return mCammonds.get(cmd);
+
+	@Override
+	public void uninit() {
+		super.uninit();
+	}
+
+	@Override
+	public void start() {
+		
+	}
+
+	@Override
+	public void stop() {
+		mHandler.removeCallbacksAndMessages(null);
+	}
+	
+	public void post(Task t){
+		mHandler.post(t);
 	}
 }

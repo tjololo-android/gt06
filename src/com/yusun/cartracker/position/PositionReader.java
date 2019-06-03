@@ -27,12 +27,12 @@ import android.database.Cursor;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
-public class TrackingController implements PositionProvider.PositionListener, NetworkManager.NetworkHandler {
+public class PositionReader implements PositionProvider.PositionListener, NetworkManager.NetworkHandler {
 
     private static final int RETRY_DELAY = 30 * 1000;
     private static final int WAKE_LOCK_TIMEOUT = 120 * 1000;
     
-    Logger logger = new Logger(TrackingController.class);
+    Logger logger = new Logger(PositionReader.class);
 
     private boolean isOnline;
     private boolean isWaiting;
@@ -48,7 +48,7 @@ public class TrackingController implements PositionProvider.PositionListener, Ne
     private NetworkManager networkManager;
     private Sender sender;
 
-    public TrackingController(Context context, Sender sender) {
+    public PositionReader(Context context, Sender sender) {
         this.context = context;      
         handler = new Handler();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);

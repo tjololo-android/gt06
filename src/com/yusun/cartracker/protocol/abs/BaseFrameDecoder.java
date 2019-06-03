@@ -16,6 +16,5 @@ public abstract class BaseFrameDecoder extends ByteToMessageDecoder {
             out.add(decoded);
         }
     }
-
     protected abstract Object decode(ChannelHandlerContext ctx, Channel channel, ByteBuf buf) throws Exception;
 }

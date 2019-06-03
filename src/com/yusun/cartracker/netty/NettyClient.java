@@ -2,7 +2,7 @@ package com.yusun.cartracker.netty;
 
 
 import com.yusun.cartracker.AppContext;
-import com.yusun.cartracker.protocol.abs.BaseProtocol;
+import com.yusun.cartracker.position.NetworkManager;
 import com.yusun.cartracker.util.Logger;
 
 import io.netty.bootstrap.Bootstrap;
@@ -13,7 +13,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 public class NettyClient {
-	Logger logger = new Logger(NettyClient.class);	
+	Logger logger = new Logger(NettyClient.class);
 	private Channel channel;
 	private NioEventLoopGroup group;	
 	private String HOST;
@@ -34,8 +34,7 @@ public class NettyClient {
                     @Override
                     protected void initChannel(Channel ch) {
                     	logger.info("initChannel");
-                    	BaseProtocol bs = AppContext.instance().getmProtocolMgr().getmProtocol();
-        				bs.onInitChannel(ch);
+                    	AppContext.instance().getProtocol().onInitChannel(ch);
                     }                    
                 });
 
@@ -43,6 +42,8 @@ public class NettyClient {
 			ChannelFuture cf = bootstrap.connect(HOST, PORT).sync();
 			if(cf.isSuccess()){
 				channel = cf.channel();
+			}else{
+				logger.info("fail connect to server!");
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();

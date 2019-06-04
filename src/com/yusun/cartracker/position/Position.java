@@ -147,5 +147,14 @@ public class Position {
 	public void setSatellites(int satellites) {
 		this.satellites = satellites;
 	}
+	
+	private boolean fixed;
 
+	public boolean isFixed() {
+		return fixed;
+	}
+
+	public void setFixed(boolean fixed) {
+		this.fixed = fixed;
+	}	
 }

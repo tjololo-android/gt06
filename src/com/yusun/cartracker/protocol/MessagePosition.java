@@ -40,10 +40,16 @@ public class MessagePosition extends Message{
 		buf.writeInt(longitude);
 		buf.writeByte((byte)UnitsConverter.kphFromKnots(position.getSpeed()));
 		
-		short gpsStatus = (short)(0x01ff & (int)position.getCourse());		//9 bit
-		gpsStatus = BitUtil.set(gpsStatus, true, 12);	//fixed
-		gpsStatus = BitUtil.set(gpsStatus, true, 10);	//-latitude
-		gpsStatus = BitUtil.set(gpsStatus, true, 11);	//-longitude
+		short gpsStatus = (short)(0x03ff & (int)position.getCourse());			//10 bit		
+		gpsStatus = BitUtil.set(gpsStatus, position.getLatitude() < 0, 10);		//-latitude
+		gpsStatus = BitUtil.set(gpsStatus, position.getLongitude() > 0, 11);	//-longitude
+		gpsStatus = BitUtil.set(gpsStatus, position.isFixed(), 12);				//fixed
+		Date now = new Date();
+		boolean realGps = false;
+		if(now.getTime() - d.getTime() < 3 * 60 * 1000){
+			realGps = true;
+		}
+		gpsStatus = BitUtil.set(gpsStatus, realGps, 13);						//real time
 		buf.writeShort(gpsStatus);  
 		
 		buf.writeShort(mcc);

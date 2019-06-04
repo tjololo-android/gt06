@@ -1,9 +1,10 @@
-package com.yusun.cartracker.model;
+package com.yusun.cartracker.protocol;
 
 import java.util.Date;
 
 import com.yusun.cartracker.helper.BitUtil;
 import com.yusun.cartracker.helper.UnitsConverter;
+import com.yusun.cartracker.model.Message;
 import com.yusun.cartracker.position.Position;
 
 import io.netty.buffer.ByteBuf;

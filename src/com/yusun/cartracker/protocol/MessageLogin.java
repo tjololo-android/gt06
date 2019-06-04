@@ -1,7 +1,9 @@
-package com.yusun.cartracker.model;
+package com.yusun.cartracker.protocol;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
+
+import com.yusun.cartracker.model.Message;
 
 import io.netty.buffer.ByteBuf;
 

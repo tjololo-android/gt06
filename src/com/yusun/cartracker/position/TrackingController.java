@@ -19,11 +19,9 @@ import java.util.Date;
 
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.helper.Logger;
-import com.yusun.cartracker.model.Sender;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
@@ -46,17 +44,15 @@ public class TrackingController implements PositionProvider.PositionListener, Ne
     private PositionProvider positionProvider;
     private DatabaseHelper databaseHelper;
     private NetworkManager networkManager;
-    private Sender sender;
 
-    public TrackingController(Context context, Sender sender) {
+    public TrackingController(Context context) {
         this.context = context;      
         handler = new Handler();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         positionProvider = PositionProviderFactory.create(context, this);
         databaseHelper = new DatabaseHelper(context);
         networkManager = new NetworkManager(context, this);
-        isOnline = networkManager.isOnline();
-        this.sender = sender;
+        isOnline = networkManager.isOnline();      
     }
 
     public void start() {

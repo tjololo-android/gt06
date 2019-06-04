@@ -10,7 +10,7 @@ public class Message extends Object{
 	public String Imei;
 	public int id;
 	public int index;
-	Message(int id){
+	protected Message(int id){
 		this.id = id;
 		index = SerialIndex.get();
 		Imei = Hardware.getImei();

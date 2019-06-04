@@ -1,6 +1,7 @@
-package com.yusun.cartracker.model;
+package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.helper.BitUtil;
+import com.yusun.cartracker.model.Message;
 
 import io.netty.buffer.ByteBuf;
 

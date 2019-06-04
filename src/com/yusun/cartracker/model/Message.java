@@ -1,7 +1,7 @@
 package com.yusun.cartracker.model;
 
 import com.yusun.cartracker.api.Hardware;
-import com.yusun.cartracker.util.SerialIndex;
+import com.yusun.cartracker.helper.SerialIndex;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

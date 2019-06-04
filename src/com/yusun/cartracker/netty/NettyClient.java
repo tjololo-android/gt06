@@ -2,8 +2,8 @@ package com.yusun.cartracker.netty;
 
 
 import com.yusun.cartracker.AppContext;
+import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.position.NetworkManager;
-import com.yusun.cartracker.util.Logger;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;

@@ -1,6 +1,6 @@
 package com.yusun.cartracker.model;
 
-import com.yusun.cartracker.util.StringFormat;
+import com.yusun.cartracker.helper.BitUtil;
 
 import io.netty.buffer.ByteBuf;
 
@@ -23,11 +23,11 @@ public class MessageHeartbeat extends Message{
 	public ByteBuf encode() {
 		ByteBuf buf = super.encode();
 		byte status = 0;
-		status = StringFormat.setBit(status, electronic_b7, 7);
-		status = StringFormat.setBit(status, gpsfix_b6, 6);
-		status = StringFormat.setBit(status, recharge_b2, 2);
-		status = StringFormat.setBit(status, acc_b1, 1);
-		status = StringFormat.setBit(status, guard_b0, 0);
+		status = BitUtil.set(status, electronic_b7, 7);
+		status = BitUtil.set(status, gpsfix_b6, 6);
+		status = BitUtil.set(status, recharge_b2, 2);
+		status = BitUtil.set(status, acc_b1, 1);
+		status = BitUtil.set(status, guard_b0, 0);
 		buf.writeByte(status);
 		buf.writeShort(valtage);
 		buf.writeByte(gsmSignal);

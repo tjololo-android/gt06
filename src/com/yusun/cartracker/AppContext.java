@@ -1,5 +1,6 @@
 package com.yusun.cartracker;
 
+import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.CmdMgr;
 import com.yusun.cartracker.model.TaskMgr;
 import com.yusun.cartracker.netty.NettyClient;
@@ -7,7 +8,6 @@ import com.yusun.cartracker.position.DatabaseHelper;
 import com.yusun.cartracker.position.NetworkManager.NetworkHandler;
 import com.yusun.cartracker.protocol.abs.BaseProtocol;
 import com.yusun.cartracker.protocol.abs.ProtocolMgr;
-import com.yusun.cartracker.util.Logger;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.yusun.cartracker.util;
+package com.yusun.cartracker.helper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,9 +52,9 @@ public class FileUtils {
 	 * 复制单个文件
 	 * 
 	 * @param oldPath
-	 *            String 原文件路径 如：c:/fqf.txt
+	 *            String 原文件路�? 如：c:/fqf.txt
 	 * @param newPath
-	 *            String 复制后路径 如：f:/fqf.txt
+	 *            String 复制后路�? 如：f:/fqf.txt
 	 * @return boolean
 	 */
 	static public boolean copyFile(String oldPath, String newPath) {
@@ -62,8 +62,8 @@ public class FileUtils {
 		try {
 			int byteread = 0;
 			File oldfile = new File(oldPath);
-			if (oldfile.exists()) { // 文件存在时
-				InputStream inStream = new FileInputStream(oldPath); // 读入原文件
+			if (oldfile.exists()) { // 文件存在�?
+				InputStream inStream = new FileInputStream(oldPath); // 读入原文�?
 				FileOutputStream fs = new FileOutputStream(newPath);
 				byte[] buffer = new byte[1024];
 				while ((byteread = inStream.read(buffer)) != -1) {
@@ -86,18 +86,18 @@ public class FileUtils {
 	}
 
 	/**
-	 * 复制整个文件夹内容
+	 * 复制整个文件夹内�?
 	 * 
 	 * @param oldPath
-	 *            String 原文件路径 如：c:/fqf
+	 *            String 原文件路�? 如：c:/fqf
 	 * @param newPath
-	 *            String 复制后路径 如：f:/fqf/ff
+	 *            String 复制后路�? 如：f:/fqf/ff
 	 * @return boolean
 	 */
 	static public boolean copyFolder(String oldPath, String newPath) {
 		boolean isok = true;
 		try {
-			(new File(newPath)).mkdirs(); // 如果文件夹不存在 则建立新文件夹
+			(new File(newPath)).mkdirs(); // 如果文件夹不存在 则建立新文件�?
 			File a = new File(oldPath);
 			String[] file = a.list();
 			File temp = null;
@@ -122,7 +122,7 @@ public class FileUtils {
 					output.close();
 					input.close();
 				}
-				if (temp.isDirectory()) {// 如果是子文件夹
+				if (temp.isDirectory()) {// 如果是子文件�?
 					copyFolder(oldPath + "/" + file[i], newPath + "/" + file[i]);
 				}
 			}

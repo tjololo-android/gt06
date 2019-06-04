@@ -1,7 +1,7 @@
 package com.yusun.cartracker.protocol;
 
+import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.protocol.abs.BaseProtocolDecoder;
-import com.yusun.cartracker.util.Logger;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;

@@ -1,10 +1,10 @@
 package com.yusun.cartracker.protocol.abs;
 
 import com.yusun.cartracker.AppContext;
+import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.CmdMgr;
 import com.yusun.cartracker.model.Task;
 import com.yusun.cartracker.model.TaskMgr;
-import com.yusun.cartracker.util.Logger;
 
 public abstract class BaseProtocol implements IClientStatus, IProtocol {
 	private int mClientStatus = 0;

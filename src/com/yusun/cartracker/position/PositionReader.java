@@ -18,8 +18,8 @@ package com.yusun.cartracker.position;
 import java.util.Date;
 
 import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.Sender;
-import com.yusun.cartracker.util.Logger;
 
 import android.content.Context;
 import android.content.SharedPreferences;

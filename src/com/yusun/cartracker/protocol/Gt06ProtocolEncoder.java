@@ -1,10 +1,9 @@
 package com.yusun.cartracker.protocol;
 
+import com.yusun.cartracker.helper.Checksum;
+import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.Message;
-import com.yusun.cartracker.model.MessageLogin;
 import com.yusun.cartracker.protocol.abs.BaseProtocolEncoder;
-import com.yusun.cartracker.util.Checksum;
-import com.yusun.cartracker.util.Logger;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

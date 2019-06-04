@@ -1,7 +1,7 @@
 package com.yusun.cartracker.netty;
 
+import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.protocol.Gt06FrameDecoder;
-import com.yusun.cartracker.util.Logger;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;

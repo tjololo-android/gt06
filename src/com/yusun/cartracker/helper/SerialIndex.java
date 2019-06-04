@@ -1,4 +1,4 @@
-package com.yusun.cartracker.util;
+package com.yusun.cartracker.helper;
 
 public class SerialIndex {
 	private static int index = 0;

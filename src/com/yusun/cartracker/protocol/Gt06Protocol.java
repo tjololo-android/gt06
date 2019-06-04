@@ -2,6 +2,7 @@ package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.CmdMgr;
 import com.yusun.cartracker.model.Message;
 import com.yusun.cartracker.model.MessageHeartbeat;
@@ -14,7 +15,6 @@ import com.yusun.cartracker.position.DatabaseHelper;
 import com.yusun.cartracker.position.Position;
 import com.yusun.cartracker.position.TrackingController;
 import com.yusun.cartracker.protocol.abs.BaseProtocol;
-import com.yusun.cartracker.util.Logger;
 
 import io.netty.channel.Channel;
 

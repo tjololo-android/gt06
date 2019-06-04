@@ -15,7 +15,7 @@
  */
 package com.yusun.cartracker.position;
 
-import com.yusun.cartracker.util.Logger;
+import com.yusun.cartracker.helper.Logger;
 
 import android.content.Context;
 import android.os.Handler;

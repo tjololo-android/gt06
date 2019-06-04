@@ -1,11 +1,11 @@
 package com.yusun.cartracker;
 
+import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.netty.NettyClient;
 import com.yusun.cartracker.netty.NettyServer;
 import com.yusun.cartracker.position.NetworkManager;
 import com.yusun.cartracker.position.NetworkManager.NetworkHandler;
 import com.yusun.cartracker.position.PositionWriter;
-import com.yusun.cartracker.util.Logger;
 
 import android.app.Service;
 import android.content.Context;

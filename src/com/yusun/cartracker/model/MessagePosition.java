@@ -1,8 +1,9 @@
 package com.yusun.cartracker.model;
 
-import java.util.Arrays;
 import java.util.Date;
 
+import com.yusun.cartracker.helper.BitUtil;
+import com.yusun.cartracker.helper.UnitsConverter;
 import com.yusun.cartracker.position.Position;
 
 import io.netty.buffer.ByteBuf;
@@ -30,24 +31,24 @@ public class MessagePosition extends Message{
 		buf.writeByte(d.getMinutes());
 		buf.writeByte(d.getSeconds());
 		
-		buf.writeByte(position.getSatellites());
+		buf.writeByte(position.getSatellites());		
 		
-		byte[] latitude = new byte[4];
-		buf.writeBytes(latitude);
+		int latitude = (int)(position.getLatitude() * 60 * 30000);
+		buf.writeInt(latitude);		
+		int longitude = (int)(position.getLongitude() * 60 * 30000);
+		buf.writeInt(longitude);
+		buf.writeByte((byte)UnitsConverter.kphFromKnots(position.getSpeed()));
 		
-		byte[] longitude = new byte[4];
-		buf.writeBytes(longitude);
-		buf.writeByte((int)position.getSpeed());
-		buf.writeShort((int)position.getCourse());
+		short gpsStatus = (short)(0x01ff & (int)position.getCourse());		//9 bit
+		gpsStatus = BitUtil.set(gpsStatus, true, 12);	//fixed
+		gpsStatus = BitUtil.set(gpsStatus, true, 10);	//-latitude
+		gpsStatus = BitUtil.set(gpsStatus, true, 11);	//-longitude
+		buf.writeShort(gpsStatus);  
+		
 		buf.writeShort(mcc);
 		buf.writeByte(mnc);
 		buf.writeShort(lac);
-		byte[] CellID = new byte[]{				   
-			(byte) (cellId & 0xFF),
-	        (byte) ((cellId >> 8) & 0xFF),      
-	        (byte) ((cellId >> 16) & 0xFF)			    
-		};
-		buf.writeBytes(CellID);
+		buf.writeMedium(cellId);
 		return buf;
 	}
 }

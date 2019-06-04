@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.yusun.cartracker.AppContext;
-import com.yusun.cartracker.util.Logger;
+import com.yusun.cartracker.helper.Logger;
 
 import android.os.Handler;
 import android.os.HandlerThread;

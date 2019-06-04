@@ -13,7 +13,7 @@ public class Message extends Object{
 	protected Message(int id){
 		this.id = id;
 		index = SerialIndex.get();
-		Imei = Hardware.getImei();
+		Imei = Hardware.instance().getIMEI();
 	}
 	
 	public ByteBuf encode(){

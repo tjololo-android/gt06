@@ -95,8 +95,8 @@ public class Gt06Protocol extends BaseProtocol{
 			msg.recharge_b2 = Hardware.isRecharge();
 			msg.acc_b1 = Hardware.isAccon();
 			msg.guard_b0 = Hardware.isInguard();
-			msg.valtage = Hardware.geValtage();
-			msg.gsmSignal = Hardware.getSignal();
+			msg.valtage = Hardware.instance().getBATTERY();
+			msg.gsmSignal = Hardware.instance().getSIGNAL();
 			msg.language = Hardware.getLanguage();
 			return msg;
 		}
@@ -128,10 +128,10 @@ public class Gt06Protocol extends BaseProtocol{
 			}
 			MessagePosition msg = new MessagePosition(getId());
 			msg.position = pos;
-			msg.mcc = Hardware.getmcc();
-			msg.mnc = Hardware.getmnc();
-			msg.lac = Hardware.getlac();
-			msg.cellId = Hardware.getcellId();	
+			msg.mcc = Hardware.instance().getMCC();
+			msg.mnc = Hardware.instance().getMNC();
+			msg.lac = Hardware.instance().getLAC();
+			msg.cellId = Hardware.instance().getCID();
 			return msg;
 		}
 		@Override

@@ -16,8 +16,8 @@ public class MessagePosition extends Message{
 	}
 	
 	public Position position;
-	public int mcc;
-	public int mnc;
+	public String mcc;
+	public String mnc;
 	public int lac;
 	public int cellId;
 	
@@ -52,8 +52,8 @@ public class MessagePosition extends Message{
 		gpsStatus = BitUtil.set(gpsStatus, realGps, 13);						//real time
 		buf.writeShort(gpsStatus);  
 		
-		buf.writeShort(mcc);
-		buf.writeByte(mnc);
+		buf.writeShort(Integer.parseInt(mcc));
+		buf.writeByte(Integer.parseInt(mnc));
 		buf.writeShort(lac);
 		buf.writeMedium(cellId);
 		return buf;

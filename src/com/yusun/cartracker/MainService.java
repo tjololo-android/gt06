@@ -1,5 +1,6 @@
 package com.yusun.cartracker;
 
+import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.netty.NettyClient;
 import com.yusun.cartracker.netty.NettyServer;
@@ -33,7 +34,10 @@ public class MainService extends Service implements NetworkHandler {
 	        logger.info("onCreate");
             PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
             wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
-            wakeLock.acquire();        
+            wakeLock.acquire();
+            Hardware.instance().setmContext(getApplicationContext());
+            Hardware.instance().init();
+            
             startWork();
         }
 	    @Override

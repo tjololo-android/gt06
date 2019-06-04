@@ -151,22 +151,6 @@ public class TrackingController implements PositionProvider.PositionListener, Ne
         });
     }
     
-    Position getFackPos(){
-    	Position position = new Position();
-        position.setId(1);
-        position.setDeviceId(Hardware.getImei());
-        position.setTime(new Date());
-        position.setLatitude(122.9);
-        position.setLongitude(23.8);
-        position.setAltitude(7.5);
-        position.setSpeed(70);
-        position.setCourse(30);
-        position.setAccuracy(1.5);
-        position.setBattery(30);
-        position.setMock(false);
-        return position;
-    }
-
     private void delete(Position position) {
         log("delete", position);
         databaseHelper.deletePositionAsync(position.getId(), new DatabaseHelper.DatabaseHandler<Void>() {

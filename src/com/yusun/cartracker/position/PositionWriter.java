@@ -37,6 +37,7 @@ public class PositionWriter implements PositionProvider.PositionListener {
 
     public void start() {  
         try {
+        	logger.info("start");
             positionProvider.startUpdates();
         } catch (SecurityException e) {
             logger.error("start exception", e);
@@ -45,6 +46,7 @@ public class PositionWriter implements PositionProvider.PositionListener {
 
     public void stop() {      
         try {
+        	logger.info("stop");
             positionProvider.stopUpdates();
         } catch (SecurityException e) {
             logger.error("stop exception", e);
@@ -54,7 +56,6 @@ public class PositionWriter implements PositionProvider.PositionListener {
 
     @Override
     public void onPositionUpdate(Position position) {
-     
         if (position != null) {
             write(position);
         }

@@ -52,7 +52,7 @@ public class NettyClient {
     }
 	public void sendMessage(Object msg){		
 		if(null != channel){
-			logger.info("sendMessage"+msg.toString());
+			logger.info("sendMessage+++");
 			channel.writeAndFlush(msg);
 		}else{
 			logger.info("sendMessage error channel=null");			

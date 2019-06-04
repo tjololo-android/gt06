@@ -5,14 +5,17 @@ import android.os.HandlerThread;
 
 public class CmdMgr extends BaseMgr{
 	Handler mHandler;
+	HandlerThread handleThread;
 	@Override
 	public void init() {
-		HandlerThread ht = new HandlerThread("cmdMgr");
-		mHandler = new Handler(ht.getLooper());
+		handleThread = new HandlerThread("cmdMgr");
+		handleThread.start();
+		mHandler = new Handler(handleThread.getLooper());
 	}
 
 	@Override
 	public void uninit() {
+		handleThread.quit();
 		super.uninit();
 	}
 

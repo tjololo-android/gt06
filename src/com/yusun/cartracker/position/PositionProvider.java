@@ -30,7 +30,7 @@ public abstract class PositionProvider {
 
     protected static final int MINIMUM_INTERVAL = 1000;
     
-    Logger logger = new Logger(Position.class);
+    Logger logger = new Logger(PositionProvider.class);
 
     public interface PositionListener {
         void onPositionUpdate(Position position);

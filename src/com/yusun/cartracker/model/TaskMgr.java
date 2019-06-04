@@ -12,6 +12,7 @@ import android.os.HandlerThread;
 public class TaskMgr{
 	Logger logger = new Logger(TaskMgr.class);
 	Handler mHandler;
+	HandlerThread mHandlerThread;
 	public static final int RESULT_SUCESS = 0;
 	public static final int RESULT_TIMEOUT = 1;
 	private final Map<Integer, TimerTask> mTasks = new ConcurrentHashMap<Integer, TimerTask>();	
@@ -23,9 +24,9 @@ public class TaskMgr{
 	}	
 	public void init(){
 		logger.info("init");
-		HandlerThread ht = new HandlerThread("worker");
-		ht.start();
-		mHandler = new Handler(ht.getLooper()){
+		mHandlerThread = new HandlerThread("taskMgr");
+		mHandlerThread.start();
+		mHandler = new Handler(mHandlerThread.getLooper()){
 			@Override
 			public void handleMessage(android.os.Message msg) {
 				onTimeout(msg.what);
@@ -34,6 +35,7 @@ public class TaskMgr{
 		};
 	}	
 	public void uninit(){	
+		mHandlerThread.quit();
 	}
 	public void start(){}
 	public void stop(){

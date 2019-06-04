@@ -23,16 +23,19 @@ public abstract class BaseProtocol implements IClientStatus, IProtocol {
 	}	
 	@Override
 	public void onConnected() {
+		logger.info("onConnected");
 		mClientStatus = CLIENT_CONNECTED;
 		login();		
 	}
 	@Override
 	public void onDisconnected() {
+		logger.info("onDisconnected");
 		mClientStatus = CLIENT_DISCONNECTED;
 		stop();		
 	}
 	@Override
 	public void onLogin() {
+		logger.info("onLogin");
 		mClientStatus = CLIENT_LOGIN;
 	}
 	@Override
@@ -50,6 +53,7 @@ public abstract class BaseProtocol implements IClientStatus, IProtocol {
 		}
 	}
 	public boolean isOnline(){
+		logger.info("mClientStatus="+mClientStatus);
 		return CLIENT_DISCONNECTED != mClientStatus;
 	}
 }

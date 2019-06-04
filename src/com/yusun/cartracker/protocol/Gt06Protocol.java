@@ -125,11 +125,7 @@ public class Gt06Protocol extends BaseProtocol{
     	int PERIOD = 30000;
     	Position pos;    	
 		@Override
-		public void onComplete(int result) {
-			if(TaskMgr.RESULT_SUCESS == result){
-				delete();
-			}
-			mTaskMgr.postDelayed(this, PERIOD);
+		public void onComplete(int result) {		
 		}
 		@Override
 		public Message getMessage() {
@@ -152,6 +148,8 @@ public class Gt06Protocol extends BaseProtocol{
 				mTaskMgr.postDelayed(this, 5*60*1000);
 			}else{
 				mTaskMgr.sendMessage(msg);
+				delete();
+				mTaskMgr.postDelayed(this, PERIOD);
 			}
 		};
 		

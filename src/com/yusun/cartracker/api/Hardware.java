@@ -3,7 +3,6 @@ package com.yusun.cartracker.api;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.TimeZone;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -57,7 +56,10 @@ public class Hardware {
 
 	public void init() {
 		TelephonyManager tel = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-		try{
+		if(null == tel){
+			logger.error("get telephony manager fail!");
+			return;
+		}
 		CellLocation cel = tel.getCellLocation();
 		if (tel.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA) {
 			CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) cel;
@@ -71,10 +73,8 @@ public class Hardware {
 		IMEI = tel.getDeviceId();
 		IMEI="860016020783556";	//for test
 		IMSI = tel.getSubscriberId();
-		ICCID = tel.getLine1Number();
-		MCC = IMSI.substring(0, 3);
-		MNC = IMSI.substring(3, 5);
-		}catch(Exception e){
+		ICCID = tel.getLine1Number();		
+		if(IMEI == null || null == IMSI){
 			IMEI="860016020783556";
 			IMSI ="460060276069992";
 			ICCID ="460060276069992";
@@ -82,8 +82,10 @@ public class Hardware {
 			MNC = "06";
 			CID = 101815812;
 			LAC = 9514;
-			e.printStackTrace();			
-		}	
+		}else{
+			MCC = IMSI.substring(0, 3);
+			MNC = IMSI.substring(3, 5);
+		}
 		installPhoneStateListener(tel);
 		installBatteryStatus();
 		logger.info("imei="+IMEI+"\nIMSI="+IMSI+"\nICCID="+ICCID+"\nCID="+CID+" LAC="+LAC+" MCC="+MCC+" MNC="+MNC);

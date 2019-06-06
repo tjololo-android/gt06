@@ -15,18 +15,26 @@
  */
 package com.yusun.cartracker.position;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Vector;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.location.GpsSatellite;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 
-public class AndroidPositionProvider extends PositionProvider implements LocationListener {
+public class AndroidPositionProvider extends PositionProvider implements LocationListener, GpsStatus.Listener{
 
     private LocationManager locationManager;
     private String provider;
+    boolean fixed = true;
+    int satellates = 0;
 
     public AndroidPositionProvider(Context context, PositionListener listener) {
         super(context, listener);
@@ -39,6 +47,8 @@ public class AndroidPositionProvider extends PositionProvider implements Locatio
         try {
             locationManager.requestLocationUpdates(
                     provider, distance > 0 || angle > 0 ? MINIMUM_INTERVAL : interval, 0, this);
+            
+            locationManager.addGpsStatusListener(this);
         } catch (RuntimeException e) {
             listener.onPositionError(e);
         }
@@ -46,6 +56,7 @@ public class AndroidPositionProvider extends PositionProvider implements Locatio
 
     public void stopUpdates() {
         locationManager.removeUpdates(this);
+        locationManager.removeGpsStatusListener(this);
     }
 
     @SuppressLint("MissingPermission")
@@ -53,12 +64,12 @@ public class AndroidPositionProvider extends PositionProvider implements Locatio
         try {
             Location location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
             if (location != null) {
-                listener.onPositionUpdate(new Position(deviceId, location, getBatteryLevel(context)));
+                listener.onPositionUpdate(new Position(location, fixed, satellates));
             } else {
                 locationManager.requestSingleUpdate(provider, new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
-                        listener.onPositionUpdate(new Position(deviceId, location, getBatteryLevel(context)));
+                        listener.onPositionUpdate(new Position(location, fixed, satellates));
                     }
 
                     @Override
@@ -91,7 +102,7 @@ public class AndroidPositionProvider extends PositionProvider implements Locatio
 
     @Override
     public void onLocationChanged(Location location) {
-        processLocation(location);
+        processLocation(location, fixed, satellates);
     }
 
     @Override
@@ -106,4 +117,32 @@ public class AndroidPositionProvider extends PositionProvider implements Locatio
     public void onProviderDisabled(String provider) {
     }
 
+	@Override
+	public void onGpsStatusChanged(int event) {
+		if (event == GpsStatus.GPS_EVENT_FIRST_FIX) {
+			fixed = true;
+		} else if (event == GpsStatus.GPS_EVENT_SATELLITE_STATUS) {
+            int totalStat = 0;
+            int usedStat = 0;
+            GpsStatus mGpsStatus = locationManager.getGpsStatus(null);
+            Iterable<GpsSatellite> gsiter = mGpsStatus.getSatellites();
+            Iterator<GpsSatellite> it = gsiter.iterator();
+            Vector<GpsSatellite> vSatellite = new Vector<GpsSatellite>();
+            ArrayList<Float> snrarray = new ArrayList<Float>();
+            while (it.hasNext()) {
+                GpsSatellite sate = (GpsSatellite)(it.next());
+                vSatellite.add(sate);
+                snrarray.add(sate.getSnr());
+                 totalStat++;
+                 if (sate.usedInFix()) {
+                     usedStat++;
+                 }
+            }
+            satellates = usedStat;
+		} else if (event == GpsStatus.GPS_EVENT_STARTED) {
+
+		} else if (event == GpsStatus.GPS_EVENT_STOPPED) {
+
+		}
+	}
 }

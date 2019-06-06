@@ -32,7 +32,8 @@ public class MessagePosition extends Message{
 		buf.writeByte(d.getMinutes());
 		buf.writeByte(d.getSeconds());
 		
-		buf.writeByte(position.getSatellites());		
+		int satellites = 0xc0 | (0x0f & position.getSatellites());		
+		buf.writeByte(satellites);		
 		
 		int latitude = (int)(position.getLatitude() * 60 * 30000);
 		buf.writeInt(latitude);		

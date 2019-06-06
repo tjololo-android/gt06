@@ -27,7 +27,7 @@ import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "traccar.db";
 
     public interface DatabaseHandler<T> {
@@ -71,16 +71,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE position (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "deviceId TEXT," +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +             
                 "time INTEGER," +
                 "latitude REAL," +
                 "longitude REAL," +
                 "altitude REAL," +
                 "speed REAL," +
                 "course REAL," +
-                "accuracy REAL," +
-                "battery REAL," +
+                "accuracy REAL," +  
+                "fixed INTEGER," +  
+                "satellates INTEGER," +  
                 "mock INTEGER)");
     }
 
@@ -97,7 +97,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void insertPosition(Position position) {
         ContentValues values = new ContentValues();
-        values.put("deviceId", position.getDeviceId());
         values.put("time", position.getTime().getTime());
         values.put("latitude", position.getLatitude());
         values.put("longitude", position.getLongitude());
@@ -105,7 +104,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("speed", position.getSpeed());
         values.put("course", position.getCourse());
         values.put("accuracy", position.getAccuracy());
-        values.put("battery", position.getBattery());
+        values.put("fixed", position.isFixed() ? 1 : 0);
+        values.put("satellates", position.getSatellites());
         values.put("mock", position.getMock() ? 1 : 0);
 
         db.insertOrThrow("position", null, values);
@@ -131,7 +131,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.moveToFirst();
 
                 position.setId(cursor.getLong(cursor.getColumnIndex("id")));
-                position.setDeviceId(cursor.getString(cursor.getColumnIndex("deviceId")));
                 position.setTime(new Date(cursor.getLong(cursor.getColumnIndex("time"))));
                 position.setLatitude(cursor.getDouble(cursor.getColumnIndex("latitude")));
                 position.setLongitude(cursor.getDouble(cursor.getColumnIndex("longitude")));
@@ -139,7 +138,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 position.setSpeed(cursor.getDouble(cursor.getColumnIndex("speed")));
                 position.setCourse(cursor.getDouble(cursor.getColumnIndex("course")));
                 position.setAccuracy(cursor.getDouble(cursor.getColumnIndex("accuracy")));
-                position.setBattery(cursor.getDouble(cursor.getColumnIndex("battery")));
+                position.setFixed(cursor.getInt(cursor.getColumnIndex("fixed")) > 0);
+                position.setSatellites(cursor.getInt(cursor.getColumnIndex("satellates")));
                 position.setMock(cursor.getInt(cursor.getColumnIndex("mock")) > 0);
 
             } else {

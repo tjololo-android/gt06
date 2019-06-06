@@ -11,24 +11,23 @@ public class Position {
     public Position() {
     }
 
-    public Position(String deviceId, Location location, double battery) {
-        this.deviceId = deviceId;
+    public Position(Location location, boolean fixed, int satellites) {
         time = new Date(location.getTime());
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         altitude = location.getAltitude();
         speed = location.getSpeed() * 1.943844; // speed in knots
-        course = location.getBearing();        
+        course = location.getBearing();
+        this.fixed = fixed;
+        this.satellites = satellites;
         if (location.getProvider() != null && !location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
             accuracy = location.getAccuracy();
         }
-        this.battery = battery;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             this.mock = location.isFromMockProvider();
-        }
+        }      
     }
-
-    private long id;
+	private long id;
 
     public long getId() {
         return id;
@@ -36,16 +35,6 @@ public class Position {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    private String deviceId;
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
     }
 
     private Date time;

@@ -67,14 +67,14 @@ public abstract class PositionProvider {
 
     public abstract void requestSingleLocation();
 
-    protected void processLocation(Location location) {
+    protected void processLocation(Location location, boolean fixed, int statelites) {
         if (location != null && (lastLocation == null
                 || location.getTime() - lastLocation.getTime() >= interval
                 || distance > 0 && location.distanceTo(lastLocation) >= distance
                 || angle > 0 && Math.abs(location.getBearing() - lastLocation.getBearing()) >= angle)) {
         	logger.info("location new");
             lastLocation = location;
-            listener.onPositionUpdate(new Position(deviceId, location, getBatteryLevel(context)));
+            listener.onPositionUpdate(new Position(location, fixed, statelites));
         } else {
             logger.info(location != null ? "location ignored" : "location nil");
         }

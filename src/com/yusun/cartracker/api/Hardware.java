@@ -1,8 +1,8 @@
 package com.yusun.cartracker.api;
 
+import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.TimeZone;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import android.telephony.gsm.GsmCellLocation;
 
 public class Hardware {
 	Context mContext;
+	Logger logger = new Logger(Hardware.class);
 	private Hardware(){}
 	private static Hardware _this;
 	public static Hardware instance(){
@@ -55,7 +56,10 @@ public class Hardware {
 
 	public void init() {
 		TelephonyManager tel = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-		@SuppressLint("MissingPermission")
+		if(null == tel){
+			logger.error("get telephony manager fail!");
+			return;
+		}
 		CellLocation cel = tel.getCellLocation();
 		if (tel.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA) {
 			CdmaCellLocation cdmaCellLocation = (CdmaCellLocation) cel;
@@ -67,12 +71,24 @@ public class Hardware {
 			LAC = gsmCellLocation.getLac();
 		}
 		IMEI = tel.getDeviceId();
+		IMEI="860016020783556";	//for test
 		IMSI = tel.getSubscriberId();
-		ICCID = tel.getLine1Number();
-		MCC = IMSI.substring(0, 3);
-		MNC = IMSI.substring(3, 5);
+		ICCID = tel.getLine1Number();		
+		if(IMEI == null || null == IMSI){
+			IMEI="860016020783556";
+			IMSI ="460060276069992";
+			ICCID ="460060276069992";
+			MCC = "460";
+			MNC = "06";
+			CID = 101815812;
+			LAC = 9514;
+		}else{
+			MCC = IMSI.substring(0, 3);
+			MNC = IMSI.substring(3, 5);
+		}
 		installPhoneStateListener(tel);
 		installBatteryStatus();
+		logger.info("imei="+IMEI+"\nIMSI="+IMSI+"\nICCID="+ICCID+"\nCID="+CID+" LAC="+LAC+" MCC="+MCC+" MNC="+MNC);
 	}
 	public void uninit(){
 		//TelephonyManager tel = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
@@ -101,9 +117,8 @@ public class Hardware {
 		}, intentFilter);
 	}
 	
-	public String getIMEI() {
-		return "860016020783556";
-		//return IMEI;
+	public String getIMEI() {		
+		return IMEI;
 	}
 	public String getICCID() {
 		return ICCID;

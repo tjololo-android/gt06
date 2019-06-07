@@ -146,4 +146,18 @@ public class Position {
 	public void setFixed(boolean fixed) {
 		this.fixed = fixed;
 	}	
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("id="+id);
+		sb.append("fixed="+fixed);
+		sb.append("time"+time);
+		sb.append("longitude="+longitude);
+		sb.append("latitude="+latitude);
+		sb.append("altitude"+altitude);
+		sb.append("speed="+speed);
+		sb.append("satellites="+satellites);
+		sb.append("mock="+mock);		
+		return sb.toString();
+	}
 }

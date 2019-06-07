@@ -19,7 +19,7 @@ public abstract class BaseProtocol implements IClientStatus, IProtocol {
 		logger.info("init+++");
 		mTaskMgr = AppContext.instance().getmTaskMgr();
 		mCmdMgr = AppContext.instance().getmCmdMgr();
-		logger.info("init+++");
+		logger.info("init---");
 	}	
 	@Override
 	public void onConnected() {

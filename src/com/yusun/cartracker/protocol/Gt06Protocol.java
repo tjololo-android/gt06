@@ -4,6 +4,7 @@ import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.Message;
+import com.yusun.cartracker.model.Task;
 import com.yusun.cartracker.model.TaskMgr;
 import com.yusun.cartracker.model.TimerTask;
 import com.yusun.cartracker.position.Position;
@@ -28,7 +29,11 @@ public class Gt06Protocol extends BaseProtocol{
 		logger.info("init+++");	
 		mTaskMgr.reg(TaskLogin);
 		mTaskMgr.reg(taskPosition);
-		mTaskMgr.reg(TaskHeartbeat);		 
+		mTaskMgr.reg(TaskHeartbeat);	
+		mTaskMgr.reg(taskLbs);
+		mTaskMgr.reg(taskWifi);
+		mCmdMgr.reg(CmdAlarmCh);
+		mCmdMgr.reg(CmdAlarmEn);
 		logger.info("init---reg task end");
 	}	
 	@Override
@@ -64,8 +69,8 @@ public class Gt06Protocol extends BaseProtocol{
 		public Message getMessage() {
 			setTimeOut(TIME_OUT);	
 			MessageLogin msg = new MessageLogin(getId());
-			msg.DeviceType = Hardware.getDeviceType();
-			msg.Language = Hardware.getLanguage();
+			msg.DeviceType = Hardware.instance().getDeviceType();
+			msg.Language = Hardware.instance().getLanguage();
 			return msg;
 		}
 
@@ -89,15 +94,7 @@ public class Gt06Protocol extends BaseProtocol{
 
 		public Message getMessage() {
 			setTimeOut(TIME_OUT);
-			MessageHeartbeat msg = new MessageHeartbeat(getId());
-			msg.electronic_b7 = Hardware.isElectronicOn();
-			msg.gpsfix_b6 = Hardware.isGpsFixed();
-			msg.recharge_b2 = Hardware.isRecharge();
-			msg.acc_b1 = Hardware.isAccon();
-			msg.guard_b0 = Hardware.isInguard();
-			msg.valtage = Hardware.instance().getBATTERY();
-			msg.gsmSignal = Hardware.instance().getSIGNAL();
-			msg.language = Hardware.getLanguage();
+			MessageHeartbeat msg = new MessageHeartbeat(getId());	
 			return msg;
 		}
 
@@ -126,12 +123,7 @@ public class Gt06Protocol extends BaseProtocol{
 			if(null == pos){
 				return null;
 			}
-			MessagePosition msg = new MessagePosition(getId());
-			msg.position = pos;
-			msg.mcc = Hardware.instance().getMCC();
-			msg.mnc = Hardware.instance().getMNC();
-			msg.lac = Hardware.instance().getLAC();
-			msg.cellId = Hardware.instance().getCID();
+			MessagePosition msg = new MessagePosition(getId(), pos);			
 			return msg;
 		}
 		@Override
@@ -152,5 +144,199 @@ public class Gt06Protocol extends BaseProtocol{
 		void read(){
 			pos = AppContext.instance().getDatabaseHelper().selectPosition();
 		}
+    };
+    
+    TimerTask taskLbs = new TimerTask(Gt06ProtocolConstant.MSG_LBS_MULTIPLE){//NG
+    	int PERIOD = 30000;
+		@Override
+		public void onComplete(int result) {
+			mTaskMgr.postDelayed(this, PERIOD);
+		}
+		@Override
+		public Message getMessage() {
+			MessageLbs msg = new MessageLbs(getId());
+			return msg;
+		}
+    };
+    
+    TimerTask taskWifi = new TimerTask(Gt06ProtocolConstant.MSG_LBS_WIFI){//NG
+    	int PERIOD = 30000;
+		@Override
+		public void onComplete(int result) {
+			mTaskMgr.postDelayed(this, PERIOD);
+		}
+		@Override
+		public Message getMessage() {
+			MessageWifi msg = new MessageWifi(getId());
+			return msg;
+		}
+    };
+    
+    TimerTask taskFence = new TimerTask(Gt06ProtocolConstant.MSG_GPS_LBS_STATUS_2){//NG //6.gps报警包，单围栏
+    	int PERIOD = 30000;
+		@Override
+		public void onComplete(int result) {
+			mTaskMgr.postDelayed(this, PERIOD);
+		}
+		@Override
+		public Message getMessage() {
+			MessageWifi msg = new MessageWifi(getId());
+			return msg;
+		}
+    };
+    
+    TimerTask taskFence2 = new TimerTask(Gt06ProtocolConstant.MSG_GPS_LBS_STATUS_3){//NG //6.gps报警包，多围栏
+    	int PERIOD = 30000;
+		@Override
+		public void onComplete(int result) {
+			mTaskMgr.postDelayed(this, PERIOD);
+		}
+		@Override
+		public Message getMessage() {
+			MessageWifi msg = new MessageWifi(getId());
+			return msg;
+		}
+    };
+    
+    
+    Task CmdAlarmCh = new Task(Gt06ProtocolConstant.MSG_WIFI){//NG	//6.gps报警包，中文回复
+    	int serviceFlag;
+    	String AlarmSMS;
+    	String Address;
+    	String phoneNum;
+		@Override
+		public void run() {
+			
+			
+		}
+
+		@Override
+		public void onComplete(int result) {
+			// TODO Auto-generated method stub
+			
+		}
+    	
+		void decode(){
+			
+		}
+    };
+    Task CmdAlarmEn = new Task(Gt06ProtocolConstant.MSG_ADDRESS_RESPONSE){//NG  //6.gps报警包，英文回复
+    	int serviceFlag;
+    	String AlarmSMS;
+    	String Address;
+    	String phoneNum;
+		@Override
+		public void run() {
+			
+			
+		}
+
+		@Override
+		public void onComplete(int result) {
+			// TODO Auto-generated method stub
+			
+		}
+    	
+		void decode(){
+			
+		}
+    };
+    
+    
+    TimerTask taskAlarmLbs = new TimerTask(Gt06ProtocolConstant.MSG_LBS_STATUS){//NG //7.LBS报警包
+    	int PERIOD = 30000;
+		@Override
+		public void onComplete(int result) {
+			mTaskMgr.postDelayed(this, PERIOD);
+		}
+		@Override
+		public Message getMessage() {
+			return new AlarmLBS(getId());			
+		}    	
+    };   
+    
+    TimerTask taskRequestGps = new TimerTask(Gt06ProtocolConstant.MSG_ADDRESS_REQUEST){//NG //8.请滶gps地址
+    	int PERIOD = 30000;
+		@Override
+		public void onComplete(int result) {
+			mTaskMgr.postDelayed(this, PERIOD);
+		}
+		@Override
+		public Message getMessage() {
+			return new AlarmLBS(getId());			
+		}    	
+    };     
+    
+    TimerTask taskRequestLbs = new TimerTask(Gt06ProtocolConstant.MSG_WIFI){//NG //9.请滶LBS地址
+    	int PERIOD = 30000;
+		@Override
+		public void onComplete(int result) {
+			mTaskMgr.postDelayed(this, PERIOD);
+		}
+		@Override
+		public Message getMessage() {
+			return new AlarmLBS(getId());			
+		}    	
+    };  
+    
+    Task CmdOnline = new TimerTask(Gt06ProtocolConstant.MSG_COMMAND_0){//NG //10.在线指令
+    	int PERIOD = 30000;
+		@Override
+		public void onComplete(int result) {
+			mTaskMgr.postDelayed(this, PERIOD);
+		}
+		@Override
+		public Message getMessage() {
+			return new AlarmLBS(getId());			
+		}    	
+    }; 
+    
+ 
+    
+    TimerTask ExeResult = new TimerTask(Gt06ProtocolConstant.MSG_STRING_INFO){//NG //10.指令执行结果回复
+    	int PERIOD = 30000;
+		@Override
+		public void onComplete(int result) {
+			mTaskMgr.postDelayed(this, PERIOD);
+		}
+		@Override
+		public Message getMessage() {
+			return new AlarmLBS(getId());			
+		}    	
+    };   
+    
+    TimerTask AdjustTime = new TimerTask(Gt06ProtocolConstant.MSG_TIME_REQUEST){//NG //11.校时包
+    	int PERIOD = 30000;
+		@Override
+		public void onComplete(int result) {
+			mTaskMgr.postDelayed(this, PERIOD);
+		}
+		@Override
+		public Message getMessage() {
+			return new AlarmLBS(getId());			
+		}    	
+    };
+    Task AdjustTimeEcho = new TimerTask(Gt06ProtocolConstant.MSG_TIME_REQUEST){//NG //11.校时包
+    	int PERIOD = 30000;
+		@Override
+		public void onComplete(int result) {
+			mTaskMgr.postDelayed(this, PERIOD);
+		}
+		@Override
+		public Message getMessage() {
+			return new AlarmLBS(getId());			
+		}    	
+    };
+    
+    Task TaskGeneral = new TimerTask(Gt06ProtocolConstant.MSG_INFO){//NG //12.通用信息包
+    	int PERIOD = 30000;
+		@Override
+		public void onComplete(int result) {
+			mTaskMgr.postDelayed(this, PERIOD);
+		}
+		@Override
+		public Message getMessage() {
+			return new AlarmLBS(getId());			
+		}    	
     };
 }

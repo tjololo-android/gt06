@@ -26,14 +26,14 @@ public class Hardware {
 		return _this;
 	}
 	
-	public static String getDeviceType() {	
-		return "11";
+	public String getDeviceType() {
+		return DEVICETYPE;
 	}
-	public static TimeZone getTimeZone() {
-		return null;
+	public TimeZone getTimeZone() {
+		return TIMEZONE;
 	}
-	public static int getLanguage() {
-		return 1;
+	public int getLanguage() {
+		return LANGUAGE;
 	}
 	public static void rebootOnTime() {
 		
@@ -71,18 +71,10 @@ public class Hardware {
 			LAC = gsmCellLocation.getLac();
 		}
 		IMEI = tel.getDeviceId();
-		IMEI="860016020783556";	//for test
+		IMEI="860016020783556";	//NG
 		IMSI = tel.getSubscriberId();
-		ICCID = tel.getLine1Number();		
-		if(IMEI == null || null == IMSI){
-			IMEI="860016020783556";
-			IMSI ="460060276069992";
-			ICCID ="460060276069992";
-			MCC = "460";
-			MNC = "06";
-			CID = 101815812;
-			LAC = 9514;
-		}else{
+		ICCID = tel.getLine1Number();
+		if(null != IMSI && IMSI.length() > 5){
 			MCC = IMSI.substring(0, 3);
 			MNC = IMSI.substring(3, 5);
 		}
@@ -106,8 +98,7 @@ public class Hardware {
 	}
 	void installBatteryStatus() {	
 		 IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);		 	
-		 mContext.registerReceiver(new BroadcastReceiver() {
-			
+		 mContext.registerReceiver(new BroadcastReceiver() {			
 			@Override
 			public void onReceive(Context arg0, Intent intent) {
 				int level = intent.getIntExtra("level", 0);
@@ -144,19 +135,37 @@ public class Hardware {
 	public int getBATTERY() {
 		return BATTERY;
 	}
+	public int getPreTime() {		
+		return PRETIME;
+	}	
+	public int getAlarmType() {		
+		return ALARM_TYPE;
+	}
+	public int getAlarmIndex() {
+		return ALARM_INDEX;
+	}
 	public void setmContext(Context mContext) {
 		this.mContext = mContext;
 	}
+	public Context getContext() {
+		return mContext;
+	}
 
-	private String IMEI;
-	private String ICCID;
-	private String IMSI;
-	private String MCC;
-	private String MNC;
-	private int SIGNAL;	
-	private int LAC;
-	private int CID;
-	private int BATTERY;	
+	private String IMEI="860016020783556";
+	private String ICCID="460060276069992";
+	private String IMSI="460060276069992";
+	private String MCC="460";
+	private String MNC="06";
+	private int SIGNAL = 10;	
+	private int LAC = 9514;
+	private int CID = 101815812;
+	private int BATTERY = 10;
+	private int PRETIME=10;						//NG
+	private int LANGUAGE = 0x01;				//NG
+	private TimeZone TIMEZONE = new TimeZone();	//NG
+	private String DEVICETYPE = "11";			//NG
+	private int ALARM_TYPE = 0;					//NG
+	private int ALARM_INDEX = 0;				//NG	
 }
 	
 

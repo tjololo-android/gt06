@@ -48,4 +48,36 @@ public class Gt06ProtocolConstant {
 	    public static final int MSG_MULTIMEDIA = 0x21;
 	    public static final int MSG_BMS_2 = 0x40;
 	    public static final int MSG_MULTIMEDIA_2 = 0x41;
+	    
+	    
+	    public static final int ALARM_INFO0 = 0x00; //正常
+	    public static final int ALARM_INFO1 = 0x01; //SOS 求救
+	    public static final int ALARM_INFO2 = 0x02; //断电报警
+	    public static final int ALARM_INFO3 = 0x03; //震动报警
+	    public static final int ALARM_INFO4 = 0x04; //进围栏报警
+	    public static final int ALARM_INFO5 = 0x05; //出围栏报警
+	    public static final int ALARM_INFO6 = 0x06; //超速报警
+	    public static final int ALARM_INFO7 = 0x09; //位移报警
+	    public static final int ALARM_INFO8 = 0x0A; //进 GPS 盲区报警
+	    public static final int ALARM_INFO9 = 0x0B; //出 GPS 盲区报警
+	    public static final int ALARM_INFO10 = 0x0C; //开机报警
+	    public static final int ALARM_INFO11 = 0x0D; //GPS 第一次定位报警
+	    public static final int ALARM_INFO12 = 0x0E; //外电低电报警
+	    public static final int ALARM_INFO13 = 0x0F; //外电低电保护报警
+	    public static final int ALARM_INFO14 = 0x10; //换卡报警
+	    public static final int ALARM_INFO15 = 0x11; //关机报警
+	    public static final int ALARM_INFO16 = 0x12; //外电低电保护后飞行模式报警
+	    public static final int ALARM_INFO17 = 0x13; //拆卸报警
+	    public static final int ALARM_INFO18 = 0x14; //门报警
+	    public static final int ALARM_INFO19 = 0x15; //低电关机报警
+	    public static final int ALARM_INFO20 = 0x16; //声控报警
+	    public static final int ALARM_INFO21 = 0x17; //伪基站报警
+	    public static final int ALARM_INFO22 = 0xFF; //ACC 关GPS 定位终端简明通讯协议
+	    public static final int ALARM_INFO23 = 0xFE; //ACC 开
+	    
+	    public static final int ALARM_TYPE_N0 = 0; //正常
+	    public static final int ALARM_TYPE_N1 = 1; //震动
+	    public static final int ALARM_TYPE_N2 = 2; //断电
+	    public static final int ALARM_TYPE_N3 = 3; //低电
+	    public static final int ALARM_TYPE_N4 = 4; //SOS
 }

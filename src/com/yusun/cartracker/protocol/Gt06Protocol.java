@@ -28,10 +28,7 @@ public class Gt06Protocol extends BaseProtocol{
 		super.init();
 		logger.info("init+++");	
 		mTaskMgr.reg(TaskLogin);
-		mTaskMgr.reg(taskPosition);
 		mTaskMgr.reg(TaskHeartbeat);	
-		mTaskMgr.reg(taskLbs);
-		mTaskMgr.reg(taskWifi);
 		mCmdMgr.reg(CmdAlarmCh);
 		mCmdMgr.reg(CmdAlarmEn);
 		logger.info("init---reg task end");
@@ -45,14 +42,15 @@ public class Gt06Protocol extends BaseProtocol{
 	@Override
 	public void start() {
 		logger.info("start+++");
-		onLogin();
-		mTaskMgr.post(taskPosition);				
-		mTaskMgr.post(TaskHeartbeat);	
+		onLogin();						
+		mTaskMgr.post(TaskHeartbeat);
+		startReportPosition();
 		logger.info("start---");		
 	}
 	@Override
 	public void stop() {
 		logger.info("stop+++");
+		stopReportPosition();
 		mTaskMgr.stop();
 		mCmdMgr.stop();		
 		logger.info("stop---");
@@ -111,93 +109,58 @@ public class Gt06Protocol extends BaseProtocol{
 		}
 	};	
 	
-    TimerTask taskPosition = new TimerTask(Gt06ProtocolConstant.MSG_GPS_LBS_2){
-    	int PERIOD = 30000;
-    	Position pos;    	
-		@Override
-		public void onComplete(int result) {		
+	static boolean isReportPos = true;
+	void startReportPosition(){
+		isReportPos = true;
+    	new Thread(){
+    		public void run(){    		
+    			MessageLbs lbs = new MessageLbs(Gt06ProtocolConstant.MSG_LBS_MULTIPLE);
+    			mTaskMgr.sendMessage(lbs);
+    			MessageWifi wifi = new MessageWifi(Gt06ProtocolConstant.MSG_LBS_WIFI);
+    			mTaskMgr.sendMessage(wifi);
+    			while(isReportPos){
+    				if(Hardware.instance().isGpsFixed()){
+    					Position pos = AppContext.instance().getDatabaseHelper().selectPosition();
+    	    			if(null != pos){
+    	    		    	MessagePosition msg = new MessagePosition(Gt06ProtocolConstant.MSG_GPS_LBS_2, pos);
+    	    		    	mTaskMgr.sendMessage(msg);
+    	    				AppContext.instance().getDatabaseHelper().deletePosition(pos.getId());
+    	    			}
+    	    			mysleep(Hardware.instance().getGpsInterval());
+    				}else{
+    					mysleep(Hardware.instance().getLbsInterval());
+    					lbs = new MessageLbs(Gt06ProtocolConstant.MSG_LBS_MULTIPLE);
+    	    			mTaskMgr.sendMessage(lbs);
+    				}
+    			}
+    		}
+    	}.start();    	
+	}
+	
+	void stopReportPosition(){
+		isReportPos = false;
+	}
+	
+	void mysleep(int sec){
+		try {
+			Thread.sleep(sec * 1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		@Override
-		public Message getMessage() {
-			read();
-			if(null == pos){
-				return null;
-			}
-			MessagePosition msg = new MessagePosition(getId(), pos);			
-			return msg;
-		}
-		@Override
-		public void run() {
-			Message msg = getMessage();
-			if(null == msg){
-				mTaskMgr.postDelayed(this, 5*60*1000);
-			}else{
-				mTaskMgr.sendMessage(msg);
-				delete();
-				mTaskMgr.postDelayed(this, PERIOD);
-			}
-		};
-		
-		void delete(){
-			AppContext.instance().getDatabaseHelper().deletePosition(pos.getId());
-		}
-		void read(){
-			pos = AppContext.instance().getDatabaseHelper().selectPosition();
-		}
-    };
+	}
     
-    TimerTask taskLbs = new TimerTask(Gt06ProtocolConstant.MSG_LBS_MULTIPLE){//NG
-    	int PERIOD = 30000;
-		@Override
-		public void onComplete(int result) {
-			mTaskMgr.postDelayed(this, PERIOD);
-		}
-		@Override
-		public Message getMessage() {
-			MessageLbs msg = new MessageLbs(getId());
-			return msg;
-		}
-    };
-    
-    TimerTask taskWifi = new TimerTask(Gt06ProtocolConstant.MSG_LBS_WIFI){//NG
-    	int PERIOD = 30000;
-		@Override
-		public void onComplete(int result) {
-			mTaskMgr.postDelayed(this, PERIOD);
-		}
-		@Override
-		public Message getMessage() {
-			MessageWifi msg = new MessageWifi(getId());
-			return msg;
-		}
-    };
-    
-    TimerTask taskFence = new TimerTask(Gt06ProtocolConstant.MSG_GPS_LBS_STATUS_2){//NG //6.gps报警包，单围栏
-    	int PERIOD = 30000;
-		@Override
-		public void onComplete(int result) {
-			mTaskMgr.postDelayed(this, PERIOD);
-		}
-		@Override
-		public Message getMessage() {
-			MessageWifi msg = new MessageWifi(getId());
-			return msg;
-		}
-    };
-    
-    TimerTask taskFence2 = new TimerTask(Gt06ProtocolConstant.MSG_GPS_LBS_STATUS_3){//NG //6.gps报警包，多围栏
-    	int PERIOD = 30000;
-		@Override
-		public void onComplete(int result) {
-			mTaskMgr.postDelayed(this, PERIOD);
-		}
-		@Override
-		public Message getMessage() {
-			MessageWifi msg = new MessageWifi(getId());
-			return msg;
-		}
-    };
-    
+    public void alarm(){
+//    	int fence = Hardware.instance().getAlarmFence();
+//    	Position pos = Hardware.instance().getposition();
+//    	Message msg = null;
+//    	if(0 == fence){
+//    		msg = new MessageFence(Gt06ProtocolConstant.MSG_GPS_LBS_STATUS_2, pos);
+//    	}else{
+//    		msg = new MessageFence(Gt06ProtocolConstant.MSG_GPS_LBS_STATUS_3, pos);
+//    	}
+//    	msg.sendToTarget();
+    }
     
     Task CmdAlarmCh = new Task(Gt06ProtocolConstant.MSG_WIFI){//NG	//6.gps报警包，中文回复
     	int serviceFlag;

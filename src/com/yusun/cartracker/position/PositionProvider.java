@@ -15,7 +15,7 @@
  */
 package com.yusun.cartracker.position;
 
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.MainFragment;
 import com.yusun.cartracker.helper.Logger;
 
 import android.content.Context;
@@ -55,10 +55,10 @@ public abstract class PositionProvider {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        deviceId = Hardware.instance().getIMEI();//preferences.getString(MainFragment.KEY_DEVICE, "860016020783556");
-        interval = 30*1000;//Long.parseLong(preferences.getString(MainFragment.KEY_INTERVAL, "600")) * 1000;
-        distance = 0;//Integer.parseInt(preferences.getString(MainFragment.KEY_DISTANCE, "0"));
-        angle = 0;//Integer.parseInt(preferences.getString(MainFragment.KEY_ANGLE, "0"));
+        deviceId = preferences.getString(MainFragment.KEY_DEVICE, "860016020783556");
+        interval = Long.parseLong(preferences.getString(MainFragment.KEY_INTERVAL, "30")) * 1000;
+        distance = Integer.parseInt(preferences.getString(MainFragment.KEY_DISTANCE, "0"));
+        angle = Integer.parseInt(preferences.getString(MainFragment.KEY_ANGLE, "0"));
     }
 
     public abstract void startUpdates();

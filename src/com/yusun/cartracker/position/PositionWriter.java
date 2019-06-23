@@ -18,19 +18,16 @@ package com.yusun.cartracker.position;
 import com.yusun.cartracker.helper.Logger;
 
 import android.content.Context;
-import android.os.Handler;
 
 public class PositionWriter implements PositionProvider.PositionListener {
     
     Logger logger = new Logger(PositionWriter.class);    
 
-    private Handler handler;
     private PositionProvider positionProvider;
     private DatabaseHelper databaseHelper;
 
 
     public PositionWriter(Context context) {        
-        handler = new Handler();
         positionProvider = PositionProviderFactory.create(context, this);
         databaseHelper = new DatabaseHelper(context);          
     }
@@ -51,7 +48,6 @@ public class PositionWriter implements PositionProvider.PositionListener {
         } catch (SecurityException e) {
             logger.error("stop exception", e);
         }
-        handler.removeCallbacksAndMessages(null);
     }
 
     @Override

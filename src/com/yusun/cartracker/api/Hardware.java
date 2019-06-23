@@ -41,8 +41,11 @@ public class Hardware {
 	public static boolean isElectronicOn(){
 		return true;
 	}
-	public static boolean isGpsFixed(){
-		return true;
+	public boolean isGpsFixed(){
+		return GPS_FIXED;
+	}
+	public void setGpsFixed(boolean isFixed){
+		GPS_FIXED = isFixed;
 	}
 	public static boolean isRecharge(){
 		return true;
@@ -150,7 +153,15 @@ public class Hardware {
 	public Context getContext() {
 		return mContext;
 	}
-
+	public int getAlarmFence() {		
+		return ALARM_FENCE;
+	}
+	public int getGpsInterval() {
+		return GPS_INTERVAL;
+	}
+	public int getLbsInterval() {
+		return LBS_INTERVAL;
+	}
 	private String IMEI="860016020783556";
 	private String ICCID="460060276069992";
 	private String IMSI="460060276069992";
@@ -165,7 +176,11 @@ public class Hardware {
 	private TimeZone TIMEZONE = new TimeZone();	//NG
 	private String DEVICETYPE = "11";			//NG
 	private int ALARM_TYPE = 0;					//NG
-	private int ALARM_INDEX = 0;				//NG	
+	private int ALARM_INDEX = 0;				//NG
+	private int ALARM_FENCE = 0;				//NG
+	private int GPS_INTERVAL = 30;				//NG
+	private int LBS_INTERVAL = 30;				//NG
+	private boolean GPS_FIXED = false;			//NG
 }
 	
 

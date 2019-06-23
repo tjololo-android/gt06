@@ -13,7 +13,7 @@ public class DeviceStatus{
 	
 	DeviceStatus(){
 		electronic_b7 = Hardware.isElectronicOn();
-		gpsfix_b6 = Hardware.isGpsFixed();
+		gpsfix_b6 = Hardware.instance().isGpsFixed();
 		recharge_b2 = Hardware.isRecharge();
 		acc_b1 = Hardware.isAccon();
 		guard_b0 = Hardware.isInguard();

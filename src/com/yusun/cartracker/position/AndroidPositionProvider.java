@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 
+import com.yusun.cartracker.api.Hardware;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.GpsSatellite;
@@ -121,6 +123,7 @@ public class AndroidPositionProvider extends PositionProvider implements Locatio
 	public void onGpsStatusChanged(int event) {
 		if (event == GpsStatus.GPS_EVENT_FIRST_FIX) {
 			fixed = true;
+			Hardware.instance().setGpsFixed(fixed);
 		} else if (event == GpsStatus.GPS_EVENT_SATELLITE_STATUS) {
             int totalStat = 0;
             int usedStat = 0;

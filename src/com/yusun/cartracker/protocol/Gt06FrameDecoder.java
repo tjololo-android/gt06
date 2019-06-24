@@ -28,7 +28,7 @@ public class Gt06FrameDecoder extends BaseFrameDecoder {
         }
 
         if (buf.readableBytes() >= length && buf.getUnsignedShort(buf.readerIndex() + length - 2) == 0x0d0a) {
-            return buf.readRetainedSlice(length);
+        	return buf.readRetainedSlice(length);                        
         }
 
         int endIndex = buf.readerIndex() - 1;

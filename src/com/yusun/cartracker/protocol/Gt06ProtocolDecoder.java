@@ -4,6 +4,7 @@ import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.protocol.abs.BaseProtocolDecoder;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.Channel;
 
 public class Gt06ProtocolDecoder extends BaseProtocolDecoder{
@@ -12,7 +13,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder{
     @Override
     protected Object decode(Channel channel, Object msg) throws Exception {
     	
-    	logger.info("decode");
+    	//logger.info("receive data: "+ ByteBufUtil.hexDump((ByteBuf) msg));
 
         ByteBuf buf = (ByteBuf) msg;
 

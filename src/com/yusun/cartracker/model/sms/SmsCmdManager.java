@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.json.JSONObject;
 
-public class SmsManager {
+public class SmsCmdManager {
 
 	static HashMap<String, CmdHandler> mHandler = new HashMap<String, CmdHandler>();
 
@@ -12,8 +12,8 @@ public class SmsManager {
 		mHandler.put(handler.getCmd().toLowerCase(), handler);
 	}
 
-	static public void addReq(String msg) {
-		SMS sMsg = SMS.fromSms(msg);		
+	static public void addReq(String num, String msg) {
+		SMS sMsg = SMS.fromSms(num, msg);		
 		if(null != sMsg){
 			handle(sMsg);
 		}
@@ -21,7 +21,7 @@ public class SmsManager {
 
 	public static void handle(SMS sMsg) {
 
-		String cmd[] = sMsg.command.split(" ");
+		String cmd[] = sMsg.content.split(" ");
 		CmdHandler handler = mHandler.get(cmd[0].toLowerCase());
 
 		if (handler != null) {
@@ -32,6 +32,10 @@ public class SmsManager {
 	}
 
 	public static void init() {
-		reg(new Versin());
+		reg(new Verson());
+		reg(new GPRSSET());
+		reg(new ApnHandler());
+		reg(new TIMER());
+		reg(new SERVER());
 	}
 }

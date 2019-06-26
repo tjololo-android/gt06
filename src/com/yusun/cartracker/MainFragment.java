@@ -17,6 +17,8 @@ package com.yusun.cartracker;
 
 import java.util.Random;
 
+import com.yusun.cartracker.helper.Utils;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -204,17 +206,8 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
         getActivity().stopService(new Intent(getActivity(), MainService.class));
         setPreferencesEnabled(true);
     }
-
-    public static boolean isValidVrl(String userUrl){
-    	int port = Uri.parse(userUrl).getPort();
-        if (URLUtil.isValidUrl(userUrl) && (port == -1 || (port > 0 && port <= 65535))
-                && (URLUtil.isHttpUrl(userUrl) || URLUtil.isHttpsUrl(userUrl))) {
-            return true;
-        }        
-        return false;
-    }
     public boolean validateServerURL(String userUrl) {
-        if(isValidVrl(userUrl)){
+        if(Utils.isValidVrl(userUrl)){
         	return true;
         }
         Toast.makeText(getActivity(), R.string.error_msg_invalid_url, Toast.LENGTH_LONG).show();

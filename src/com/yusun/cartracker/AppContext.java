@@ -1,5 +1,6 @@
 package com.yusun.cartracker;
 
+import com.yusun.cartracker.api.ApnSetting;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.CmdMgr;
 import com.yusun.cartracker.model.TaskMgr;
@@ -19,6 +20,7 @@ public class AppContext{
 		if(null == mContext){
 			throw new IllegalArgumentException("set context first");
 		}
+		mApnSetting = new ApnSetting(getContext());
 		databaseHelper = new DatabaseHelper(getContext());
 		mCmdMgr = new CmdMgr();
 		mCmdMgr.init();
@@ -44,7 +46,11 @@ public class AppContext{
 		logger.info("uninit---");
 	}
 	
-	
+	private ApnSetting mApnSetting;
+	public ApnSetting getmApnSetting() {
+		return mApnSetting;
+	}
+
 	private CmdMgr mCmdMgr;
 	private TaskMgr mTaskMgr;	
 	

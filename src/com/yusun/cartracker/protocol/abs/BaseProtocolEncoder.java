@@ -13,7 +13,7 @@ public abstract class BaseProtocolEncoder extends ChannelOutboundHandlerAdapter 
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {       
        ByteBuf buf = encodeContent(msg);
-       logger.info("send data: "+ByteBufUtil.hexDump((ByteBuf) msg));
+       logger.info("send data: "+ByteBufUtil.hexDump((ByteBuf) buf));
        ctx.writeAndFlush(buf);
     }
     abstract public ByteBuf encodeContent(Object msg);

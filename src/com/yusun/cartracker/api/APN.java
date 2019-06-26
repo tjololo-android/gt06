@@ -1,6 +1,9 @@
 package com.yusun.cartracker.api;
 
-public class ApnSetter {
+public class APN {
+	String id;
+	String apn;
+	String numeric;	
 	String name;
 	String user;
 	String pass;
@@ -35,9 +38,5 @@ public class ApnSetter {
 	}
 	public void setIp(String ip) {
 		this.ip = ip;
-	}
-	public boolean update() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

@@ -2,6 +2,7 @@ package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.SmsSender;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.Message;
 import com.yusun.cartracker.model.Task;
@@ -79,6 +80,8 @@ public class Gt06Protocol extends BaseProtocol{
 			}else{
 				if(++count > MAX_COUNT){
 					Hardware.rebootOnTime();
+				}else{
+					
 				}
 			}
 		}
@@ -113,7 +116,7 @@ public class Gt06Protocol extends BaseProtocol{
 	void startReportPosition(){
 		isReportPos = true;
     	new Thread(){
-    		public void run(){    		
+    		public void run(){
     			MessageLbs lbs = new MessageLbs(Gt06ProtocolConstant.MSG_LBS_MULTIPLE);
     			mTaskMgr.sendMessage(lbs);
     			MessageWifi wifi = new MessageWifi(Gt06ProtocolConstant.MSG_LBS_WIFI);
@@ -130,7 +133,7 @@ public class Gt06Protocol extends BaseProtocol{
     				}else{
     					mysleep(Hardware.instance().getLbsInterval());
     					lbs = new MessageLbs(Gt06ProtocolConstant.MSG_LBS_MULTIPLE);
-    	    			mTaskMgr.sendMessage(lbs);
+    	    			mTaskMgr.sendMessage(lbs);    	    			
     				}
     			}
     		}

@@ -85,8 +85,10 @@ public class MainService extends Service implements NetworkHandler {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
-
-				client = new NettyClient("www.18gps.net", 7018);				
+				
+				String ip = Hardware.instance().getIp();
+				int port = Integer.parseInt(Hardware.instance().getPort());
+				client = new NettyClient(ip, port);				
 				AppContext.instance().setClient(client);
 				if(networkManager.isOnline()){
 					client.start();

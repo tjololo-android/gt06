@@ -1,6 +1,7 @@
 package com.yusun.cartracker.api;
 
 import com.yusun.cartracker.helper.Logger;
+import com.yusun.cartracker.helper.Utils;
 import com.yusun.cartracker.model.TimeZone;
 
 import android.content.BroadcastReceiver;
@@ -16,6 +17,7 @@ import android.telephony.gsm.GsmCellLocation;
 
 public class Hardware {
 	Context mContext;
+	MyPreference mMyPreference;
 	Logger logger = new Logger(Hardware.class);
 	private Hardware(){}
 	private static Hardware _this;
@@ -74,7 +76,6 @@ public class Hardware {
 			LAC = gsmCellLocation.getLac();
 		}
 		IMEI = tel.getDeviceId();
-		IMEI="860016020783556";	//NG
 		IMSI = tel.getSubscriberId();
 		ICCID = tel.getLine1Number();
 		if(null != IMSI && IMSI.length() > 5){
@@ -84,6 +85,16 @@ public class Hardware {
 		installPhoneStateListener(tel);
 		installBatteryStatus();
 		logger.info("imei="+IMEI+"\nIMSI="+IMSI+"\nICCID="+ICCID+"\nCID="+CID+" LAC="+LAC+" MCC="+MCC+" MNC="+MNC);
+		
+		initSettings();
+	}
+	private void initSettings(){
+		mMyPreference = new MyPreference(mContext);
+		IP = mMyPreference.getString(MyPreference.KEY_IP);
+		PORT = mMyPreference.getString(MyPreference.KEY_PORT);
+		GPS_INTERVAL = mMyPreference.getInt(MyPreference.KEY_GPS_INTERVAL);
+		LBS_INTERVAL = mMyPreference.getInt(MyPreference.KEY_LBS_INTERVAL);
+		GPS_WORK_INTERVAL = mMyPreference.getInt(MyPreference.KEY_GPS_WORK_INTERVAL);
 	}
 	public void uninit(){
 		//TelephonyManager tel = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
@@ -159,8 +170,39 @@ public class Hardware {
 	public int getGpsInterval() {
 		return GPS_INTERVAL;
 	}
+	public void setGpsInterval(int interval) {
+		GPS_INTERVAL = interval;
+	}
 	public int getLbsInterval() {
 		return LBS_INTERVAL;
+	}
+	public void setLbsInterval(int interval) {
+		LBS_INTERVAL = interval;
+	}
+	public int getGpsWorkInterval() {
+		return GPS_WORK_INTERVAL;
+	}
+	public void setGpsWorkInterval(int interval) {
+		GPS_WORK_INTERVAL = interval;
+	}
+	public boolean setService(String ip, String port) {
+		if(IP.equalsIgnoreCase(ip) && PORT.equalsIgnoreCase(port))
+			return false;		
+		int p = Integer.parseInt(port);
+		if(Utils.isValidVrl(ip) && p > 0 && p < 65535){
+			IP = ip;
+			PORT = port;
+			mMyPreference.set(MyPreference.KEY_IP, ip);
+			mMyPreference.set(MyPreference.KEY_PORT, port);			
+			return true;
+		}		
+		return false;
+	}
+	public String getIp(){
+		return IP;
+	}
+	public String getPort(){
+		return PORT;
 	}
 	private String IMEI="860016020783556";
 	private String ICCID="460060276069992";
@@ -178,9 +220,12 @@ public class Hardware {
 	private int ALARM_TYPE = 0;					//NG
 	private int ALARM_INDEX = 0;				//NG
 	private int ALARM_FENCE = 0;				//NG
-	private int GPS_INTERVAL = 30;				//NG
-	private int LBS_INTERVAL = 30;				//NG
+	private int GPS_INTERVAL = 30;				
+	private int LBS_INTERVAL = 30;				
+	private int GPS_WORK_INTERVAL = 30;			
 	private boolean GPS_FIXED = false;			//NG
+	private String IP;
+	private String PORT;
 }
 	
 

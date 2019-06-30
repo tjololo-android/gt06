@@ -1,6 +1,7 @@
-package com.yusun.cartracker.api;
+package com.yusun.cartracker.model.sms;
 
-import com.yusun.cartracker.model.sms.SmsCmdManager;
+import com.yusun.cartracker.AppContext;
+import com.yusun.cartracker.helper.Logger;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,8 +10,9 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 
 public class SmsReceiver extends BroadcastReceiver {
+	Logger logger = new Logger(SmsReceiver.class);
 	@Override
-	public void onReceive(Context context, Intent intent) {	
+	public void onReceive(Context context, Intent intent) {
 		String num, con;	
 		Bundle bundle = intent.getExtras();
 		if (bundle != null) {
@@ -20,8 +22,8 @@ public class SmsReceiver extends BroadcastReceiver {
 				smsMessages[i] = SmsMessage.createFromPdu((byte[]) objs[i]);
 				num = smsMessages[i].getDisplayOriginatingAddress();
 				con = smsMessages[i].getDisplayMessageBody();
-				SmsCmdManager.addReq(num, con);
-				System.out.println("phone:" + num + "content:" + con);	
+				AppContext.instance().getSmsCmdManager().addReq(num, con);
+				logger.info("phone:" + num + "content:" + con);	
 			}
 			abortBroadcast();
 		}

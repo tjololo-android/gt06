@@ -94,6 +94,7 @@ public class Logger {
 	}
 	
 	public void error(String msg, Throwable tr){
+		writeToLogFile(clazz.getSimpleName()+":"+ msg+tr.toString());
 		Log.e(clazz.getSimpleName(), ""+msg, tr);
 	}
 	

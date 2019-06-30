@@ -28,18 +28,7 @@ public abstract class BaseProtocolDecoder extends ChannelInboundHandlerAdapter {
 		AppContext.instance().getProtocol().onDisconnected();
 		super.channelInactive(ctx);
 	}
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		logger.info("exceptionCaught");
-		super.exceptionCaught(ctx, cause);
-	}
-
-	@Override
-	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-		logger.info("userEventTriggered");
-		super.userEventTriggered(ctx, evt);
-	}
-
+	
 	protected abstract Object decode(Channel channel,  Object msg) throws Exception;
     
     protected void onReceiveCmd(int cmd, Object content){

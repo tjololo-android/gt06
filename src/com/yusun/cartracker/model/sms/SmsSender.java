@@ -1,11 +1,11 @@
-package com.yusun.cartracker.api;
+package com.yusun.cartracker.model.sms;
 
 import java.util.ArrayList;
 
 import android.telephony.SmsManager;
 
 public class SmsSender {
-    public static void send(String message, String phone) {
+    public static void send(String phone, String message) {
         SmsManager smsManager = SmsManager.getDefault();
         ArrayList<String> list = smsManager.divideMessage(message);
         for (String text:list) {

@@ -1,12 +1,12 @@
 package com.yusun.cartracker.model.sms;
 
+import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.Hardware;
 
 public class SERVER implements CmdHandler{
 
 	@Override
 	public String getCmd() {
-		// TODO Auto-generated method stub
 		return CMDS.SERVER;
 	}
 
@@ -14,11 +14,15 @@ public class SERVER implements CmdHandler{
 	public void doCmd(SMS msg) {
 		//SERVER,666666,0,202.173.231.112,8821,0#
 		String[] pm = msg.content.split(",");
-		String ip = pm[3];
-		String port = pm[4];					
+		if(pm.length < 3){
+			msg.sendAck("ERROR");
+			return;
+		}		
+		String ip = pm[1].trim();
+		String port = pm[2].trim();		
 		if(Hardware.instance().setService(ip, port)){
-			msg.sendAck("OK");
-			System.exit(1);	//reboot app for service changed
+			AppContext.instance().resetNetServer();
+			msg.sendAck("OK");			
 		}else{
 			msg.sendAck("ERROR");
 		}			

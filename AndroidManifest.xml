@@ -22,8 +22,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />	
     <uses-permission android:name="android.permission.ACCESS_GPS" />	
     <!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->	
-    <uses-permission android:name="android.permission.GET_TASKS" />	
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />	
+    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />	
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />	
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />	
@@ -43,6 +42,9 @@
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />	
 	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />	
 	<uses-permission android:name="android.permission.SEND_SMS" />
+	<uses-permission android:name="android.permission.RECEIVE_SMS"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -88,7 +90,7 @@
             </intent-filter>
         </receiver>
         <receiver
-		    android:name=".SmsReceiver"
+		    android:name="com.yusun.cartracker.model.sms.SmsReceiver"
 		    android:enabled="true"
 		    android:exported="true">
 		     <intent-filter android:priority="1000">

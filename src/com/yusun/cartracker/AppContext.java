@@ -4,6 +4,7 @@ import com.yusun.cartracker.api.ApnSetting;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.CmdMgr;
 import com.yusun.cartracker.model.TaskMgr;
+import com.yusun.cartracker.model.sms.SmsCmdManager;
 import com.yusun.cartracker.netty.NettyClient;
 import com.yusun.cartracker.position.DatabaseHelper;
 import com.yusun.cartracker.position.NetworkManager.NetworkHandler;
@@ -11,17 +12,22 @@ import com.yusun.cartracker.protocol.abs.BaseProtocol;
 import com.yusun.cartracker.protocol.abs.ProtocolMgr;
 
 import android.content.Context;
+import android.telephony.SmsManager;
+import android.telephony.gsm.SmsMessage;
 
 public class AppContext{
 	Logger logger = new Logger(AppContext.class);
 	
-	public void init(){
-		logger.info("init+++");
+	public void init(){		
+		logger.info("init+++");		
 		if(null == mContext){
 			throw new IllegalArgumentException("set context first");
 		}
 		mApnSetting = new ApnSetting(getContext());
 		databaseHelper = new DatabaseHelper(getContext());
+		mSmsCmdManager = new SmsCmdManager();
+		mSmsCmdManager.init();
+		
 		mCmdMgr = new CmdMgr();
 		mCmdMgr.init();
 		mTaskMgr = new TaskMgr();
@@ -43,7 +49,14 @@ public class AppContext{
 		if(null != mProtocol){
 			mProtocol.uninit();
 		}
+		if(null != mSmsCmdManager){
+			mSmsCmdManager.uninit();
+		}
 		logger.info("uninit---");
+	}
+	private SmsCmdManager mSmsCmdManager;
+	public SmsCmdManager getSmsCmdManager(){
+		return mSmsCmdManager;
 	}
 	
 	private ApnSetting mApnSetting;
@@ -100,5 +113,12 @@ public class AppContext{
 	private DatabaseHelper databaseHelper;
 	public DatabaseHelper getDatabaseHelper() {
 		return databaseHelper;
+	}
+
+	public void resetNetServer() {
+		if(null != mClient){
+			mClient.stop();
+			mClient.start();
+		}
 	}	
 }

@@ -1,9 +1,8 @@
 package com.yusun.cartracker.netty;
 
-
 import com.yusun.cartracker.AppContext;
+import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.helper.Logger;
-import com.yusun.cartracker.position.NetworkManager;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -18,12 +17,13 @@ public class NettyClient {
 	private NioEventLoopGroup group;	
 	private String HOST;
 	private int PORT;
-	public NettyClient(String host, int port){
-		HOST = host;
-		PORT = port;
+	public NettyClient(){		
 	}
     public void start() {
     	logger.info("start+++");
+    	
+    	HOST = Hardware.instance().getIp();
+    	PORT = Integer.parseInt(Hardware.instance().getPort());
     	
     	Bootstrap bootstrap = new Bootstrap();
     	group = new NioEventLoopGroup();
@@ -45,8 +45,10 @@ public class NettyClient {
 			}else{
 				logger.info("fail connect to server!");
 			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		} catch (InterruptedException e) {			
+			logger.error("start---channel=",e);
+		} catch (Exception e){			
+			logger.error("start---channel=",e);
 		}
         logger.info("start---channel="+channel);
     }
@@ -63,6 +65,7 @@ public class NettyClient {
 		if(null != channel){
 			channel.closeFuture();
 			group.shutdownGracefully();
+			channel = null;
 		}
 	}
 }

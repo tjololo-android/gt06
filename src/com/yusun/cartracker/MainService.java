@@ -11,9 +11,11 @@ import com.yusun.cartracker.position.PositionWriter;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.util.Log;
 
@@ -32,20 +34,13 @@ public class MainService extends Service implements NetworkHandler {
 	    @Override
 	    public void onCreate() {
 	        logger.info("onCreate");
-            PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
-            wakeLock.acquire();
-            Hardware.instance().setmContext(getApplicationContext());
-            Hardware.instance().init();
-            
-            startWork();
+	        startWorkThread();
         }
 	    @Override
 	    public IBinder onBind(Intent intent) {
 	    	logger.info("onBind");
 	        return null;
 	    }
-
 	   
 	    @Override
 	    public int onStartCommand(Intent intent, int flags, int startId) {	 
@@ -56,56 +51,63 @@ public class MainService extends Service implements NetworkHandler {
 	    @Override
 	public void onDestroy() {
 		logger.info("onDestroy");
-
-		stopForeground(true);
-
 		stopWork();
 	}
-
+	void startWorkThread(){
+		new Thread("work"){
+			public void run(){
+				Looper.prepare();				
+				startWork();
+				Looper.loop();
+			}
+		}.start();       
+	}
 	void startWork() {
 		logger.info("startWork");
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
+        wakeLock.acquire(3*60*1000);
+        
+        Hardware.instance().setmContext(getApplicationContext());
+        Hardware.instance().init();
+        
 	    networkManager = new NetworkManager(this, this);
+	    networkManager.start();
         positionWriter = new PositionWriter(this);
-		HandlerThread ht = new HandlerThread("worker");
-		ht.start();
-		Handler handler = new Handler(ht.getLooper());
-		handler.post(new Runnable() {
-			@Override
-			public void run() {			
-				positionWriter.start();
-				AppContext.instance().setContext(MainService.this.getApplicationContext());
-				AppContext.instance().init();
-
-//				 NettyServer server = new NettyServer();
-//				 server.start();
-//
-//				try {
-//					Thread.sleep(2000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+		positionWriter.start();
+		
+		client = new NettyClient();
 				
-				String ip = Hardware.instance().getIp();
-				int port = Integer.parseInt(Hardware.instance().getPort());
-				client = new NettyClient(ip, port);				
-				AppContext.instance().setClient(client);
-				if(networkManager.isOnline()){
-					client.start();
-				}
-				networkManager.start();
-			}
-		});
+		AppContext.instance().setContext(MainService.this.getApplicationContext());
+		AppContext.instance().init();
+		AppContext.instance().setClient(client);
+
+//		NettyServer server = new NettyServer();
+//		server.start();
+//
+//		try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}			
+		
+		if(networkManager.isOnline()){
+			client.start();
+		}
 	}
 
 	void stopWork() {
 		logger.info("stopWork");
-		positionWriter.stop();
-
+		if(null != positionWriter){
+			positionWriter.stop();
+		}
+		if(null != networkManager){
+			networkManager.stop();
+		}
 		if (client != null) {
 			client.stop();
 		}
-		
 		AppContext.instance().uninit();
 
 		if (wakeLock != null && wakeLock.isHeld()) {
@@ -114,7 +116,7 @@ public class MainService extends Service implements NetworkHandler {
 	}
 	@Override
 	public void onNetworkUpdate(boolean isOnline) {
-		if(isOnline && !AppContext.instance().getProtocol().isOnline()){
+		if(null != client && isOnline && !AppContext.instance().getProtocol().isOnline()){
 			client.start();
 		}
 	}

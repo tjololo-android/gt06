@@ -167,9 +167,9 @@ public class ApnSetting {
 	}
 	
 	private void initApnList() {
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-		String apnStr = preferences.getString("apn_list", "null");
-
+		MyPreference preference = new MyPreference(mContext);		
+		String apnStr = preference.getString(MyPreference.KEY_APN_LIST);
+		
 		if (apnStr == "null") {
 			apnStr = "[{\"carrier\":\"骞垮窞鐗╄仈缃�(ChinaUnicom)\",\"mcc\":\"460\",\"mnc\":\"06\",\"apn\":\"UNIM2M.GZM2MAPN\"},"
 					+ "{\"carrier\":\"鍗椾含鐗╄仈缃�(ChinaUnicom)\",\"mcc\":\"460\",\"mnc\":\"06\",\"apn\":\"UNIM2M.NJM2MAPN\"},"
@@ -204,10 +204,9 @@ public class ApnSetting {
 				obj.put(APN, apn.apn);
 				obj.put("carrier", apn.name);			
 			}
-			String s = arr.toString();
-			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-			preferences.edit().putString("apn_list",s);
-			preferences.edit().commit();
+			String s = arr.toString();			
+			MyPreference preference = new MyPreference(mContext);
+			preference.set(MyPreference.KEY_APN_LIST, s);
 		} catch (JSONException e){
 			e.printStackTrace();
 		}
@@ -286,8 +285,55 @@ public class ApnSetting {
 		}
 		if(-1 == isInApnList(apnList, apn)){
 			apnList.add(0, apn);
-			saveApnList();
+			saveApnList();			
+		}else{
+			return false;
 		}
 		return true;
+	}
+	
+	public APN newApn(){
+		return new APN();
+	}
+	
+	public class APN {
+		String id;
+		String apn;
+		String numeric;	
+		String name;
+		String user;
+		String pass;
+		String netid;
+		String ip;
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getUser() {
+			return user;
+		}
+		public void setUser(String user) {
+			this.user = user;
+		}
+		public String getPass() {
+			return pass;
+		}
+		public void setPass(String pass) {
+			this.pass = pass;
+		}
+		public String getNetid() {
+			return netid;
+		}
+		public void setNetid(String netid) {
+			this.netid = netid;
+		}
+		public String getIp() {
+			return ip;
+		}
+		public void setIp(String ip) {
+			this.ip = ip;
+		}
 	}
 }

@@ -3,13 +3,13 @@ package com.yusun.cartracker.model.sms;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.yusun.cartracker.api.SmsSender;
-
 public class SMS {
 	int errorCode =0;
+	String cmd;
 	String content;
 	String phoneNum;               
-	SMS(String num, String msg){
+	SMS(String num, String cmd, String msg){
+		this.cmd = cmd;
 		phoneNum = num;
 		content = msg;
 	}
@@ -17,11 +17,11 @@ public class SMS {
 		sendSms(phoneNum, msg);
 	}	
 	public static SMS fromSms(String num, String msg) {
-		String reg = "[A-Z]+,[0-9]{6}.*#";
+		String reg = "([A-Z]+),[0-9]{6},*(.*)#";
 		Pattern p = Pattern.compile(reg);
 		Matcher m = p.matcher(msg);
-		if(m.find()){
-			return new SMS(num, msg);
+		if(m.find()){			
+			return new SMS(num, m.group(1), m.group(2));
 		}
 		return null;
 	}

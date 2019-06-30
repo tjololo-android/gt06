@@ -15,6 +15,7 @@ public class MyPreference {
 	public static final String KEY_GPS_INTERVAL = "gps_interval";
 	public static final String KEY_LBS_INTERVAL = "lbs_interval";
 	public static final String KEY_GPS_WORK_INTERVAL = "gps_work_interval";
+	public static final String KEY_APN_LIST = "apn_list";
 	
 	private Context mContext;
 	public MyPreference(Context ctx){

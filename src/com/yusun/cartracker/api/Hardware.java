@@ -171,19 +171,28 @@ public class Hardware {
 		return GPS_INTERVAL;
 	}
 	public void setGpsInterval(int interval) {
-		GPS_INTERVAL = interval;
+		if(interval != GPS_INTERVAL){			
+			GPS_INTERVAL = interval;
+			mMyPreference.set(MyPreference.KEY_GPS_INTERVAL, interval);
+		}
 	}
 	public int getLbsInterval() {
 		return LBS_INTERVAL;
 	}
 	public void setLbsInterval(int interval) {
-		LBS_INTERVAL = interval;
+		if(interval != LBS_INTERVAL){						
+			LBS_INTERVAL = interval;
+			mMyPreference.set(MyPreference.KEY_LBS_INTERVAL, interval);
+		}		
 	}
 	public int getGpsWorkInterval() {
 		return GPS_WORK_INTERVAL;
 	}
 	public void setGpsWorkInterval(int interval) {
-		GPS_WORK_INTERVAL = interval;
+		if(interval != GPS_INTERVAL){						
+			GPS_WORK_INTERVAL = interval;
+			mMyPreference.set(MyPreference.KEY_GPS_WORK_INTERVAL, interval);
+		}
 	}
 	public boolean setService(String ip, String port) {
 		if(IP.equalsIgnoreCase(ip) && PORT.equalsIgnoreCase(port))

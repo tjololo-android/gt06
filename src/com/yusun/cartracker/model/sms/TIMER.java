@@ -1,14 +1,11 @@
 package com.yusun.cartracker.model.sms;
 
-import com.yusun.cartracker.AppContext;
-import com.yusun.cartracker.api.APN;
 import com.yusun.cartracker.api.Hardware;
 
 public class TIMER implements CmdHandler{
 
 	@Override
 	public String getCmd() {
-		// TODO Auto-generated method stub
 		return CMDS.TIMER;
 	}
 
@@ -17,25 +14,23 @@ public class TIMER implements CmdHandler{
 		//TIMER,666666, 2,10,30#
 		try{
 			String[] pm = msg.content.split(",");
-			String s = pm[2];
-			if(null != s && !s.isEmpty()){
-				int lbs = Integer.parseInt(s);
+			if(pm.length > 2){
+				int lbs = Integer.parseInt(pm[0].trim());
 				Hardware.instance().setLbsInterval(lbs * 60);
-			}
-			s = pm[3];
-			if(null != s && !s.isEmpty()){
-				int gps = Integer.parseInt(s);
+				
+				int gps = Integer.parseInt(pm[1].trim());
 				Hardware.instance().setLbsInterval(gps);
-			}
-			s = pm[4];
-			if(null != s && !s.isEmpty()){
-				int gpsWork = Integer.parseInt(s);
+				
+				int gpsWork = Integer.parseInt(pm[2].trim());
 				Hardware.instance().setLbsInterval(gpsWork * 60);
+				msg.sendAck("OK");
+				return;
 			}
-			msg.sendAck("OK");
 		} catch (NumberFormatException e){
-			e.printStackTrace();
-			msg.sendAck("ERROR");
+			e.printStackTrace();			
+		} catch (NullPointerException e){
+			e.printStackTrace();			
 		}
+		msg.sendAck("ERROR");
 	}	
 }

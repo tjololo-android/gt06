@@ -2,12 +2,12 @@ package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.Hardware;
-import com.yusun.cartracker.api.SmsSender;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.Message;
 import com.yusun.cartracker.model.Task;
 import com.yusun.cartracker.model.TaskMgr;
 import com.yusun.cartracker.model.TimerTask;
+import com.yusun.cartracker.model.sms.SmsSender;
 import com.yusun.cartracker.position.Position;
 import com.yusun.cartracker.protocol.abs.BaseProtocol;
 

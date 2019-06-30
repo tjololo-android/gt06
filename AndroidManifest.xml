@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yusun.cartracker"
-    android:versionCode="006"
-    android:versionName="1.006" >
+    android:versionCode="007"
+    android:versionName="1.007" >
 
 
     <uses-sdk

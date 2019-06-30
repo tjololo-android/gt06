@@ -1,5 +1,5 @@
 <resources>
-   <string name="ip" translatable="false">http://www.18gps.net</string>
+   <string name="ip" translatable="false">www.18gps.net</string>
    <string name="port" translatable="false">7018</string>
    <integer name="gps_interval">30</integer>
    <integer name="lbs_interval">30</integer>

@@ -4,11 +4,11 @@ import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.ApnSetting;
 import com.yusun.cartracker.api.Hardware;
 
-public class GPRSSET implements CmdHandler{
+public class SCXSZ implements CmdHandler{
 
 	@Override
 	public String getCmd() {		
-		return CMDS.GPRSSET;
+		return CMDS.SCXSZ;
 	}
 
 	@Override
@@ -33,12 +33,15 @@ public class GPRSSET implements CmdHandler{
 		}
 		sb.append(";");
 		
+		//timezone
+		sb.append(Hardware.instance().getTimeZone2()+";");
+		
 		//interval
 		sb.append("LBS_GPSUpload_GPSWork:");
 		sb.append(""+Hardware.instance().getLbsInterval()/60);
 		sb.append(","+Hardware.instance().getGpsInterval());
 		sb.append(","+Hardware.instance().getGpsWorkInterval()/60);
-		sb.append(";");
+		sb.append(";");		
 		
 		//Server
 		sb.append("Server:");		
@@ -46,6 +49,21 @@ public class GPRSSET implements CmdHandler{
 		sb.append(","+Hardware.instance().getPort());
 		sb.append(","+Hardware.instance().getProtocol());
 		sb.append(";");
+		
+		//sos
+		sb.append(Hardware.instance().getSOS() + ";");
+		
+		//sensor time
+		sb.append(Hardware.instance().getSensor_Time() + ";");
+		
+		//gps address analyse
+		sb.append(Hardware.instance().getGpsAddressAnalyser() + ";");
+		
+		//alarm time
+		sb.append(Hardware.instance().getAlarm_Time() + ";");
+		
+		//electric
+		sb.append(Hardware.instance().isOilPowerControl() ? 1 : 0 + ";");
 		
 		msg.sendAck(sb.toString());
 	}

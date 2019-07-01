@@ -1,5 +1,8 @@
 package com.yusun.cartracker.helper;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Utils {
 	public static boolean isValidVrl(String str){
         str = str.toLowerCase();
@@ -15,4 +18,16 @@ public class Utils {
                 + "(/[0-9a-z_!~*бо().;?:@&=+$,%#-]+)+/?)$";  
         return  str.matches(regex);
 	}	
+	public static String join(String[] str, String flag){
+		StringBuilder sb = new StringBuilder();
+		for(String s : str){
+			sb.append(s + flag);
+		}
+		String strline = sb.toString(); 
+		return strline.substring(0, strline.length()-flag.length());
+	}
+	public static String getDataTime(Date date){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+		return dateFormat.format(date);
+	}
 }

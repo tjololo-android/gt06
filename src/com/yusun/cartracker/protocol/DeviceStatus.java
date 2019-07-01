@@ -12,7 +12,7 @@ public class DeviceStatus{
 	public int alarm_type_b3_5;
 	
 	DeviceStatus(){
-		electronic_b7 = Hardware.isElectronicOn();
+		electronic_b7 = Hardware.isOilPowerControl();
 		gpsfix_b6 = Hardware.instance().isGpsFixed();
 		recharge_b2 = Hardware.isRecharge();
 		acc_b1 = Hardware.isAccon();

@@ -40,8 +40,8 @@ public class Hardware {
 	public static void rebootOnTime() {
 		
 	}	
-	public static boolean isElectronicOn(){
-		return true;
+	public static boolean isOilPowerControl(){
+		return true;					//NG
 	}
 	public boolean isGpsFixed(){
 		return GPS_FIXED;
@@ -57,6 +57,10 @@ public class Hardware {
 	}
 	public static boolean isInguard(){
 		return true;
+	}
+	
+	public String getTimeZone2() {	//NG
+		return "E8";
 	}
 
 	public void init() {
@@ -95,6 +99,9 @@ public class Hardware {
 		GPS_INTERVAL = mMyPreference.getInt(MyPreference.KEY_GPS_INTERVAL);
 		LBS_INTERVAL = mMyPreference.getInt(MyPreference.KEY_LBS_INTERVAL);
 		GPS_WORK_INTERVAL = mMyPreference.getInt(MyPreference.KEY_GPS_WORK_INTERVAL);
+		SOS = mMyPreference.getString(MyPreference.KEY_SOS_NUM);
+		Sensor_Time = mMyPreference.getInt(MyPreference.KEY_SENSOR_TIME);
+		Alarm_Time = mMyPreference.getInt(MyPreference.KEY_ALARM_TIME);
 	}
 	public void uninit(){
 		//TelephonyManager tel = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
@@ -213,6 +220,19 @@ public class Hardware {
 	public String getPort(){
 		return PORT;
 	}
+	public String getProtocol() {
+		return "TCP";								//NG
+	}
+	public String getSOS() {
+		return SOS;
+	}
+
+	public void setSOS(String sOS) {
+		if(!SOS.equals(sOS)){						
+			SOS = sOS;
+			mMyPreference.set(MyPreference.KEY_SOS_NUM, SOS);
+		}		
+	}
 	private String IMEI="860016020783556";
 	private String ICCID="460060276069992";
 	private String IMSI="460060276069992";
@@ -235,6 +255,37 @@ public class Hardware {
 	private boolean GPS_FIXED = false;			//NG
 	private String IP;
 	private String PORT;
+	private String SOS;
+	private int Alarm_Time;
+	public int getAlarm_Time() {
+		return Alarm_Time;
+	}
+
+	public void setAlarm_Time(int val) {
+		if(Alarm_Time != val){
+			Alarm_Time = val;
+			mMyPreference.set(MyPreference.KEY_SENSOR_TIME, val);
+		}
+	}
+
+	public int getSensor_Time() {
+		return Sensor_Time;
+	}
+
+	public void setSensor_Time(int val) {
+		if(Sensor_Time != val){
+			Sensor_Time = val;
+			mMyPreference.set(MyPreference.KEY_SENSOR_TIME, val);
+		}
+	}
+	private int Sensor_Time;
+	public String getGpsAddressAnalyser() {
+		return "unknown";			//NG
+	}
+
+	public boolean isGpsPowerOn() {	
+		return true;				//NG
+	}
 }
 	
 

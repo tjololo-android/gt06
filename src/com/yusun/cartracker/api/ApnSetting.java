@@ -5,6 +5,9 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.yusun.cartracker.api.ApnSetting.APN;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -123,7 +126,14 @@ public class ApnSetting {
 	private String ID = "_id";
 	private String NAME = "name";
 
-	private APN getCurrentApnInfo() {
+	public APN getCurrentApnInfo() {
+		if(true){		//NG
+			APN apn = new APN();
+			apn.name = "xxx";
+			apn.numeric = "46001";
+			apn.ip= "10.0.0.1";
+			return apn;
+		}
 
 		APN mApn = null;
 
@@ -303,7 +313,6 @@ public class ApnSetting {
 		String name;
 		String user;
 		String pass;
-		String netid;
 		String ip;
 		public String getName() {
 			return name;
@@ -324,10 +333,10 @@ public class ApnSetting {
 			this.pass = pass;
 		}
 		public String getNetid() {
-			return netid;
+			return numeric;
 		}
 		public void setNetid(String netid) {
-			this.netid = netid;
+			this.numeric = netid;
 		}
 		public String getIp() {
 			return ip;

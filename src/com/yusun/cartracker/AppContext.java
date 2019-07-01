@@ -7,6 +7,7 @@ import com.yusun.cartracker.model.TaskMgr;
 import com.yusun.cartracker.model.sms.SmsCmdManager;
 import com.yusun.cartracker.netty.NettyClient;
 import com.yusun.cartracker.position.DatabaseHelper;
+import com.yusun.cartracker.position.NetworkManager;
 import com.yusun.cartracker.position.NetworkManager.NetworkHandler;
 import com.yusun.cartracker.protocol.abs.BaseProtocol;
 import com.yusun.cartracker.protocol.abs.ProtocolMgr;
@@ -120,5 +121,16 @@ public class AppContext{
 			mClient.stop();
 			mClient.start();
 		}
-	}	
+	}
+	
+	private NetworkManager mNetworkManager;
+	public void setNetWorkManager(NetworkManager networkManager){
+		mNetworkManager = networkManager;
+	}
+	public boolean isNetworkConnected() {
+		if(null != mNetworkManager){
+			return mNetworkManager.isOnline(); 
+		}
+		return false;
+	}
 }

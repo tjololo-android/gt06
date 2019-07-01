@@ -39,6 +39,10 @@ public class SmsCmdManager {
 		reg(new ApnHandler());
 		reg(new TIMER());
 		reg(new SERVER());
+		reg(new PARAM());
+		reg(new SCXSZ());
+		reg(new STATUS());
+		reg(new WHERE());
 		start();
 	}
 	private void start(){

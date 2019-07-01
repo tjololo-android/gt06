@@ -81,6 +81,7 @@ public class MainService extends Service implements NetworkHandler {
 		AppContext.instance().setContext(MainService.this.getApplicationContext());
 		AppContext.instance().init();
 		AppContext.instance().setClient(client);
+		AppContext.instance().setNetWorkManager(networkManager);
 
 //		NettyServer server = new NettyServer();
 //		server.start();

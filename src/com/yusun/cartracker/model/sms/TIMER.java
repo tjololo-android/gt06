@@ -19,10 +19,10 @@ public class TIMER implements CmdHandler{
 				Hardware.instance().setLbsInterval(lbs * 60);
 				
 				int gps = Integer.parseInt(pm[1].trim());
-				Hardware.instance().setLbsInterval(gps);
+				Hardware.instance().setGpsInterval(gps);
 				
 				int gpsWork = Integer.parseInt(pm[2].trim());
-				Hardware.instance().setLbsInterval(gpsWork * 60);
+				Hardware.instance().setGpsWorkInterval(gpsWork * 60);
 				msg.sendAck("OK");
 				return;
 			}

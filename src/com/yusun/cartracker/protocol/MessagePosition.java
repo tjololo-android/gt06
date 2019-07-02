@@ -1,12 +1,12 @@
 package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.helper.Logger;
-import com.yusun.cartracker.model.Message;
+import com.yusun.cartracker.model.CMessage;
 import com.yusun.cartracker.position.Position;
 
 import io.netty.buffer.ByteBuf;
 
-public class MessagePosition extends Message{
+public class MessagePosition extends CMessage{
 	Logger logger = new Logger(MessagePosition.class);
 
 	public MessagePosition(int id, Position pos) {

@@ -33,6 +33,6 @@ public abstract class BaseProtocolDecoder extends ChannelInboundHandlerAdapter {
     
     protected void onReceiveCmd(int cmd, Object content){
     	logger.info("onReceiveCmd");
-    	AppContext.instance().getProtocol().onReceive(cmd, content);
+    	AppContext.instance().getProtocol().onEcho(cmd, content);
     }
 }

@@ -6,13 +6,13 @@ import java.util.List;
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.api.WifiInfoMgr;
 import com.yusun.cartracker.helper.Hex;
-import com.yusun.cartracker.model.Message;
+import com.yusun.cartracker.model.CMessage;
 
 import android.net.wifi.ScanResult;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 
-public class MessageWifi extends Message{
+public class MessageWifi extends CMessage{
 	public MessageWifi(int id) {		
 		super(id);
 		

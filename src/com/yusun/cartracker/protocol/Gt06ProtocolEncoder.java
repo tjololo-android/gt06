@@ -2,7 +2,7 @@ package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.helper.Checksum;
 import com.yusun.cartracker.helper.Logger;
-import com.yusun.cartracker.model.Message;
+import com.yusun.cartracker.model.CMessage;
 import com.yusun.cartracker.protocol.abs.BaseProtocolEncoder;
 
 import io.netty.buffer.ByteBuf;
@@ -15,10 +15,10 @@ public class Gt06ProtocolEncoder extends BaseProtocolEncoder{
 		logger.debug("encode");
 		
 		ByteBuf buf = Unpooled.buffer();			
-		if(msg instanceof Message){
+		if(msg instanceof CMessage){
 			logger.debug("encode+++");
 			
-			Message m = (Message)msg;
+			CMessage m = (CMessage)msg;
 			
 			ByteBuf content = m.encode();
 	        buf.writeByte(0x78);

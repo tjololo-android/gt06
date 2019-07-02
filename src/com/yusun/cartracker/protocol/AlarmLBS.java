@@ -1,12 +1,12 @@
 package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.api.Hardware;
-import com.yusun.cartracker.model.Message;
+import com.yusun.cartracker.model.CMessage;
 import com.yusun.cartracker.position.Position;
 
 import io.netty.buffer.ByteBuf;
 
-public class AlarmLBS extends Message{	//NG
+public class AlarmLBS extends CMessage{	//NG
 	public AlarmLBS(int id) {
 		super(id);
 		lbs = new LBS();

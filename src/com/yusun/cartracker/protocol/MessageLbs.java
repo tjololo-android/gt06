@@ -3,12 +3,12 @@ package com.yusun.cartracker.protocol;
 import java.util.Date;
 
 import com.yusun.cartracker.api.Hardware;
-import com.yusun.cartracker.model.Message;
+import com.yusun.cartracker.model.CMessage;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 
-public class MessageLbs extends Message{
+public class MessageLbs extends CMessage{
 	public MessageLbs(int id) {		
 		super(id);
 		

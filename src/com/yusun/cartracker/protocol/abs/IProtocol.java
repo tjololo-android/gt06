@@ -9,5 +9,5 @@ public interface IProtocol{
 	void login();
 	void start();
 	void stop();
-	void onReceive(int cmd, Object content);
+	void onEcho(int cmd, Object content);
 }

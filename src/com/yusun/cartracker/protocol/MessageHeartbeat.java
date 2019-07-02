@@ -2,14 +2,14 @@ package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.helper.BitUtil;
-import com.yusun.cartracker.model.Message;
+import com.yusun.cartracker.model.CMessage;
 
 import io.netty.buffer.ByteBuf;
 
-public class MessageHeartbeat extends Message{
+public class MessageHeartbeat extends CMessage{
 
-	public MessageHeartbeat(int id) {
-		super(id);
+	public MessageHeartbeat() {
+		super(0x23);
 		deviceStatus = new DeviceStatus();		
 		valtage = Hardware.instance().getBATTERY();
 		gsmSignal = Hardware.instance().getSIGNAL();

@@ -1,4 +1,4 @@
-package com.yusun.cartracker.model.sms;
+package com.yusun.cartracker.model.sms.abs;
 
 public interface CmdHandler {
 	public String getCmd();

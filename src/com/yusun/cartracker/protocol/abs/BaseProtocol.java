@@ -2,7 +2,6 @@ package com.yusun.cartracker.protocol.abs;
 
 import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.helper.Logger;
-import com.yusun.cartracker.model.CmdMgr;
 import com.yusun.cartracker.model.Task;
 import com.yusun.cartracker.model.TaskMgr;
 
@@ -13,12 +12,10 @@ public abstract class BaseProtocol implements IClientStatus, IProtocol {
 	int CLIENT_LOGIN = 2;
 	
 	protected TaskMgr mTaskMgr; 
-	protected CmdMgr mCmdMgr;
 	Logger logger = new Logger(BaseProtocol.class);
 	public void init(){
 		logger.info("init+++");
 		mTaskMgr = AppContext.instance().getmTaskMgr();
-		mCmdMgr = AppContext.instance().getmCmdMgr();
 		logger.info("init---");
 	}	
 	@Override
@@ -39,18 +36,13 @@ public abstract class BaseProtocol implements IClientStatus, IProtocol {
 		mClientStatus = CLIENT_LOGIN;
 	}
 	@Override
-	public void onReceive(int cmd, Object content) {
-		Task t = mCmdMgr.get(cmd);
+	public void onReceive(int cmd, Object content) {		
+		Task t = mTaskMgr.get(cmd);
 		if(null != t){
-			mCmdMgr.post(t);
+			mTaskMgr.onEcho(cmd);
 		}else{
-			t = mTaskMgr.get(cmd);
-			if(null != t){
-				mTaskMgr.onEcho(cmd);
-			}else{
-				logger.error("receive unknow command="+cmd);
-			}
-		}
+			logger.error("receive unknow command="+cmd);
+		}		
 	}
 	public boolean isOnline(){
 		logger.info("mClientStatus="+mClientStatus);

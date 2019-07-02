@@ -1,4 +1,4 @@
-package com.yusun.cartracker.model.sms;
+package com.yusun.cartracker.model.sms.abs;
 
 public final class ERR {
 	public static final int ER_LENGTH = 100;        //out of length

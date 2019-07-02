@@ -2,19 +2,15 @@ package com.yusun.cartracker;
 
 import com.yusun.cartracker.api.ApnSetting;
 import com.yusun.cartracker.helper.Logger;
-import com.yusun.cartracker.model.CmdMgr;
 import com.yusun.cartracker.model.TaskMgr;
-import com.yusun.cartracker.model.sms.SmsCmdManager;
+import com.yusun.cartracker.model.sms.abs.SmsCmdManager;
 import com.yusun.cartracker.netty.NettyClient;
 import com.yusun.cartracker.position.DatabaseHelper;
 import com.yusun.cartracker.position.NetworkManager;
-import com.yusun.cartracker.position.NetworkManager.NetworkHandler;
 import com.yusun.cartracker.protocol.abs.BaseProtocol;
 import com.yusun.cartracker.protocol.abs.ProtocolMgr;
 
 import android.content.Context;
-import android.telephony.SmsManager;
-import android.telephony.gsm.SmsMessage;
 
 public class AppContext{
 	Logger logger = new Logger(AppContext.class);
@@ -29,8 +25,6 @@ public class AppContext{
 		mSmsCmdManager = new SmsCmdManager();
 		mSmsCmdManager.init();
 		
-		mCmdMgr = new CmdMgr();
-		mCmdMgr.init();
 		mTaskMgr = new TaskMgr();
 		mTaskMgr.init();
 		mProtocol = ProtocolMgr.getProtocol();
@@ -43,9 +37,6 @@ public class AppContext{
 		logger.info("uninit+++");
 		if(null != mTaskMgr){
 			mTaskMgr.uninit();
-		}
-		if(null != mCmdMgr){
-			mCmdMgr.uninit();
 		}
 		if(null != mProtocol){
 			mProtocol.uninit();
@@ -65,17 +56,10 @@ public class AppContext{
 		return mApnSetting;
 	}
 
-	private CmdMgr mCmdMgr;
 	private TaskMgr mTaskMgr;	
 	
 	private AppContext(){
 		
-	}
-	public CmdMgr getmCmdMgr() {
-		return mCmdMgr;
-	}
-	public void setmCmdMgr(CmdMgr mCmdMgr) {
-		this.mCmdMgr = mCmdMgr;
 	}
 	public TaskMgr getmTaskMgr() {
 		return mTaskMgr;

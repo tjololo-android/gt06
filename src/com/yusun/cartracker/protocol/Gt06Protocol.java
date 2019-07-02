@@ -7,7 +7,7 @@ import com.yusun.cartracker.model.Message;
 import com.yusun.cartracker.model.Task;
 import com.yusun.cartracker.model.TaskMgr;
 import com.yusun.cartracker.model.TimerTask;
-import com.yusun.cartracker.model.sms.SmsSender;
+import com.yusun.cartracker.model.sms.abs.SmsSender;
 import com.yusun.cartracker.position.Position;
 import com.yusun.cartracker.protocol.abs.BaseProtocol;
 
@@ -30,8 +30,6 @@ public class Gt06Protocol extends BaseProtocol{
 		logger.info("init+++");	
 		mTaskMgr.reg(TaskLogin);
 		mTaskMgr.reg(TaskHeartbeat);	
-		mCmdMgr.reg(CmdAlarmCh);
-		mCmdMgr.reg(CmdAlarmEn);
 		logger.info("init---reg task end");
 	}	
 	@Override
@@ -53,7 +51,6 @@ public class Gt06Protocol extends BaseProtocol{
 		logger.info("stop+++");
 		stopReportPosition();
 		mTaskMgr.stop();
-		mCmdMgr.stop();		
 		logger.info("stop---");
 	}
 	@Override

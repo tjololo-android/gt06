@@ -1,4 +1,4 @@
-package com.yusun.cartracker.model.sms;
+package com.yusun.cartracker.model.sms.abs;
 
 public final class CMDS {
 	public static final String VERSION = "VERSION";

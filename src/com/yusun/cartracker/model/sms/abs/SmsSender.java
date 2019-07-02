@@ -1,4 +1,4 @@
-package com.yusun.cartracker.model.sms;
+package com.yusun.cartracker.model.sms.abs;
 
 import java.util.ArrayList;
 

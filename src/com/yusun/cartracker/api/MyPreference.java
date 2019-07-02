@@ -49,9 +49,9 @@ public class MyPreference {
 			edit.putInt(KEY_GPS_INTERVAL, mContext.getResources().getInteger(R.integer.gps_interval));
 			edit.putInt(KEY_LBS_INTERVAL, mContext.getResources().getInteger(R.integer.lbs_interval));
 			edit.putInt(KEY_GPS_WORK_INTERVAL, mContext.getResources().getInteger(R.integer.gps_work_interval));
-			edit.putString(KEY_SOS_NUM, mContext.getResources().getString(R.string.sos_num));
-			edit.putInt(KEY_SENSOR_TIME, mContext.getResources().getInteger(R.integer.sensor_time));
-			edit.putInt(KEY_ALARM_TIME, mContext.getResources().getInteger(R.integer.alarm_time));
+			//edit.putString(KEY_SOS_NUM, mContext.getResources().getString(R.string.sos_num));
+			//edit.putInt(KEY_SENSOR_TIME, mContext.getResources().getInteger(R.integer.sensor_time));
+			//edit.putInt(KEY_ALARM_TIME, mContext.getResources().getInteger(R.integer.alarm_time));
 			
 			edit.putString("init", "inited");
 			edit.apply();

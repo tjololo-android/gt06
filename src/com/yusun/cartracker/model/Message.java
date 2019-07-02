@@ -20,7 +20,4 @@ public class Message extends Object{
 		ByteBuf buf = Unpooled.buffer();
 		return buf;
 	}
-	public Object decode(Byte Buf){
-		return null;
-	}
 }

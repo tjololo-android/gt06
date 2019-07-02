@@ -90,7 +90,7 @@
             </intent-filter>
         </receiver>
         <receiver
-		    android:name="com.yusun.cartracker.model.sms.SmsReceiver"
+		    android:name="com.yusun.cartracker.model.sms.abs.SmsReceiver"
 		    android:enabled="true"
 		    android:exported="true">
 		     <intent-filter android:priority="1000">

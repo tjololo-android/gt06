@@ -1,4 +1,4 @@
-package com.yusun.cartracker.model.sms;
+package com.yusun.cartracker.model.sms.abs;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class SMS {
 	int errorCode =0;
 	String cmd;
-	String content;
+	public String content;
 	String phoneNum;               
 	SMS(String num, String cmd, String msg){
 		this.cmd = cmd;

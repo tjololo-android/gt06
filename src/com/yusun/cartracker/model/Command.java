@@ -11,4 +11,5 @@ public abstract class Command{
 		return ID;
 	}	
 	public abstract void decode(ByteBuf buf);
+	public abstract void doCmd();
 }

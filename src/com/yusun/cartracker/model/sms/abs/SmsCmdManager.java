@@ -5,12 +5,15 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.yusun.cartracker.model.sms.ApnHandler;
+import com.yusun.cartracker.model.sms.DW;
+import com.yusun.cartracker.model.sms.EURL;
 import com.yusun.cartracker.model.sms.GPRSSET;
 import com.yusun.cartracker.model.sms.PARAM;
 import com.yusun.cartracker.model.sms.SCXSZ;
 import com.yusun.cartracker.model.sms.SERVER;
 import com.yusun.cartracker.model.sms.STATUS;
 import com.yusun.cartracker.model.sms.TIMER;
+import com.yusun.cartracker.model.sms.URL;
 import com.yusun.cartracker.model.sms.Verson;
 import com.yusun.cartracker.model.sms.WHERE;
 
@@ -53,6 +56,9 @@ public class SmsCmdManager {
 		reg(new SCXSZ());
 		reg(new STATUS());
 		reg(new WHERE());
+		reg(new DW());
+		reg(new URL());
+		reg(new EURL());
 		start();
 	}
 	private void start(){

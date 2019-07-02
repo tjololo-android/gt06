@@ -10,4 +10,7 @@ public final class CMDS {
 	public static final String SCXSZ = "SCXSZ";
 	public static final String STATUS = "STATUS";
 	public static final String WHERE = "WHERE";
+	public static final String DW = "DW";
+	public static final String URL = "URL";
+	public static final String EURL = "EURL";
 }

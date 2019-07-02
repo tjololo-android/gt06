@@ -10,4 +10,5 @@ public interface IProtocol{
 	void start();
 	void stop();
 	void onEcho(int cmd, Object content);
+	void doCmd(int cmd, Object content);
 }

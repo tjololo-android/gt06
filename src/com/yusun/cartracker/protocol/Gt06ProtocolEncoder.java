@@ -11,9 +11,7 @@ import io.netty.buffer.Unpooled;
 public class Gt06ProtocolEncoder extends BaseProtocolEncoder{
 	Logger logger = new Logger(Gt06ProtocolEncoder.class);
 	@Override
-	public ByteBuf encodeContent(Object msg) {		
-		logger.debug("encode");
-		
+	public ByteBuf encodeContent(Object msg) {			
 		ByteBuf buf = Unpooled.buffer();			
 		if(msg instanceof CMessage){
 			logger.debug("encode+++");

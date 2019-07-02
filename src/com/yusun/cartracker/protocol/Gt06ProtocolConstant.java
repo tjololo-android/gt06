@@ -79,5 +79,7 @@ public class Gt06ProtocolConstant {
 	    public static final int ALARM_TYPE_N1 = 1; //Υπ¶―
 	    public static final int ALARM_TYPE_N2 = 2; //¶Οµη
 	    public static final int ALARM_TYPE_N3 = 3; //µΝµη
-	    public static final int ALARM_TYPE_N4 = 4; //SOS
+	    public static final int ALARM_TYPE_N4 = 4; //SOS	    
+	    	    
+		public static final int CMD_REQUEST_ADDRESS = 200;
 }

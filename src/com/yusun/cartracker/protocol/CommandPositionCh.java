@@ -7,16 +7,23 @@ import com.yusun.cartracker.model.sms.abs.SMS;
 
 import io.netty.buffer.ByteBuf;
 
-public class CommandPositionCh extends Command{	
+public class CommandPositionCh extends Command{
+	String address;
+	String phoneNum;
 	public CommandPositionCh(){
 		super(0x17);
 	}	
 	public void decode(ByteBuf buf) {
-		int index = 1;
+		int len = buf.readableBytes();
+		int m = len - 49;
+		int index = 18;
 		buf.skipBytes(index);
-		String address = buf.readBytes(21).toString(Charset.forName("ascii"));
-		buf.skipBytes(6);
-		String phoneNum = buf.readBytes(21).toString(Charset.forName("ascii"));
+		address = buf.readBytes(m).toString(Charset.forName("unicode")).trim();
+		buf.skipBytes(2);
+		phoneNum = buf.readBytes(21).toString(Charset.forName("ascii")).trim();		
+	}
+	@Override
+	public void doCmd() {
 		SMS.sendSms(phoneNum, address);
 	}
 }

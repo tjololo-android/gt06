@@ -28,4 +28,7 @@ public class SMS {
 	public static void sendSms(String num, String con){
 		SmsSender.send(num, con);
 	}
+	public String getPhoneNum() {
+		return phoneNum;
+	}
 }

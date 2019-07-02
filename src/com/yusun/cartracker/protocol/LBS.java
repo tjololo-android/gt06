@@ -25,6 +25,11 @@ public class LBS{
 	public ByteBuf encode() {
 		ByteBuf buf = Unpooled.buffer();	
 		buf.writeByte(9);
+		buf.writeBytes(encodeBasic());
+		return buf;
+	}
+	public ByteBuf encodeBasic(){
+		ByteBuf buf = Unpooled.buffer();	
 		buf.writeShort(Integer.parseInt(mcc));
 		buf.writeByte(Integer.parseInt(mnc));
 		buf.writeShort(lac);

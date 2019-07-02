@@ -5,6 +5,7 @@ import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.CMessage;
 import com.yusun.cartracker.model.Waiter;
+import com.yusun.cartracker.model.sms.abs.SMS;
 import com.yusun.cartracker.position.Position;
 import com.yusun.cartracker.protocol.abs.BaseProtocol;
 
@@ -91,7 +92,7 @@ public class Gt06Protocol extends BaseProtocol{
     			wifi.sendToTarget();
     			while(mIsRunning){
     				if(Hardware.instance().isGpsFixed()){
-    					Position pos = AppContext.instance().getDatabaseHelper().selectPosition();
+    					Position pos = getPosition();
     	    			if(null != pos){
     	    		    	MessagePosition msg = new MessagePosition(Gt06ProtocolConstant.MSG_GPS_LBS_2, pos);
     	    		    	msg.sendToTarget();
@@ -118,7 +119,7 @@ public class Gt06Protocol extends BaseProtocol{
     
     public void alarm(){
     	int fence = Hardware.instance().getAlarmFence();
-    	Position pos = AppContext.instance().getDatabaseHelper().selectPosition();
+    	Position pos = getPosition();
     	CMessage msg = null;
     	if(0 == fence){
     		msg = new MessageFence(Gt06ProtocolConstant.MSG_GPS_LBS_STATUS_2, pos);
@@ -126,5 +127,25 @@ public class Gt06Protocol extends BaseProtocol{
     		msg = new MessageFence(Gt06ProtocolConstant.MSG_GPS_LBS_STATUS_3, pos);
     	}
     	msg.sendToTarget();
-    }	
+    }
+	@Override
+	public void doCmd(int cmd, Object content) {
+		logger.info("doCmd cmd="+cmd);
+		switch(cmd){
+		case Gt06ProtocolConstant.CMD_REQUEST_ADDRESS:		
+			SMS sms = (SMS)content;
+			CMessage msg = null;
+			if(Hardware.instance().isGpsFixed()){
+				msg = new MessageRequestPosition(getPosition(), sms.getPhoneNum());
+			}else{
+				msg = new MessageRequestLbs(sms.getPhoneNum());
+			}
+			msg.sendToTarget();
+			break;
+		}
+	}
+	private Position getPosition() {
+		return AppContext.instance().getDatabaseHelper().selectPosition();
+	}    
+	
 }

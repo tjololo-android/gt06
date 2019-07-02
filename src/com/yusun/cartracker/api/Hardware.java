@@ -79,8 +79,7 @@ public class Hardware {
 			CID = gsmCellLocation.getCid();
 			LAC = gsmCellLocation.getLac();
 		}
-		IMEI = tel.getDeviceId();
-		IMEI="860016020783556";
+		IMEI = tel.getDeviceId();		
 		IMSI = tel.getSubscriberId();
 		ICCID = tel.getLine1Number();
 		if(null != IMSI && IMSI.length() > 5){
@@ -89,8 +88,14 @@ public class Hardware {
 		}
 		installPhoneStateListener(tel);
 		installBatteryStatus();
-		logger.info("imei="+IMEI+"\nIMSI="+IMSI+"\nICCID="+ICCID+"\nCID="+CID+" LAC="+LAC+" MCC="+MCC+" MNC="+MNC);
-		
+		if(Utils.isFeatures()){
+			IMEI="860016020783556";
+			CID=102181894;
+			LAC=42303;
+			MCC="460";
+			MNC="01";
+		}
+		logger.info("imei="+IMEI+"\nIMSI="+IMSI+"\nICCID="+ICCID+"\nCID="+CID+" LAC="+LAC+" MCC="+MCC+" MNC="+MNC);		
 		initSettings();
 	}
 	private void initSettings(){
@@ -286,6 +291,16 @@ public class Hardware {
 
 	public boolean isGpsPowerOn() {	
 		return true;				//NG
+	}
+
+	private String GpsAnalyseUrl = "www.18gps.net";//NG
+	public boolean setGPSAnalyseUrl(String content) {
+		GpsAnalyseUrl = content;
+		return false;
+	}
+
+	public String getGPSAnalyseUrl() {
+		return GpsAnalyseUrl;
 	}
 }
 	

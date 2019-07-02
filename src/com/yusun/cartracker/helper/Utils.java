@@ -3,6 +3,8 @@ package com.yusun.cartracker.helper;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.os.Build;
+
 public class Utils {
 	public static boolean isValidVrl(String str){
         str = str.toLowerCase();
@@ -29,5 +31,17 @@ public class Utils {
 	public static String getDataTime(Date date){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
 		return dateFormat.format(date);
+	}
+	public static boolean isFeatures() {
+		return Build.MANUFACTURER.contains("unknow");
+//	    return Build.FINGERPRINT.startsWith("generic")
+//	            || Build.FINGERPRINT.toLowerCase().contains("vbox")
+//	            || Build.FINGERPRINT.toLowerCase().contains("test-keys")
+//	            || Build.MODEL.contains("google_sdk")
+//	            || Build.MODEL.contains("Emulator")
+//	            || Build.MODEL.contains("Android SDK built for x86")
+//	            || Build.MANUFACTURER.contains("Genymotion")
+//	            || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
+//	            || "google_sdk".equals(Build.PRODUCT);
 	}
 }

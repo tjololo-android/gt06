@@ -14,4 +14,9 @@ public class CommandCommon extends Command{
 		CMessage msg = new MessageLogin();	//NG
 		msg.sendToTarget();
 	}
+	@Override
+	public void doCmd() {
+		// TODO Auto-generated method stub
+		
+	}
 }

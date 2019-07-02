@@ -24,14 +24,11 @@ public class Gt06Protocol extends BaseProtocol{
 	}
 	@Override
 	public void init(){		
-		super.init();
 		logger.info("init+++");	
-		logger.info("init---reg task end");
 	}	
 	@Override
 	public void uninit(){
 		logger.info("uninit+++");
-		logger.info("uninit---");
 	}
 	@Override
 	public void start() {
@@ -49,18 +46,22 @@ public class Gt06Protocol extends BaseProtocol{
 	}
 	@Override
 	public void login() {
-		int MAX_COUNT = 3;
-		int count = 0;
-		int TIME_OUT = 5000;
-		while(count++ < MAX_COUNT){
-			MessageLogin msg = new MessageLogin();
-			msg.sendToTarget();
-			if(Waiter.instance().wait(msg.getId(), TIME_OUT)){
-				onLogin();
-				return;
-			}
-		}
-		Hardware.instance().rebootOnTime();
+		final int MAX_COUNT = 3;		
+		final int TIME_OUT = 5000;		
+		new Thread("login"){
+    		public void run(){
+				int count = 0;		
+				while(count++ < MAX_COUNT){
+					MessageLogin msg = new MessageLogin();
+					msg.sendToTarget();
+					if(Waiter.instance().wait(msg.getId(), TIME_OUT)){
+						onLogin();
+						return;
+					}
+				}
+				Hardware.instance().rebootOnTime();
+    		}
+		}.start();
 	}
 	void startHeartbeat(){
 		final int MAX_COUNT = 3;		

@@ -11,7 +11,8 @@ import android.os.Environment;
 import android.util.Log;
 
 public class Logger {
-	private Class<?> clazz = Logger.class;	 
+	private Class<?> clazz = Logger.class;	
+	private String TAG = "Logger";
 	static String mLogFile = Environment.getExternalStorageDirectory() + "/tracker"+System.currentTimeMillis()+".log";
 	static FileOutputStream mOut=null;
 	static boolean mLogToFile=true;
@@ -68,43 +69,44 @@ public class Logger {
 	
 	public Logger(Class<?> clazz){
 		this.clazz = clazz;
+		TAG = "yusun_" + clazz.getSimpleName();
 	}	
 
 	public void info(String mess){
-		writeToLogFile(clazz.getSimpleName()+":"+ mess);
-		Log.i(clazz.getSimpleName(),""+ mess);
+		writeToLogFile(TAG+":"+ mess);
+		Log.i(TAG,""+ mess);
 	}
 	
 	public void info(String mess, Throwable tr){
-		Log.i(clazz.getSimpleName(), ""+mess, tr);
+		Log.i(TAG, ""+mess, tr);
 	}
 	
 	public void debug(String mess){
-		writeToLogFile(clazz.getSimpleName()+":"+ mess);
-		Log.d(clazz.getSimpleName(),""+ mess);
+		writeToLogFile(TAG+":"+ mess);
+		Log.d(TAG,""+ mess);
 	}
 	
 	public void debug(String msg,Throwable tr){
-		Log.d(clazz.getSimpleName(), ""+msg,tr);
+		Log.d(TAG, ""+msg,tr);
 	}
 	
 	public void error(String msg){
-		writeToLogFile(clazz.getSimpleName()+":"+ msg);
-		Log.e(clazz.getSimpleName(), ""+msg);
+		writeToLogFile(TAG+":"+ msg);
+		Log.e(TAG, ""+msg);
 	}
 	
 	public void error(String msg, Throwable tr){
-		writeToLogFile(clazz.getSimpleName()+":"+ msg+tr.toString());
-		Log.e(clazz.getSimpleName(), ""+msg, tr);
+		writeToLogFile(TAG+":"+ msg+tr.toString());
+		Log.e(TAG, ""+msg, tr);
 	}
 	
 	public void warning(String msg){
-		writeToLogFile(clazz.getSimpleName()+":"+ msg);
-		Log.w(clazz.getSimpleName(), ""+msg);
+		writeToLogFile(TAG+":"+ msg);
+		Log.w(TAG, ""+msg);
 	}
 	
 	public void warning(String msg, Throwable tr){
-		Log.w(clazz.getSimpleName(), ""+msg, tr);
+		Log.w(TAG, ""+msg, tr);
 	}
 	
 	public String getStackTraceString(Throwable tr){

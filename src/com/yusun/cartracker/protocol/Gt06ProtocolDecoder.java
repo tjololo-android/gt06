@@ -30,7 +30,9 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder{
         }
         
         buf.skipBytes(1);
-        int type = buf.readByte();  
+        int type = buf.readByte(); 
+        
+        logger.info("receive data:"+Integer.toHexString(type));
         
         buf.resetReaderIndex();        
         Command cmd = CommandFactory.newCommand(type);

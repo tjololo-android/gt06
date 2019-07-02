@@ -7,10 +7,11 @@ public class Waiter {
 	
 	public boolean wait(int cmd, int timeout){
 		MyWaiter waiter = mWaiters.get(cmd); 
-		if(null == waiter){
-			waiter = new MyWaiter(cmd, timeout);
-			mWaiters.put(cmd, waiter);
+		if(null != waiter){
+			waiter.cancel();
 		}
+		waiter = new MyWaiter(cmd, timeout);
+		mWaiters.put(cmd, waiter);
 		return waiter.waitfor();
 	}
 	public boolean onEcho(int cmd){
@@ -18,14 +19,12 @@ public class Waiter {
 		if(null == waiter)
 			return false;
 		
-		waiter.onEcho();
-		mWaiters.remove(cmd);
+		waiter.onEcho();		
 		return true;
 	}
 	
 	
 	private static Waiter _this;
-	private Waiter(){}
 	public static Waiter instance(){
 		if(null == _this){
 			_this = new Waiter();
@@ -48,6 +47,11 @@ public class Waiter {
 				notify();
 			}			
 		}
+		void cancel(){
+			synchronized (this) {
+				notify();
+			}			
+		}
 		boolean waitfor(){
 			synchronized (this) {
 				try {
@@ -55,6 +59,7 @@ public class Waiter {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				mWaiters.remove(cmd);
 			}
 			return result;
 		}

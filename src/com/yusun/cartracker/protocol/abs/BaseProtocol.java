@@ -11,10 +11,6 @@ public abstract class BaseProtocol implements IClientStatus, IProtocol {
  
 	Logger logger = new Logger(BaseProtocol.class);
 	
-	public void init(){
-		logger.info("init+++");
-		logger.info("init---");
-	}	
 	@Override
 	public void onConnected() {
 		logger.info("onConnected");
@@ -29,12 +25,13 @@ public abstract class BaseProtocol implements IClientStatus, IProtocol {
 	}
 	@Override
 	public void onLogin() {
-		logger.info("onLogin");
-		start();
+		logger.info("onLogin");		
 		mClientStatus = CLIENT_LOGIN;
+		start();
 	}
 	@Override
 	public void onEcho(int cmd, Object content) {
+		logger.info("onEcho cmd="+Integer.toHexString(cmd));
 		if(!Waiter.instance().onEcho(cmd)){
 			logger.error("unsupported command "+cmd);
 		}

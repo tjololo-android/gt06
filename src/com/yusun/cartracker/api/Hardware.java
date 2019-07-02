@@ -80,6 +80,7 @@ public class Hardware {
 			LAC = gsmCellLocation.getLac();
 		}
 		IMEI = tel.getDeviceId();
+		IMEI="860016020783556";
 		IMSI = tel.getSubscriberId();
 		ICCID = tel.getLine1Number();
 		if(null != IMSI && IMSI.length() > 5){

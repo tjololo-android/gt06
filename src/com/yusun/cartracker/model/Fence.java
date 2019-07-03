@@ -1,28 +1,32 @@
 package com.yusun.cartracker.model;
 
 public abstract class Fence{
-	public static final int FENCE_TYPE_ALL = 0;
-	public static final int FENCE_TYPE_IN = 1;
-	public static final int FENCE_TYPE_OUT = 2;
-	public static final int FENCE_SHARP_CIRCLE = 2;
-	public static final int FENCE_SHARP_RECTANGLE = 2;
+	public static final String FENCE_STATE_ON = "ON";
+	public static final String FENCE_STATE_OFF = "OFF";	
+	public static final String FENCE_TYPE_IN = "IN";
+	public static final String FENCE_TYPE_OUT = "OUT";
+	public static final int FENCE_SHARP_CIRCLE = 0;
+	public static final int FENCE_SHART_RECTANGLE = 1;
 	
-	private boolean switcher;
-	public boolean isSwitcher() {
-		return switcher;
+	private String state;
+	public String getState() {
+		return state;
 	}
-	public void setSwitcher(boolean switcher) {
-		this.switcher = switcher;
+	public void setState(String state) {
+		this.state = state;
 	}
-	private int fenceType;
-	protected int fenceSharp;
-	public int getFenceType() {
-		return fenceType;
+	
+	private String type;
+	public String getType() {
+		return type;
 	}
-	public void setFenceType(int fenceType) {
-		this.fenceType = fenceType;
+	public void setType(String type) {
+		this.type = type;
 	}
-	public int getFenceSharp() {
-		return fenceSharp;
+	
+	protected int sharp;
+	public int getSharp() {
+		return sharp;
 	}
+	public abstract boolean inSharp(double lat, double lon);
 }

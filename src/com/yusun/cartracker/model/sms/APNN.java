@@ -6,7 +6,7 @@ import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
 import com.yusun.cartracker.model.sms.abs.SMS;
 
-public class ApnHandler implements CmdHandler{
+public class APNN implements CmdHandler{
 
 	@Override
 	public String getCmd() {

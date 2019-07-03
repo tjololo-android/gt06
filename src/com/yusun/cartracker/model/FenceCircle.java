@@ -1,14 +1,26 @@
 package com.yusun.cartracker.model;
 
 public class FenceCircle extends Fence{
-	public FenceCircle() {
-		fenceSharp = FENCE_SHARP_CIRCLE;
-	}
-	public FenceCircle(Point center, int radius) {
-		fenceSharp = FENCE_SHARP_CIRCLE;
+	public FenceCircle(int radius, double lat, double lon) {
+		sharp = FENCE_SHARP_CIRCLE;
 		this.radius = radius;
-		this.center = center;
+		
+	}
+	public int getRadius() {
+		return radius;
+	}
+	public double getLat() {
+		return lat;
+	}
+	public double getLon() {
+		return lon;
 	}
 	private int radius;
-	private Point center;
+	private double lat;
+	private double lon;
+	@Override
+	public boolean inSharp(double lat, double lon) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

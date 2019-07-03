@@ -2,6 +2,7 @@ package com.yusun.cartracker.api;
 
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.helper.Utils;
+import com.yusun.cartracker.model.Fence;
 import com.yusun.cartracker.model.TimeZone;
 
 import android.content.BroadcastReceiver;
@@ -301,6 +302,14 @@ public class Hardware {
 
 	public String getGPSAnalyseUrl() {
 		return GpsAnalyseUrl;
+	}
+
+	private Fence mFence;
+	public void setFence(Fence fence) {
+		mFence = fence;		//NG		
+	}
+	public Fence getFence(){
+		return mFence;
 	}
 }
 	

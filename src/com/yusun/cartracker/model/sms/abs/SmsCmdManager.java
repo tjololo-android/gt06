@@ -4,16 +4,29 @@ import java.util.HashMap;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.yusun.cartracker.model.sms.ApnHandler;
+import com.yusun.cartracker.model.sms.APNN;
+import com.yusun.cartracker.model.sms.DEFENSE;
 import com.yusun.cartracker.model.sms.DW;
 import com.yusun.cartracker.model.sms.EURL;
+import com.yusun.cartracker.model.sms.FACTORY;
+import com.yusun.cartracker.model.sms.FENCE;
+import com.yusun.cartracker.model.sms.GMT;
 import com.yusun.cartracker.model.sms.GPRSSET;
+import com.yusun.cartracker.model.sms.MONITOR;
 import com.yusun.cartracker.model.sms.PARAM;
+import com.yusun.cartracker.model.sms.PASS;
+import com.yusun.cartracker.model.sms.RELAY;
 import com.yusun.cartracker.model.sms.SCXSZ;
+import com.yusun.cartracker.model.sms.SEEFENCE;
+import com.yusun.cartracker.model.sms.SENDS;
+import com.yusun.cartracker.model.sms.SENSOR;
 import com.yusun.cartracker.model.sms.SERVER;
+import com.yusun.cartracker.model.sms.SETGPS;
+import com.yusun.cartracker.model.sms.SOS;
 import com.yusun.cartracker.model.sms.STATUS;
 import com.yusun.cartracker.model.sms.TIMER;
 import com.yusun.cartracker.model.sms.URL;
+import com.yusun.cartracker.model.sms.VIBRATION;
 import com.yusun.cartracker.model.sms.Verson;
 import com.yusun.cartracker.model.sms.WHERE;
 
@@ -49,7 +62,7 @@ public class SmsCmdManager {
 	public void init() {
 		reg(new Verson());
 		reg(new GPRSSET());
-		reg(new ApnHandler());
+		reg(new APNN());
 		reg(new TIMER());
 		reg(new SERVER());
 		reg(new PARAM());
@@ -59,6 +72,19 @@ public class SmsCmdManager {
 		reg(new DW());
 		reg(new URL());
 		reg(new EURL());
+		reg(new FENCE());
+		reg(new SEEFENCE());
+		reg(new SETGPS());
+		reg(new PASS());
+		reg(new FACTORY());
+		reg(new GMT());
+		reg(new SOS());
+		reg(new SENSOR());
+		reg(new SENDS());
+		reg(new DEFENSE());
+		reg(new RELAY());
+		reg(new MONITOR());
+		reg(new VIBRATION());
 		start();
 	}
 	private void start(){

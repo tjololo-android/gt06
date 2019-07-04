@@ -45,15 +45,12 @@ public class FENCE implements CmdHandler{
 		Fence fence = null;
 		String reg1 = "(ON|OFF),1,([NS])(\\d+\\.*\\d*),([WE])(\\d+\\.*\\d*),([NS])(\\d+\\.*\\d*),([WE])(\\d+\\.*\\d*),*(IN|OUT)*";
 		String reg2 = "(ON|OFF),0,([NS])(\\d+\\.*\\d*),([WE])(\\d+\\.*\\d*),(\\d+),*(IN|OUT)*";
-		String reg3 = "(ON|OFF),0,0,0,(\\d+),*(IN|OUT)*";		
+		String reg3 = "(ON|OFF),0,0,0,(\\d+),*(IN|OUT)*";
+		
 		if(msg.content.matches(reg1)){
 			Pattern p = Pattern.compile(reg1);
 			Matcher m = p.matcher(msg.content);
 			if(m.find()){
-				int c = m.groupCount();
-				String s = m.group();
-				String s0 = m.group(0);
-				
 				double lan1 = get(m.group(2), m.group(3));
 				double lon1 = get(m.group(4), m.group(5));
 				double lan2 = get(m.group(6), m.group(7));
@@ -66,18 +63,18 @@ public class FENCE implements CmdHandler{
 			Pattern p = Pattern.compile(reg2);
 			Matcher m = p.matcher(msg.content);
 			if(m.find()){
-				double lan = get(m.group(3), m.group(4));
-				double lon = get(m.group(5), m.group(6));
-				int radio = Integer.parseInt(m.group(7))*100;
+				double lan = get(m.group(2), m.group(3));
+				double lon = get(m.group(4), m.group(5));
+				int radio = Integer.parseInt(m.group(6))*100;
 				fence = new FenceCircle(radio, lan, lon);
 				fence.setState(m.group(1));				
-				fence.setType(m.group(8));				
+				fence.setType(m.group(7));				
 			}
 		}else if(msg.content.matches(reg3)){
 			Pattern p = Pattern.compile(reg3);
 			Matcher m = p.matcher(msg.content);
 			if(m.find()){
-				int radio = Integer.parseInt(m.group(2));
+				int radio = Integer.parseInt(m.group(2))*100;
 				fence = new FenceCircle(radio, 0, 0);
 				fence.setState(m.group(1));				
 				fence.setType(m.group(3));				

@@ -19,8 +19,8 @@ public class SMS {
 	public static SMS fromSms(String num, String msg) {
 		String reg = "([A-Z]+),[0-9]{6},*(.*)#";
 		Pattern p = Pattern.compile(reg);
-		Matcher m = p.matcher(msg);
-		if(m.find()){			
+		Matcher m = p.matcher(msg);		
+		if(m.find()){
 			return new SMS(num, m.group(1), m.group(2));
 		}
 		return null;

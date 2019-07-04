@@ -4,7 +4,8 @@ public class FenceCircle extends Fence{
 	public FenceCircle(int radius, double lat, double lon) {
 		sharp = FENCE_SHARP_CIRCLE;
 		this.radius = radius;
-		
+		this.lat = lat;
+		this.lon = lon;
 	}
 	public int getRadius() {
 		return radius;
@@ -20,7 +21,6 @@ public class FenceCircle extends Fence{
 	private double lon;
 	@Override
 	public boolean inSharp(double lat, double lon) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

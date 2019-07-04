@@ -16,7 +16,9 @@ public final class CMDS {
 	public static final String FENCE = "FENCE";
 	public static final String SEEFENCE = "SEEFENCE";
 	public static final String SETGPS = "SETGPS";
-	public static final String PASS = "PASS";
+	public static final String PASSWORD = "PASSWORD";
+	public static final String RECOVER = "RECOVER";
+	public static final String RESET = "RESET";
 	public static final String FACTORY = "FACTORY";
 	public static final String GMT = "GMT";
 	public static final String SOS = "SOS";

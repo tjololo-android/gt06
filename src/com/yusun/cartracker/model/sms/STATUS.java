@@ -52,7 +52,7 @@ public class STATUS implements CmdHandler{
 		
 		//OilPowerControl
 		sb.append("OilPowerControl:");
-		sb.append(Hardware.instance().isOilPowerControl() ? "ON" : "OFF");
+		sb.append(Hardware.instance().getOilPowerControl() ? "ON" : "OFF");
 		sb.append(";");
 		
 		msg.sendAck(sb.toString());

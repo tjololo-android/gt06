@@ -15,7 +15,19 @@ public class SMS {
 	}
 	public void sendAck(String msg){
 		sendSms(phoneNum, msg);
-	}	
+	}
+	public void sendFormatErr(){
+		sendAck("format error!");
+	}		
+	public void sendPassErr() {
+		sendAck("password error!");		
+	}
+	public void sendOK() {
+		sendAck("OK");		
+	}
+	public void sendErr() {
+		sendAck("ERROR");		
+	}
 	public static SMS fromSms(String num, String msg) {
 		String reg = "([A-Z]+),[0-9]{6},*(.*)#";
 		Pattern p = Pattern.compile(reg);
@@ -31,4 +43,5 @@ public class SMS {
 	public String getPhoneNum() {
 		return phoneNum;
 	}
+
 }

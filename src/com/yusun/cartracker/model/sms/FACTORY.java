@@ -14,6 +14,7 @@ public class FACTORY implements CmdHandler{
 
 	@Override
 	public void doCmd(SMS msg) {
-		
+		Hardware.instance().factory();
+		msg.sendOK();
 	}	
 }

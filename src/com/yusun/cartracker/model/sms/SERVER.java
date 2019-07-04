@@ -1,5 +1,8 @@
 package com.yusun.cartracker.model.sms;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.model.sms.abs.CMDS;
@@ -16,18 +19,16 @@ public class SERVER implements CmdHandler{
 	@Override
 	public void doCmd(SMS msg) {
 		//SERVER,666666,0,202.173.231.112,8821,0#
-		String[] pm = msg.content.split(",");
-		if(pm.length < 3){
-			msg.sendAck("ERROR");
-			return;
-		}		
-		String ip = pm[1].trim();
-		String port = pm[2].trim();		
-		if(Hardware.instance().setService(ip, port)){
-			AppContext.instance().resetNetServer();
-			msg.sendAck("OK");			
+		String reg = "([0-1]),(.*),(\\d+),([0-1])";
+		Matcher m = Pattern.compile(reg).matcher(msg.content);
+		if(m.find()){			
+			if(Hardware.instance().setService(m.group(2), m.group(3))){
+				AppContext.instance().resetNetServer();
+			}else{
+				msg.sendErr();
+			}
 		}else{
-			msg.sendAck("ERROR");
-		}			
+			msg.sendFormatErr();
+		}
 	}
 }

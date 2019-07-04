@@ -11,9 +11,22 @@ public class SETGPS implements CmdHandler{
 	public String getCmd() {		
 		return CMDS.SETGPS;
 	}
-
+	
 	@Override
 	public void doCmd(SMS msg) {
+		if(!"ON".equals(msg.content) && !"OFF".equals(msg.content)){		
+			msg.sendFormatErr();
+			return;
+		}
 		
+		boolean on = true;
+		if("OFF".equals(msg.content))
+			on = false;
+		
+		if(Hardware.instance().turnOnGps(on)){
+			msg.sendAck("OK");
+		}else{
+			msg.sendAck("ERROR");
+		}
 	}	
 }

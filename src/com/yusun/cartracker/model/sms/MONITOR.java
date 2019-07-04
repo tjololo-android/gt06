@@ -14,6 +14,11 @@ public class MONITOR implements CmdHandler{
 
 	@Override
 	public void doCmd(SMS msg) {
-		
+		if(Hardware.instance().getSOS().contains(msg.getPhoneNum())){
+			Hardware.instance().switchMonitor();
+			msg.sendOK();
+		}else{
+			msg.sendAck("not a sos phonenumber");;
+		}
 	}	
 }

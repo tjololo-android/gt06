@@ -38,12 +38,24 @@ public class Hardware {
 	public int getLanguage() {
 		return LANGUAGE;
 	}
-	public static void rebootOnTime() {
+	public static void rebootOnTime() {	//NG
+		
+	}
+	public void rebootAfter1Minute() {	//NG
 		
 	}	
-	public static boolean isOilPowerControl(){
-		return true;					//NG
+	public void factory() {	//NG
+		
 	}
+	private boolean OIL_POWER_CONTROL;
+	public boolean getOilPowerControl(){
+		return OIL_POWER_CONTROL;					//NG
+	}
+	public void setOilPowerControl(boolean control){
+		OIL_POWER_CONTROL = control;
+	}
+	
+	
 	public boolean isGpsFixed(){
 		return GPS_FIXED;
 	}
@@ -279,12 +291,16 @@ public class Hardware {
 		return Sensor_Time;
 	}
 
-	public void setSensor_Time(int val) {
+	public void setSensorInterval(int val) {	//NG interval to check vibrator second
 		if(Sensor_Time != val){
 			Sensor_Time = val;
 			mMyPreference.set(MyPreference.KEY_SENSOR_TIME, val);
 		}
 	}
+	public void setSendsTimeout(int val) {	//NG timeout no vibrator to close gps
+		
+	}
+	
 	private int Sensor_Time;
 	public String getGpsAddressAnalyser() {
 		return "unknown";			//NG
@@ -310,6 +326,51 @@ public class Hardware {
 	}
 	public Fence getFence(){
 		return mFence;
+	}
+
+	public boolean turnOnGps(boolean on) {		//NG
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean checkPass(String group) {	//NG
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void modifyPass(String group) {		//NG
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean checkAdminPass(String group) {	//NG
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void resetPass() {		//NG
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setTimeZone(String east, String num) {	//NG
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setDefenseDelay(int i) {	//NG
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void switchMonitor() {	//NG
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setVibration(boolean equals) {	//NG
+		// TODO Auto-generated method stub
+		
 	}
 }
 	

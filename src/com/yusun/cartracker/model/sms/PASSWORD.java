@@ -8,18 +8,22 @@ import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
 import com.yusun.cartracker.model.sms.abs.SMS;
 
-public class RELAY implements CmdHandler{
+public class PASSWORD implements CmdHandler{
 
 	@Override
 	public String getCmd() {		
-		return CMDS.RELAY;
+		return CMDS.PASSWORD;
 	}
 
 	@Override
 	public void doCmd(SMS msg) {
-		Matcher m = Pattern.compile("([0-1])").matcher(msg.content);
+		Matcher m = Pattern.compile("(\\d+),(\\d+)").matcher(msg.content);
 		if(m.find()){
-			Hardware.instance().setOilPowerControl("1".equals(m.group(1)));
+			if(Hardware.instance().checkPass(m.group(1))){
+				Hardware.instance().modifyPass(m.group(2));
+			}else{
+				msg.sendPassErr();
+			}
 		}else{
 			msg.sendFormatErr();
 		}

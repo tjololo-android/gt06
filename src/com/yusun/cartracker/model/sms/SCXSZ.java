@@ -66,7 +66,7 @@ public class SCXSZ implements CmdHandler{
 		sb.append(Hardware.instance().getAlarm_Time() + ";");
 		
 		//electric
-		sb.append(Hardware.instance().isOilPowerControl() ? 1 : 0 + ";");
+		sb.append(Hardware.instance().getOilPowerControl() ? 1 : 0 + ";");
 		
 		msg.sendAck(sb.toString());
 	}

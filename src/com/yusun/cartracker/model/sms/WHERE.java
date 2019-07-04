@@ -20,7 +20,7 @@ public class WHERE implements CmdHandler{
 	@Override
 	public void doCmd(SMS msg) {
 		StringBuilder sb = new StringBuilder();
-		if(!Hardware.instance().isGpsFixed()){
+		if(!Hardware.instance().getGpsFixed()){
 			sb.append("No Data!");
 		}else{
 			Position pos = AppContext.instance().getDatabaseHelper().selectPosition();

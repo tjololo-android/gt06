@@ -34,7 +34,7 @@ public class STATUS implements CmdHandler{
 		sb.append("GPS:");
 		if(!Hardware.instance().isGpsPowerOn()){
 			sb.append("GPS OFF");
-		}else if(Hardware.instance().isGpsFixed()){
+		}else if(Hardware.instance().getGpsFixed()){
 			sb.append("Successful Positioning");
 		}else{
 			sb.append("Searching Satellite");

@@ -31,8 +31,8 @@ public class PARAM implements CmdHandler{
 		sb.append("IMEI:"+Hardware.instance().getIMEI()+";");
 		sb.append("TimeZone:"+Hardware.instance().getTimeZone2()+";");
 		sb.append("SOS:"+Hardware.instance().getSOS()+";");
-		sb.append("Sensor:"+Hardware.instance().getSensor_Time()+";");
-		sb.append("Alarm:"+Hardware.instance().getAlarm_Time()+";");
+		sb.append("Sensor:"+Hardware.instance().getSensorInterval()+";");
+		sb.append("Alarm:"+Hardware.instance().getDefenseDelay()+";");
 		
 		msg.sendAck(sb.toString());
 	}

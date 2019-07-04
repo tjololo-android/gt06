@@ -13,10 +13,10 @@ public class DeviceStatus{
 	
 	DeviceStatus(){
 		electronic_b7 = Hardware.instance().getOilPowerControl();
-		gpsfix_b6 = Hardware.instance().isGpsFixed();
-		recharge_b2 = Hardware.isRecharge();
-		acc_b1 = Hardware.isAccon();
-		guard_b0 = Hardware.isInguard();
+		gpsfix_b6 = Hardware.instance().getGpsFixed();
+		recharge_b2 = Hardware.instance().getRecharge();
+		acc_b1 = Hardware.instance().getAcc();
+		guard_b0 = Hardware.instance().getVibration();
 		alarm_type_b3_5 = Hardware.instance().getAlarmType();
 	}
 

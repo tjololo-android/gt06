@@ -20,6 +20,45 @@ public class Hardware {
 	Context mContext;
 	MyPreference mMyPreference;
 	Logger logger = new Logger(Hardware.class);
+    private String IMEI="860016020783556";
+	private String ICCID="460060276069992";
+	private String IMSI="460060276069992";
+	private String MCC="460";
+	private String MNC="06";
+	private int mSignal = 10;	
+	private int LAC = 9514;
+	private int CID = 101815812;	
+	private int PRETIME=10;		
+	private int mBattery = 10;					//NG
+	private int mLanguage = 0x01;				//NG
+	private TimeZone mTimeZone = new TimeZone();//NG
+	private String DEVICETYPE = "11";			//NG
+	private int mAlarmType = 0;					//NG
+	private int mAlarmIndex = 0;				//NG
+	private int mFenceType = 0;					//NG
+    private Fence mFence;
+    private int mSensorInterval;
+    private int mSendsTimeout;
+    private int mDefenseDelay;    
+	private int mGpsInterval = 30;				
+	private int mLbsInterval = 30;				
+	private int mGpsWorkInterval = 30;			
+	private boolean mGpsFixed = false;			//NG
+	private String mIp;
+	private String mPort;
+	private String mSosNumber;
+    private boolean mOilPowerControl;
+    private boolean mGpsPower;
+    private String mPassword;
+    private String mAdminPassword;
+    private String mTimeZoneEast="E";
+    private int mTimeZoneNum=8;   
+    private boolean mMonitor;
+    private boolean mVirbation;   
+    private boolean mRecharge;
+    private boolean mAcc;
+    private String mGpsAnalyseUrl;
+    
 	private Hardware(){}
 	private static Hardware _this;
 	public static Hardware instance(){
@@ -33,12 +72,12 @@ public class Hardware {
 		return DEVICETYPE;
 	}
 	public TimeZone getTimeZone() {
-		return TIMEZONE;
+		return mTimeZone;
 	}
 	public int getLanguage() {
-		return LANGUAGE;
+		return mLanguage;
 	}
-	public static void rebootOnTime() {	//NG
+	public void rebootOnTime() {	//NG
 		
 	}
 	public void rebootAfter1Minute() {	//NG
@@ -47,33 +86,37 @@ public class Hardware {
 	public void factory() {	//NG
 		
 	}
-	private boolean OIL_POWER_CONTROL;
+	
 	public boolean getOilPowerControl(){
-		return OIL_POWER_CONTROL;					//NG
+		return mOilPowerControl;
 	}
 	public void setOilPowerControl(boolean control){
-		OIL_POWER_CONTROL = control;
-	}
-	
-	
-	public boolean isGpsFixed(){
-		return GPS_FIXED;
+		mOilPowerControl = control;	//NG
+	}	
+	public boolean getGpsFixed(){
+		return mGpsFixed;
 	}
 	public void setGpsFixed(boolean isFixed){
-		GPS_FIXED = isFixed;
+		mGpsFixed = isFixed;
 	}
-	public static boolean isRecharge(){
-		return true;
+	public boolean getRecharge(){
+		return mRecharge;
 	}
-	public static boolean isAccon(){
-		return true;
+	public void setRecharge(boolean recharge){
+		mRecharge = recharge;
 	}
-	public static boolean isInguard(){
-		return true;
+	public boolean getAcc(){
+		return mAcc;
+	}
+	public void setAcc(boolean acc){
+		mAcc = acc;
+	}
+	public boolean getVibration(){
+		return mVirbation;
 	}
 	
-	public String getTimeZone2() {	//NG
-		return "E8";
+	public String getTimeZone2() {
+		return mTimeZoneEast+mTimeZoneNum;
 	}
 
 	public void init() {
@@ -113,14 +156,14 @@ public class Hardware {
 	}
 	private void initSettings(){
 		mMyPreference = new MyPreference(mContext);
-		IP = mMyPreference.getString(MyPreference.KEY_IP);
-		PORT = mMyPreference.getString(MyPreference.KEY_PORT);
-		GPS_INTERVAL = mMyPreference.getInt(MyPreference.KEY_GPS_INTERVAL);
-		LBS_INTERVAL = mMyPreference.getInt(MyPreference.KEY_LBS_INTERVAL);
-		GPS_WORK_INTERVAL = mMyPreference.getInt(MyPreference.KEY_GPS_WORK_INTERVAL);
-		SOS = mMyPreference.getString(MyPreference.KEY_SOS_NUM);
-		Sensor_Time = mMyPreference.getInt(MyPreference.KEY_SENSOR_TIME);
-		Alarm_Time = mMyPreference.getInt(MyPreference.KEY_ALARM_TIME);
+		mIp = mMyPreference.getString(MyPreference.KEY_IP);
+		mPort = mMyPreference.getString(MyPreference.KEY_PORT);
+		mGpsInterval = mMyPreference.getInt(MyPreference.KEY_GPS_INTERVAL);
+		mLbsInterval = mMyPreference.getInt(MyPreference.KEY_LBS_INTERVAL);
+		mGpsWorkInterval = mMyPreference.getInt(MyPreference.KEY_GPS_WORK_INTERVAL);
+		mSosNumber = mMyPreference.getString(MyPreference.KEY_SOS_NUM);
+		mSensorInterval = mMyPreference.getInt(MyPreference.KEY_SENSOR_TIME);
+		mDefenseDelay = mMyPreference.getInt(MyPreference.KEY_ALARM_TIME);
 	}
 	public void uninit(){
 		//TelephonyManager tel = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
@@ -131,7 +174,7 @@ public class Hardware {
 		tel.listen(new PhoneStateListener(){
 			@Override
 			public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-				SIGNAL = signalStrength.getGsmSignalStrength();
+				mSignal = signalStrength.getGsmSignalStrength();
 				super.onSignalStrengthsChanged(signalStrength);
 			}
 		}, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);		
@@ -143,7 +186,7 @@ public class Hardware {
 			public void onReceive(Context arg0, Intent intent) {
 				int level = intent.getIntExtra("level", 0);
 				int scale = intent.getIntExtra("scale", 100);
-				BATTERY = (level * 100) / scale;				
+				mBattery = (level * 100) / scale;				
 			}
 		}, intentFilter);
 	}
@@ -164,7 +207,7 @@ public class Hardware {
 		return MNC;
 	}
 	public int getSIGNAL() {
-		return SIGNAL;
+		return mSignal;
 	}
 	public int getLAC() {
 		return LAC;
@@ -173,16 +216,16 @@ public class Hardware {
 		return CID;
 	}
 	public int getBATTERY() {
-		return BATTERY;
+		return mBattery;
 	}
 	public int getPreTime() {		
 		return PRETIME;
 	}	
 	public int getAlarmType() {		
-		return ALARM_TYPE;
+		return mAlarmType;
 	}
 	public int getAlarmIndex() {
-		return ALARM_INDEX;
+		return mAlarmIndex;
 	}
 	public void setmContext(Context mContext) {
 		this.mContext = mContext;
@@ -190,43 +233,43 @@ public class Hardware {
 	public Context getContext() {
 		return mContext;
 	}
-	public int getAlarmFence() {		
-		return ALARM_FENCE;
+	public int getFenceType() {		
+		return mFenceType;
 	}
 	public int getGpsInterval() {
-		return GPS_INTERVAL;
+		return mGpsInterval;
 	}
 	public void setGpsInterval(int interval) {
-		if(interval != GPS_INTERVAL){			
-			GPS_INTERVAL = interval;
+		if(interval != mGpsInterval){			
+			mGpsInterval = interval;
 			mMyPreference.set(MyPreference.KEY_GPS_INTERVAL, interval);
 		}
 	}
 	public int getLbsInterval() {
-		return LBS_INTERVAL;
+		return mLbsInterval;
 	}
 	public void setLbsInterval(int interval) {
-		if(interval != LBS_INTERVAL){						
-			LBS_INTERVAL = interval;
+		if(interval != mLbsInterval){						
+			mLbsInterval = interval;
 			mMyPreference.set(MyPreference.KEY_LBS_INTERVAL, interval);
 		}		
 	}
 	public int getGpsWorkInterval() {
-		return GPS_WORK_INTERVAL;
+		return mGpsWorkInterval;
 	}
 	public void setGpsWorkInterval(int interval) {
-		if(interval != GPS_INTERVAL){						
-			GPS_WORK_INTERVAL = interval;
+		if(interval != mGpsInterval){						
+			mGpsWorkInterval = interval;
 			mMyPreference.set(MyPreference.KEY_GPS_WORK_INTERVAL, interval);
 		}
 	}
 	public boolean setService(String ip, String port) {
-		if(IP.equalsIgnoreCase(ip) && PORT.equalsIgnoreCase(port))
+		if(mIp.equalsIgnoreCase(ip) && mPort.equalsIgnoreCase(port))
 			return false;		
 		int p = Integer.parseInt(port);
 		if(Utils.isValidVrl(ip) && p > 0 && p < 65535){
-			IP = ip;
-			PORT = port;
+			mIp = ip;
+			mPort = port;
 			mMyPreference.set(MyPreference.KEY_IP, ip);
 			mMyPreference.set(MyPreference.KEY_PORT, port);			
 			return true;
@@ -234,93 +277,57 @@ public class Hardware {
 		return false;
 	}
 	public String getIp(){
-		return IP;
+		return mIp;
 	}
 	public String getPort(){
-		return PORT;
+		return mPort;
 	}
 	public String getProtocol() {
 		return "TCP";								//NG
 	}
 	public String getSOS() {
-		return SOS;
+		return mSosNumber;
 	}
 
 	public void setSOS(String sOS) {
-		if(!SOS.equals(sOS)){						
-			SOS = sOS;
-			mMyPreference.set(MyPreference.KEY_SOS_NUM, SOS);
+		if(!mSosNumber.equals(sOS)){						
+			mSosNumber = sOS;
+			mMyPreference.set(MyPreference.KEY_SOS_NUM, mSosNumber);
 		}		
 	}
-	private String IMEI="860016020783556";
-	private String ICCID="460060276069992";
-	private String IMSI="460060276069992";
-	private String MCC="460";
-	private String MNC="06";
-	private int SIGNAL = 10;	
-	private int LAC = 9514;
-	private int CID = 101815812;
-	private int BATTERY = 10;
-	private int PRETIME=10;						//NG
-	private int LANGUAGE = 0x01;				//NG
-	private TimeZone TIMEZONE = new TimeZone();	//NG
-	private String DEVICETYPE = "11";			//NG
-	private int ALARM_TYPE = 0;					//NG
-	private int ALARM_INDEX = 0;				//NG
-	private int ALARM_FENCE = 0;				//NG
-	private int GPS_INTERVAL = 30;				
-	private int LBS_INTERVAL = 30;				
-	private int GPS_WORK_INTERVAL = 30;			
-	private boolean GPS_FIXED = false;			//NG
-	private String IP;
-	private String PORT;
-	private String SOS;
-	private int Alarm_Time;
-	public int getAlarm_Time() {
-		return Alarm_Time;
-	}
 
-	public void setAlarm_Time(int val) {
-		if(Alarm_Time != val){
-			Alarm_Time = val;
-			mMyPreference.set(MyPreference.KEY_SENSOR_TIME, val);
-		}
+	public int getDefenseDelay() {
+		return mDefenseDelay;
 	}
-
-	public int getSensor_Time() {
-		return Sensor_Time;
+	
+	public int getSensorInterval() {
+		return mSensorInterval;
 	}
 
 	public void setSensorInterval(int val) {	//NG interval to check vibrator second
-		if(Sensor_Time != val){
-			Sensor_Time = val;
+		if(mSensorInterval != val){
+			mSensorInterval = val;
 			mMyPreference.set(MyPreference.KEY_SENSOR_TIME, val);
 		}
 	}
 	public void setSendsTimeout(int val) {	//NG timeout no vibrator to close gps
-		
-	}
-	
-	private int Sensor_Time;
-	public String getGpsAddressAnalyser() {
-		return "unknown";			//NG
+		mSendsTimeout = val;
 	}
 
 	public boolean isGpsPowerOn() {	
-		return true;				//NG
+		return mGpsPower;
 	}
-
-	private String GpsAnalyseUrl = "www.18gps.net";//NG
+	
 	public boolean setGPSAnalyseUrl(String content) {
-		GpsAnalyseUrl = content;
+		mGpsAnalyseUrl = content;
 		return false;
 	}
 
 	public String getGPSAnalyseUrl() {
-		return GpsAnalyseUrl;
+		return mGpsAnalyseUrl;
 	}
 
-	private Fence mFence;
+	
 	public void setFence(Fence fence) {
 		mFence = fence;		//NG		
 	}
@@ -329,48 +336,41 @@ public class Hardware {
 	}
 
 	public boolean turnOnGps(boolean on) {		//NG
-		// TODO Auto-generated method stub
-		return false;
+		mGpsPower = on;
+		return true;
 	}
 
-	public boolean checkPass(String group) {	//NG
-		// TODO Auto-generated method stub
-		return false;
+	public boolean checkPass(String password) {
+		return password.equals(mPassword);
 	}
 
-	public void modifyPass(String group) {		//NG
-		// TODO Auto-generated method stub
-		
+	public void modifyPass(String password) {
+		mPassword = password;		
 	}
 
-	public boolean checkAdminPass(String group) {	//NG
-		// TODO Auto-generated method stub
-		return false;
+	public boolean checkAdminPass(String password) {
+		return mAdminPassword.equals(password);
 	}
 
 	public void resetPass() {		//NG
-		// TODO Auto-generated method stub
-		
+				
 	}
-
-	public void setTimeZone(String east, String num) {	//NG
-		// TODO Auto-generated method stub
-		
+	public void setTimeZone(String east, int num) {		
+		mTimeZoneEast = east;
+		mTimeZoneNum = num;
 	}
-
-	public void setDefenseDelay(int i) {	//NG
-		// TODO Auto-generated method stub
-		
+	public void setDefenseDelay(int delay) {		
+		if(mDefenseDelay != delay){
+			mDefenseDelay = delay;
+			mMyPreference.set(MyPreference.KEY_SENSOR_TIME, delay);
+		}
 	}
 
 	public void switchMonitor() {	//NG
-		// TODO Auto-generated method stub
-		
+		mMonitor = true;
 	}
-
-	public void setVibration(boolean equals) {	//NG
-		// TODO Auto-generated method stub
-		
+	public void setVibration(boolean virbation) {	//NG	
+		mVirbation = virbation;
 	}
 }
 	

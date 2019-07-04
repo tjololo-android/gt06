@@ -91,7 +91,7 @@ public class Gt06Protocol extends BaseProtocol{
     			MessageWifi wifi = new MessageWifi(Gt06ProtocolConstant.MSG_LBS_WIFI);
     			wifi.sendToTarget();
     			while(mIsRunning){
-    				if(Hardware.instance().isGpsFixed()){
+    				if(Hardware.instance().getGpsFixed()){
     					Position pos = getPosition();
     	    			if(null != pos){
     	    		    	MessagePosition msg = new MessagePosition(Gt06ProtocolConstant.MSG_GPS_LBS_2, pos);
@@ -118,7 +118,7 @@ public class Gt06Protocol extends BaseProtocol{
 	}
     
     public void alarm(){
-    	int fence = Hardware.instance().getAlarmFence();
+    	int fence = Hardware.instance().getFenceType();
     	Position pos = getPosition();
     	CMessage msg = null;
     	if(0 == fence){
@@ -135,7 +135,7 @@ public class Gt06Protocol extends BaseProtocol{
 		case Gt06ProtocolConstant.CMD_REQUEST_ADDRESS:		
 			SMS sms = (SMS)content;
 			CMessage msg = null;
-			if(Hardware.instance().isGpsFixed()){
+			if(Hardware.instance().getGpsFixed()){
 				msg = new MessageRequestPosition(getPosition(), sms.getPhoneNum());
 			}else{
 				msg = new MessageRequestLbs(sms.getPhoneNum());

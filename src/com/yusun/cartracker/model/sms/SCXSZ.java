@@ -57,13 +57,13 @@ public class SCXSZ implements CmdHandler{
 		sb.append(Hardware.instance().getSOS() + ";");
 		
 		//sensor time
-		sb.append(Hardware.instance().getSensor_Time() + ";");
+		sb.append(Hardware.instance().getSensorInterval() + ";");
 		
 		//gps address analyse
-		sb.append(Hardware.instance().getGpsAddressAnalyser() + ";");
+		sb.append(Hardware.instance().getGPSAnalyseUrl() + ";");
 		
 		//alarm time
-		sb.append(Hardware.instance().getAlarm_Time() + ";");
+		sb.append(Hardware.instance().getDefenseDelay() + ";");
 		
 		//electric
 		sb.append(Hardware.instance().getOilPowerControl() ? 1 : 0 + ";");

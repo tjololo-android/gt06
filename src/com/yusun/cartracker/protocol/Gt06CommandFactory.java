@@ -8,10 +8,16 @@ public class Gt06CommandFactory {
 		switch(cmd){
 		case 0x17:
 			command =  new CommandPositionCh();
-			break;		
+			break;
+		case 0x80:
+			command = new CommandCommon();
+			break;
+		case 0x8A:
+			command = new CommandSyncTime();
+			break;
 		case 0x97:
 			command = new CommandPositionEn();
-			break;
+			break;		
 		}
 		return command;
 	}

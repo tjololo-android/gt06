@@ -121,13 +121,23 @@ public class Gt06Protocol extends BaseProtocol{
     	int fence = Hardware.instance().getFenceType();
     	Position pos = getPosition();
     	CMessage msg = null;
-    	if(0 == fence){
-    		msg = new MessageFence(Gt06ProtocolConstant.MSG_GPS_LBS_STATUS_2, pos);
+    	if(!Hardware.instance().getGpsFixed()){
+    		msg = new AlarmLBS();
+    	}else if(0 == fence){
+    		msg = new AlarmSFence(0x26, pos);
     	}else{
-    		msg = new MessageFence(Gt06ProtocolConstant.MSG_GPS_LBS_STATUS_3, pos);
+    		msg = new AlarmMFence(0x27, pos);
     	}
     	msg.sendToTarget();
     }
+    
+    public void syncTimeOnline(){
+		if(mIsRunning && !Hardware.instance().getGpsFixed()){					
+			CMessage msg = new CMessage(0x8A);
+			msg.sendToTarget();									
+		}
+    }
+    
 	@Override
 	public void doCmd(int cmd, Object content) {
 		logger.info("doCmd cmd="+cmd);
@@ -146,6 +156,5 @@ public class Gt06Protocol extends BaseProtocol{
 	}
 	private Position getPosition() {
 		return AppContext.instance().getDatabaseHelper().selectPosition();
-	}    
-	
+	}	
 }

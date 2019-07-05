@@ -34,13 +34,12 @@ public class Waiter {
 	
 	final class MyWaiter{
 		int cmd;
-		int timeout;	
+		int timeout;
 		boolean result = false;
 		MyWaiter(int cmd, int timeout){
 			this.cmd = cmd;
 			this.timeout = timeout;
 		}
-		
 		void onEcho(){
 			synchronized (this) {
 				result = true;

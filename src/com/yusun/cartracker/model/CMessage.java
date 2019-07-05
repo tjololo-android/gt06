@@ -11,7 +11,7 @@ public class CMessage extends Object{
 	public String Imei;
 	public int id;
 	public int index;
-	protected CMessage(int id){
+	public CMessage(int id){
 		this.id = id;
 		index = SerialIndex.get();
 		Imei = Hardware.instance().getIMEI();

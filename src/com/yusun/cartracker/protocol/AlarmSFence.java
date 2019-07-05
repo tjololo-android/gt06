@@ -6,8 +6,8 @@ import com.yusun.cartracker.position.Position;
 
 import io.netty.buffer.ByteBuf;
 
-public class MessageFence extends CMessage{
-	public MessageFence(int id, Position pos) {
+public class AlarmSFence extends CMessage{
+	public AlarmSFence(int id, Position pos) {
 		super(id);
 		gps = new GPS(pos);
 		lbs = new LBS();

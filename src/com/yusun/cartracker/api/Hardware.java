@@ -1,5 +1,7 @@
 package com.yusun.cartracker.api;
 
+import java.util.Date;
+
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.helper.Utils;
 import com.yusun.cartracker.model.Fence;
@@ -58,6 +60,7 @@ public class Hardware {
     private boolean mRecharge;
     private boolean mAcc;
     private String mGpsAnalyseUrl;
+    private int mFenceNum;
     
 	private Hardware(){}
 	private static Hardware _this;
@@ -371,6 +374,17 @@ public class Hardware {
 	}
 	public void setVibration(boolean virbation) {	//NG	
 		mVirbation = virbation;
+	}
+
+	public int getFenceNum() {		
+		return mFenceNum;
+	}
+	public void setFenceNum(int fenceNum) {		
+		mFenceNum = fenceNum;
+	}
+
+	public void setDate(Date date) {	//NG
+		
 	}
 }
 	

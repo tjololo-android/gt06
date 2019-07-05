@@ -6,9 +6,9 @@ import com.yusun.cartracker.position.Position;
 
 import io.netty.buffer.ByteBuf;
 
-public class AlarmLBS extends CMessage{	//NG
-	public AlarmLBS(int id) {
-		super(id);
+public class AlarmLBS extends CMessage{
+	public AlarmLBS() {
+		super(0x19);
 		lbs = new LBS();
 		deviceStatus = new DeviceStatus();
 		Alarm_Index = Hardware.instance().getAlarmIndex();

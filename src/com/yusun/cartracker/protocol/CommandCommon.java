@@ -2,6 +2,7 @@ package com.yusun.cartracker.protocol;
 
 import java.nio.charset.Charset;
 
+import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.model.Command;
 
 import io.netty.buffer.ByteBuf;
@@ -13,11 +14,10 @@ public class CommandCommon extends Command{
 	public void decode(ByteBuf buf) {
 		buf.skipBytes(2);
 		int len = buf.readUnsignedByte();
-		buf.skipBytes(1);
-		byte[] flag = new byte[4]; 
-		buf.readBytes(flag);
-		
-		String cmd = buf.readBytes(len-17).toString(Charset.forName("ascii")).trim();		
+		buf.skipBytes(1);		
+		int flag = buf.readInt();		
+		String content = buf.readBytes(len-17).toString(Charset.forName("ascii")).trim();
+		AppContext.instance().getSmsCmdManager().addGprsReq(content, flag);
 	}
 	@Override
 	public void doCmd() {

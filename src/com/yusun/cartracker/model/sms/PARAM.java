@@ -3,7 +3,7 @@ package com.yusun.cartracker.model.sms;
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
-import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 
 public class PARAM implements CmdHandler{
 
@@ -13,7 +13,7 @@ public class PARAM implements CmdHandler{
 	}
 
 	@Override
-	public void doCmd(SMS msg) {
+	public void doCmd(MSG msg) {
 		/*IMEI:353419030080159;
 		TimeZone:E8;
 		SOS:13312345678,137123456789,137123456789;

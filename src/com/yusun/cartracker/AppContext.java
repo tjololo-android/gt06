@@ -2,7 +2,7 @@ package com.yusun.cartracker;
 
 import com.yusun.cartracker.api.ApnSetting;
 import com.yusun.cartracker.helper.Logger;
-import com.yusun.cartracker.model.sms.abs.SmsCmdManager;
+import com.yusun.cartracker.model.sms.abs.CmdManager;
 import com.yusun.cartracker.netty.NettyClient;
 import com.yusun.cartracker.position.DatabaseHelper;
 import com.yusun.cartracker.position.NetworkManager;
@@ -21,7 +21,7 @@ public class AppContext{
 		}
 		mApnSetting = new ApnSetting(getContext());
 		databaseHelper = new DatabaseHelper(getContext());
-		mSmsCmdManager = new SmsCmdManager();
+		mSmsCmdManager = new CmdManager();
 		mSmsCmdManager.init();		
 
 		mProtocol = ProtocolMgr.getProtocol();
@@ -41,8 +41,8 @@ public class AppContext{
 		}
 		logger.info("uninit---");
 	}
-	private SmsCmdManager mSmsCmdManager;
-	public SmsCmdManager getSmsCmdManager(){
+	private CmdManager mSmsCmdManager;
+	public CmdManager getSmsCmdManager(){
 		return mSmsCmdManager;
 	}
 	

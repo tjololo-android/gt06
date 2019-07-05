@@ -9,7 +9,7 @@ import com.yusun.cartracker.model.FenceCircle;
 import com.yusun.cartracker.model.FenceRectangle;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
-import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 
 public class FENCE implements CmdHandler{
 
@@ -27,7 +27,7 @@ public class FENCE implements CmdHandler{
 	}
 
 	@Override
-	public void doCmd(SMS msg) {				
+	public void doCmd(MSG msg) {				
 //		ON,1,N23,W114,N24,E114
 //		ON,1,N23,W114,N24,E114,OUT
 //		ON,0,N23,W114,10
@@ -41,7 +41,7 @@ public class FENCE implements CmdHandler{
 			msg.sendFormatErr();
 		}
 	}	
-	Fence getFence(SMS msg){
+	Fence getFence(MSG msg){
 		Fence fence = null;
 		String reg1 = "(ON|OFF),1,([NS])(\\d+\\.*\\d*),([WE])(\\d+\\.*\\d*),([NS])(\\d+\\.*\\d*),([WE])(\\d+\\.*\\d*),*(IN|OUT)*";
 		String reg2 = "(ON|OFF),0,([NS])(\\d+\\.*\\d*),([WE])(\\d+\\.*\\d*),(\\d+),*(IN|OUT)*";

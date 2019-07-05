@@ -7,7 +7,7 @@ import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
-import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 
 public class SERVER implements CmdHandler{
 
@@ -17,7 +17,7 @@ public class SERVER implements CmdHandler{
 	}
 
 	@Override
-	public void doCmd(SMS msg) {
+	public void doCmd(MSG msg) {
 		//SERVER,666666,0,202.173.231.112,8821,0#
 		String reg = "([0-1]),(.*),(\\d+),([0-1])";
 		Matcher m = Pattern.compile(reg).matcher(msg.content);

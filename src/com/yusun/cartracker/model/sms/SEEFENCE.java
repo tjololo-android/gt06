@@ -6,7 +6,7 @@ import com.yusun.cartracker.model.FenceCircle;
 import com.yusun.cartracker.model.FenceRectangle;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
-import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 
 public class SEEFENCE implements CmdHandler{
 
@@ -15,7 +15,7 @@ public class SEEFENCE implements CmdHandler{
 		return CMDS.SEEFENCE;
 	}
 	@Override
-	public void doCmd(SMS msg) {
+	public void doCmd(MSG msg) {
 		//State:OUT;Lat:N23.116615;Lon:E114.416000;Radius:20000M;FenceType:Circle;
 		StringBuilder sb = new StringBuilder();
 		Fence fence = Hardware.instance().getFence();

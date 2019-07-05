@@ -5,7 +5,7 @@ import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.CMessage;
 import com.yusun.cartracker.model.Waiter;
-import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 import com.yusun.cartracker.position.Position;
 import com.yusun.cartracker.protocol.abs.BaseProtocol;
 
@@ -143,7 +143,7 @@ public class Gt06Protocol extends BaseProtocol{
 		logger.info("doCmd cmd="+cmd);
 		switch(cmd){
 		case Gt06ProtocolConstant.CMD_REQUEST_ADDRESS:		
-			SMS sms = (SMS)content;
+			MSG sms = (MSG)content;
 			CMessage msg = null;
 			if(Hardware.instance().getGpsFixed()){
 				msg = new MessageRequestPosition(getPosition(), sms.getPhoneNum());

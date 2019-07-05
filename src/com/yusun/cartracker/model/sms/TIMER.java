@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
-import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 
 public class TIMER implements CmdHandler{
 
@@ -16,7 +16,7 @@ public class TIMER implements CmdHandler{
 	}
 
 	@Override
-	public void doCmd(SMS msg) {
+	public void doCmd(MSG msg) {
 		//TIMER,666666, 2,10,30#
 		String reg = "(\\d+)*,(\\d+)*,(\\d+)*";
 		Matcher m = Pattern.compile(reg).matcher(msg.content);

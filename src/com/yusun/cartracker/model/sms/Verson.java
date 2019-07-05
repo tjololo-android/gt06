@@ -3,7 +3,7 @@ package com.yusun.cartracker.model.sms;
 import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
-import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -18,7 +18,7 @@ public class Verson implements CmdHandler{
 	}
 
 	@Override
-	public void doCmd(SMS msg) {
+	public void doCmd(MSG msg) {
 		int versioncode=0;
 	    String versionname="unknow";
 	    Context ctx = AppContext.instance().getContext();

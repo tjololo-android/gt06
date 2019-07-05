@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
-import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 
 public class SOS implements CmdHandler{
 
@@ -16,7 +16,7 @@ public class SOS implements CmdHandler{
 	}
 
 	@Override
-	public void doCmd(SMS msg) {	
+	public void doCmd(MSG msg) {	
 		//SOS,666666,D,1,3,4#
 		//SOS,666666,D,13810001000#		
 		//SOS,666666,A,13810001000,1390000,,112#

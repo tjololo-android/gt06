@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
-import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 
 public class VIBRATION implements CmdHandler{
 
@@ -16,7 +16,7 @@ public class VIBRATION implements CmdHandler{
 	}
 
 	@Override
-	public void doCmd(SMS msg) {
+	public void doCmd(MSG msg) {
 		Matcher m = Pattern.compile("(ON|OFF)").matcher(msg.content);
 		if(m.find()){
 			Hardware.instance().setVibration("ON".equals(m.group(1)));

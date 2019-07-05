@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 
 import com.yusun.cartracker.model.Command;
 import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 
 import io.netty.buffer.ByteBuf;
 
@@ -24,6 +25,6 @@ public class CommandPositionEn extends Command{
 	}
 	@Override
 	public void doCmd() {
-		SMS.sendSms(phoneNum, address);
+		SMS.sendMsg(phoneNum, address);
 	}
 }

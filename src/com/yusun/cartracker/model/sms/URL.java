@@ -3,7 +3,7 @@ package com.yusun.cartracker.model.sms;
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
-import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 
 public class URL implements CmdHandler{
 
@@ -13,7 +13,7 @@ public class URL implements CmdHandler{
 	}
 
 	@Override
-	public void doCmd(SMS msg) {
+	public void doCmd(MSG msg) {
 		msg.sendAck(Hardware.instance().getGPSAnalyseUrl());
 	}	
 }

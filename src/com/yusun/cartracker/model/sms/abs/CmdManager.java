@@ -32,8 +32,8 @@ import com.yusun.cartracker.model.sms.VIBRATION;
 import com.yusun.cartracker.model.sms.Verson;
 import com.yusun.cartracker.model.sms.WHERE;
 
-public class SmsCmdManager {
-	Queue<SMS> SmsQueues = new ConcurrentLinkedQueue<SMS>();
+public class CmdManager {
+	Queue<MSG> SmsQueues = new ConcurrentLinkedQueue<MSG>();
 	HashMap<String, CmdHandler> mHandler = new HashMap<String, CmdHandler>();
 
 	private void reg(CmdHandler handler) {
@@ -41,23 +41,35 @@ public class SmsCmdManager {
 	}
 
 	public void addReq(String num, String msg) {
-		SMS sMsg = SMS.fromSms(num, msg);		
+		MSG sMsg = SMS.fromMsg(num, msg);		
 		if(null != sMsg){
 			synchronized (SmsQueues) {
 				SmsQueues.add(sMsg);
-				SmsQueues.notify();	
+				SmsQueues.notifyAll();	
 			}			
 		}else{
-			SMS.sendSms(num, "format error!");
+			SMS.sendMsg(num, "format error!");
+		}
+	}
+	
+	public void addGprsReq(String msg, int serverFlag) {
+		GPRS sMsg = GPRS.fromMsg(msg, serverFlag);
+		if(null != sMsg){
+			synchronized (SmsQueues) {
+				SmsQueues.add(sMsg);
+				SmsQueues.notifyAll();	
+			}		
+		}else{
+			GPRS.sendMsg("format error!", serverFlag);
 		}
 	}
 
-	private void handle(SMS sMsg) {		
-		CmdHandler handler = mHandler.get(sMsg.cmd.toLowerCase());
+	private void handle(MSG msg) {		
+		CmdHandler handler = mHandler.get(msg.cmd.toLowerCase());
 		if (handler != null) {
-			handler.doCmd(sMsg);
+			handler.doCmd(msg);
 		} else {
-			sMsg.sendAck("unknow command " + sMsg.cmd);
+			msg.sendAck("unknow command " + msg.cmd);
 		}
 	}
 
@@ -112,7 +124,7 @@ public class SmsCmdManager {
 				}
 			}
 			while(SmsQueues.size() > 0){
-				SMS sms = SmsQueues.poll();			
+				MSG sms = SmsQueues.poll();			
 				handle(sms);			
 			}
 		}

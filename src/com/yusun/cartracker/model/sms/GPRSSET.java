@@ -5,7 +5,7 @@ import com.yusun.cartracker.api.ApnSetting;
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
-import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 
 public class GPRSSET implements CmdHandler{
 
@@ -15,7 +15,7 @@ public class GPRSSET implements CmdHandler{
 	}
 
 	@Override
-	public void doCmd(SMS msg) {
+	public void doCmd(MSG msg) {
 		/*
 		APN:CMNET,1,10.0.0.172,,;
 		LBS_GPS_Ephemeris:20,10,30;

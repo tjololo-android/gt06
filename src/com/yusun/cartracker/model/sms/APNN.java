@@ -7,7 +7,7 @@ import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.ApnSetting;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
-import com.yusun.cartracker.model.sms.abs.SMS;
+import com.yusun.cartracker.model.sms.abs.MSG;
 
 public class APNN implements CmdHandler{
 	String reg = "(\\w+),*(\\w+)*,*(\\d+)*,*(\\d+)*,*(\\d+\\.\\d+\\.\\d+\\.\\d+)*";
@@ -18,7 +18,7 @@ public class APNN implements CmdHandler{
 	}
 
 	@Override
-	public void doCmd(SMS msg) {		
+	public void doCmd(MSG msg) {		
 		//APN,666666,CMNET,admin,123456,0,0.0.0.0#		
 		Pattern p = Pattern.compile(reg);
 		Matcher m = p.matcher(msg.content);

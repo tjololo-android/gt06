@@ -3,6 +3,7 @@ package com.yusun.cartracker.model.sms;
 import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.ApnSetting;
 import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
 import com.yusun.cartracker.model.sms.abs.MSG;
@@ -41,29 +42,29 @@ public class SCXSZ implements CmdHandler{
 		
 		//interval
 		sb.append("LBS_GPSUpload_GPSWork:");
-		sb.append(""+Hardware.instance().getLbsInterval()/60);
-		sb.append(","+Hardware.instance().getGpsInterval());
-		sb.append(","+Hardware.instance().getGpsWorkInterval()/60);
+		sb.append(""+Settings.instance().getLbsInterval()/60);
+		sb.append(","+Settings.instance().getGpsInterval());
+		sb.append(","+Settings.instance().getGpsWorkInterval()/60);
 		sb.append(";");		
 		
 		//Server
 		sb.append("Server:");		
-		sb.append(","+Hardware.instance().getIp());
-		sb.append(","+Hardware.instance().getPort());
-		sb.append(","+Hardware.instance().getProtocol());
+		sb.append(","+Settings.instance().getIp());
+		sb.append(","+Settings.instance().getPort());
+		sb.append(","+Settings.instance().getProtocol());
 		sb.append(";");
 		
 		//sos
-		sb.append(Hardware.instance().getSOS() + ";");
+		sb.append(Settings.instance().getSOS() + ";");
 		
 		//sensor time
-		sb.append(Hardware.instance().getSensorInterval() + ";");
+		sb.append(Settings.instance().getSensorInterval() + ";");
 		
 		//gps address analyse
-		sb.append(Hardware.instance().getGPSAnalyseUrl() + ";");
+		sb.append(Settings.instance().getGPSAnalyseUrl() + ";");
 		
 		//alarm time
-		sb.append(Hardware.instance().getDefenseDelay() + ";");
+		sb.append(Settings.instance().getDefenseDelay() + ";");
 		
 		//electric
 		sb.append(Hardware.instance().getOilPowerControl() ? 1 : 0 + ";");

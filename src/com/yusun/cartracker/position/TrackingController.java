@@ -17,7 +17,7 @@ package com.yusun.cartracker.position;
 
 import java.util.Date;
 
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.helper.Logger;
 
 import android.content.Context;

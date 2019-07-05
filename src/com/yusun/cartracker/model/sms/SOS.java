@@ -3,7 +3,7 @@ package com.yusun.cartracker.model.sms;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
 import com.yusun.cartracker.model.sms.abs.MSG;
@@ -26,7 +26,7 @@ public class SOS implements CmdHandler{
 		Matcher m1 = Pattern.compile(r1).matcher(msg.content);
 		Matcher m2 = Pattern.compile(r2).matcher(msg.content);
 		Matcher m3 = Pattern.compile(r3).matcher(msg.content);
-		String[] nums = Hardware.instance().getSOS().split(",");
+		String[] nums = Settings.instance().getSOS().split(",");
 		if(m1.find()){			//delete by index
 			Matcher m = m3;
 			for(int i = 1; i < 5; i++){
@@ -68,6 +68,6 @@ public class SOS implements CmdHandler{
 			return;
 		}
 		String s = nums[0] + ',' + nums[1] + ',' +nums[2] + ',' + nums[3];
-		Hardware.instance().setSOS(s);
+		Settings.instance().setSOS(s);
 	}	
 }

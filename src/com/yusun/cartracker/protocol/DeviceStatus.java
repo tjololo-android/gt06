@@ -1,6 +1,7 @@
 package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.helper.BitUtil;
 
 public class DeviceStatus{
@@ -16,7 +17,7 @@ public class DeviceStatus{
 		gpsfix_b6 = Hardware.instance().getGpsFixed();
 		recharge_b2 = Hardware.instance().getRecharge();
 		acc_b1 = Hardware.instance().getAcc();
-		guard_b0 = Hardware.instance().getVibration();
+		guard_b0 = Settings.instance().getVibration();
 		alarm_type_b3_5 = Hardware.instance().getAlarmType();
 	}
 

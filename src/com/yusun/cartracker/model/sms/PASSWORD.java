@@ -3,7 +3,7 @@ package com.yusun.cartracker.model.sms;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
 import com.yusun.cartracker.model.sms.abs.MSG;
@@ -19,8 +19,8 @@ public class PASSWORD implements CmdHandler{
 	public void doCmd(MSG msg) {
 		Matcher m = Pattern.compile("(\\d+),(\\d+)").matcher(msg.content);
 		if(m.find()){
-			if(Hardware.instance().checkPass(m.group(1))){
-				Hardware.instance().modifyPass(m.group(2));
+			if(Settings.instance().checkPass(m.group(1))){
+				Settings.instance().modifyPass(m.group(2));
 			}else{
 				msg.sendPassErr();
 			}

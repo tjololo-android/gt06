@@ -3,7 +3,7 @@ package com.yusun.cartracker.model.sms;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
 import com.yusun.cartracker.model.sms.abs.MSG;
@@ -24,17 +24,17 @@ public class TIMER implements CmdHandler{
 			String s = m.group(1);
 			if(null != s && !s.isEmpty()){
 				int lbs = Integer.parseInt(s);
-				Hardware.instance().setLbsInterval(lbs * 60);
+				Settings.instance().setLbsInterval(lbs * 60);
 			}
 			s = m.group(2);
 			if(null != s && !s.isEmpty()){
 				int gps = Integer.parseInt(s);
-				Hardware.instance().setGpsInterval(gps);
+				Settings.instance().setGpsInterval(gps);
 			}			
 			s = m.group(3);
 			if(null != s && !s.isEmpty()){
 				int gpsWork = Integer.parseInt(s);
-				Hardware.instance().setGpsWorkInterval(gpsWork * 60);
+				Settings.instance().setGpsWorkInterval(gpsWork * 60);
 			}
 			msg.sendAck("OK");			
 		}else{	

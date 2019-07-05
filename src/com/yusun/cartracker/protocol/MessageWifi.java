@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.api.WifiInfoMgr;
-import com.yusun.cartracker.helper.Hex;
 import com.yusun.cartracker.model.CMessage;
 
 import android.net.wifi.ScanResult;
@@ -23,7 +23,7 @@ public class MessageWifi extends CMessage{
 		cellId = Hardware.instance().getCID();
 		rssi = Hardware.instance().getSIGNAL();
 		preTime = Hardware.instance().getPreTime();
-		wifiinfos = WifiInfoMgr.getWifiInfos(Hardware.instance().getContext());
+		wifiinfos = WifiInfoMgr.getWifiInfos(Settings.instance().getContext());
 	}
 	public String DeviceType;
 

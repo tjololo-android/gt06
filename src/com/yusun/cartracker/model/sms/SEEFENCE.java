@@ -1,6 +1,6 @@
 package com.yusun.cartracker.model.sms;
 
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.Fence;
 import com.yusun.cartracker.model.FenceCircle;
 import com.yusun.cartracker.model.FenceRectangle;
@@ -18,7 +18,7 @@ public class SEEFENCE implements CmdHandler{
 	public void doCmd(MSG msg) {
 		//State:OUT;Lat:N23.116615;Lon:E114.416000;Radius:20000M;FenceType:Circle;
 		StringBuilder sb = new StringBuilder();
-		Fence fence = Hardware.instance().getFence();
+		Fence fence = Settings.instance().getFence();
 		sb.append("State:"+fence.getType()+";");
 		sb.append("State:"+fence.getType()+";");
 		if(Fence.FENCE_SHARP_CIRCLE == fence.getSharp()){

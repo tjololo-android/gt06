@@ -1,6 +1,6 @@
 package com.yusun.cartracker.model.sms;
 
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
 import com.yusun.cartracker.model.sms.abs.MSG;
@@ -23,7 +23,7 @@ public class SETGPS implements CmdHandler{
 		if("OFF".equals(msg.content))
 			on = false;
 		
-		if(Hardware.instance().turnOnGps(on)){
+		if(Settings.instance().turnOnGps(on)){
 			msg.sendAck("OK");
 		}else{
 			msg.sendAck("ERROR");

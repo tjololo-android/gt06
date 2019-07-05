@@ -1,6 +1,6 @@
 package com.yusun.cartracker.model.sms;
 
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
 import com.yusun.cartracker.model.sms.abs.MSG;
@@ -14,7 +14,7 @@ public class EURL implements CmdHandler{
 
 	@Override
 	public void doCmd(MSG msg) {		
-		if(Hardware.instance().setGPSAnalyseUrl(msg.content)){
+		if(Settings.instance().setGPSAnalyseUrl(msg.content)){
 			msg.sendAck("OK");
 		}else{
 			msg.sendAck("ERROR");

@@ -1,6 +1,7 @@
 package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.CMessage;
 import com.yusun.cartracker.position.Position;
 
@@ -14,7 +15,7 @@ public class AlarmSFence extends CMessage{
 		deviceStatus = new DeviceStatus();
 		voltage = Hardware.instance().getBATTERY();
 		signal = Hardware.instance().getSIGNAL();
-		language = Hardware.instance().getLanguage();
+		language = Settings.instance().getLanguage();
 		Alarm_Index = Hardware.instance().getAlarmIndex();
 	}
 	public GPS gps;

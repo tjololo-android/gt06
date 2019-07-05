@@ -3,7 +3,7 @@ package com.yusun.cartracker.model.sms;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.Fence;
 import com.yusun.cartracker.model.FenceCircle;
 import com.yusun.cartracker.model.FenceRectangle;
@@ -36,7 +36,7 @@ public class FENCE implements CmdHandler{
 		Fence fence = getFence(msg);
 		if(null != fence){
 			msg.sendAck("OK");
-			Hardware.instance().setFence(fence);
+			Settings.instance().setFence(fence);
 		}else{
 			msg.sendFormatErr();
 		}

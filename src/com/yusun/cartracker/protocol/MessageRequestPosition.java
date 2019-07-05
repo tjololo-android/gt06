@@ -1,6 +1,7 @@
 package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.CMessage;
 import com.yusun.cartracker.position.Position;
@@ -15,7 +16,7 @@ public class MessageRequestPosition extends CMessage{
 		gps = new GPS(pos);
 		this.phoneNum = phoneNum; 
 		Alarm_Index = Hardware.instance().getAlarmIndex();
-		language = Hardware.instance().getLanguage();
+		language = Settings.instance().getLanguage();
 	}	
 	
 	GPS gps;

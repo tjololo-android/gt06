@@ -1,7 +1,7 @@
 package com.yusun.cartracker.netty;
 
 import com.yusun.cartracker.AppContext;
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.helper.Logger;
 
 import io.netty.bootstrap.Bootstrap;
@@ -22,8 +22,8 @@ public class NettyClient {
     public void start() {
     	logger.info("start+++");
     	
-    	HOST = Hardware.instance().getIp();
-    	PORT = Integer.parseInt(Hardware.instance().getPort());
+    	HOST = Settings.instance().getIp();
+    	PORT = Integer.parseInt(Settings.instance().getPort());
     	
     	Bootstrap bootstrap = new Bootstrap();
     	group = new NioEventLoopGroup();

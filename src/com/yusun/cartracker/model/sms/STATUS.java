@@ -1,12 +1,11 @@
 package com.yusun.cartracker.model.sms;
 
 import com.yusun.cartracker.AppContext;
-import com.yusun.cartracker.api.ApnSetting;
 import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
 import com.yusun.cartracker.model.sms.abs.MSG;
-import com.yusun.cartracker.position.NetworkManager;
 
 public class STATUS implements CmdHandler{
 
@@ -32,7 +31,7 @@ public class STATUS implements CmdHandler{
 		
 		//gps
 		sb.append("GPS:");
-		if(!Hardware.instance().isGpsPowerOn()){
+		if(!Settings.instance().isGpsPowerOn()){
 			sb.append("GPS OFF");
 		}else if(Hardware.instance().getGpsFixed()){
 			sb.append("Successful Positioning");

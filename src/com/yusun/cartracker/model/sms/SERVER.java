@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.yusun.cartracker.AppContext;
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
 import com.yusun.cartracker.model.sms.abs.MSG;
@@ -22,7 +22,7 @@ public class SERVER implements CmdHandler{
 		String reg = "([0-1]),(.*),(\\d+),([0-1])";
 		Matcher m = Pattern.compile(reg).matcher(msg.content);
 		if(m.find()){			
-			if(Hardware.instance().setService(m.group(2), m.group(3))){
+			if(Settings.instance().setService(m.group(2), m.group(3))){
 				AppContext.instance().resetNetServer();
 			}else{
 				msg.sendErr();

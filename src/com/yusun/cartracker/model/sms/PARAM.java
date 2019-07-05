@@ -1,6 +1,7 @@
 package com.yusun.cartracker.model.sms;
 
 import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.sms.abs.CMDS;
 import com.yusun.cartracker.model.sms.abs.CmdHandler;
 import com.yusun.cartracker.model.sms.abs.MSG;
@@ -30,9 +31,9 @@ public class PARAM implements CmdHandler{
 		StringBuilder sb = new StringBuilder();
 		sb.append("IMEI:"+Hardware.instance().getIMEI()+";");
 		sb.append("TimeZone:"+Hardware.instance().getTimeZone2()+";");
-		sb.append("SOS:"+Hardware.instance().getSOS()+";");
-		sb.append("Sensor:"+Hardware.instance().getSensorInterval()+";");
-		sb.append("Alarm:"+Hardware.instance().getDefenseDelay()+";");
+		sb.append("SOS:"+Settings.instance().getSOS()+";");
+		sb.append("Sensor:"+Settings.instance().getSensorInterval()+";");
+		sb.append("Alarm:"+Settings.instance().getDefenseDelay()+";");
 		
 		msg.sendAck(sb.toString());
 	}

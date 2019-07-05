@@ -1,6 +1,7 @@
 package com.yusun.cartracker;
 
 import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.netty.NettyClient;
 import com.yusun.cartracker.netty.NettyServer;
@@ -70,6 +71,8 @@ public class MainService extends Service implements NetworkHandler {
         
         Hardware.instance().setmContext(getApplicationContext());
         Hardware.instance().init();
+        Settings.instance().setmContext(getApplicationContext());
+        Settings.instance().init();
         
 	    networkManager = new NetworkManager(this, this);
 	    networkManager.start();

@@ -2,7 +2,7 @@ package com.yusun.cartracker.protocol;
 
 import java.util.Date;
 
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.CMessage;
 
 import io.netty.buffer.ByteBuf;
@@ -14,7 +14,7 @@ public class MessageLbs extends CMessage{
 		
 		d = new Date();
 		lbs = new LBS();
-		language = Hardware.instance().getLanguage();
+		language = Settings.instance().getLanguage();
 	}
 	public String DeviceType;
 

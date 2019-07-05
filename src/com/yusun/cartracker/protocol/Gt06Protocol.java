@@ -2,6 +2,7 @@ package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.model.CMessage;
 import com.yusun.cartracker.model.Waiter;
@@ -98,9 +99,9 @@ public class Gt06Protocol extends BaseProtocol{
     	    		    	msg.sendToTarget();
     	    				AppContext.instance().getDatabaseHelper().deletePosition(pos.getId());
     	    			}
-    	    			mysleep(Hardware.instance().getGpsInterval());
+    	    			mysleep(Settings.instance().getGpsInterval());
     				}else{
-    					mysleep(Hardware.instance().getLbsInterval());
+    					mysleep(Settings.instance().getLbsInterval());
     					lbs = new MessageLbs(Gt06ProtocolConstant.MSG_LBS_MULTIPLE);
     	    			lbs.sendToTarget();    	    			
     				}

@@ -1,6 +1,6 @@
 package com.yusun.cartracker.protocol;
 
-import com.yusun.cartracker.api.Hardware;
+import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.helper.Hex;
 import com.yusun.cartracker.model.CMessage;
 
@@ -9,8 +9,8 @@ import io.netty.buffer.ByteBuf;
 public class MessageLogin extends CMessage{
 	public MessageLogin() {
 		super(0x01);
-		DeviceType = Hardware.instance().getDeviceType();
-		Language = Hardware.instance().getLanguage();
+		DeviceType = Settings.instance().getDeviceType();
+		Language = Settings.instance().getLanguage();
 	}
 	public String DeviceType;
 	public int Language;	

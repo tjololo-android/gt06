@@ -1,7 +1,6 @@
 package com.yusun.cartracker.protocol;
 
 import com.yusun.cartracker.api.Hardware;
-import com.yusun.cartracker.model.CMessage;
 import com.yusun.cartracker.position.Position;
 
 import io.netty.buffer.ByteBuf;

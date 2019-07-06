@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.yusun.cartracker.api.Settings;
+import com.yusun.cartracker.helper.Utils;
 import com.yusun.cartracker.model.Fence;
 import com.yusun.cartracker.model.FenceCircle;
 import com.yusun.cartracker.model.FenceRectangle;
@@ -18,14 +19,6 @@ public class FENCE implements CmdHandler{
 		return CMDS.FENCE;
 	}
 	
-	double get(String flag, String val){
-		double ret = Double.parseDouble(val); 
-		if("S".equals(flag) || "W".equals(flag)){
-			ret *= -1;
-		}
-		return ret;
-	}
-
 	@Override
 	public void doCmd(MSG msg) {				
 //		ON,1,N23,W114,N24,E114
@@ -33,7 +26,7 @@ public class FENCE implements CmdHandler{
 //		ON,0,N23,W114,10
 //		ON,0,N23,W114,10,IN
 //		ON,0,0,0,10
-		Fence fence = getFence(msg);
+		Fence fence = getFence(msg.content);
 		if(null != fence){
 			msg.sendAck("OK");
 			Settings.instance().setFence(fence);
@@ -41,14 +34,14 @@ public class FENCE implements CmdHandler{
 			msg.sendFormatErr();
 		}
 	}	
-	Fence getFence(MSG msg){
+	public Fence getFence(String content){
 		Fence fence = null;
 		String reg1 = "(ON|OFF),1,([NS])(\\d+\\.*\\d*),([WE])(\\d+\\.*\\d*),([NS])(\\d+\\.*\\d*),([WE])(\\d+\\.*\\d*),*(IN|OUT)*";
 		String reg2 = "(ON|OFF),0,([NS])(\\d+\\.*\\d*),([WE])(\\d+\\.*\\d*),(\\d+),*(IN|OUT)*";
 		String reg3 = "(ON|OFF),0,0,0,(\\d+),*(IN|OUT)*";
-		Matcher m1 = Pattern.compile(reg1).matcher(msg.content);
-		Matcher m2 = Pattern.compile(reg2).matcher(msg.content);
-		Matcher m3 = Pattern.compile(reg3).matcher(msg.content);		
+		Matcher m1 = Pattern.compile(reg1).matcher(content);
+		Matcher m2 = Pattern.compile(reg2).matcher(content);
+		Matcher m3 = Pattern.compile(reg3).matcher(content);		
 		if(m1.find()){
 			Matcher m = m1;
 			double lan1 = get(m.group(2), m.group(3));
@@ -74,5 +67,8 @@ public class FENCE implements CmdHandler{
 			fence.setType(m.group(3));
 		}
 		return fence;
+	}
+	double get(String flag, String val){
+		return Utils.getLanLong(flag, val);
 	}
 }

@@ -212,6 +212,14 @@ public class Hardware {
 	public void setDate(Date date) {	//NG
 		
 	}
+
+	public String getCenterNum() {		//NG
+		return "0000000000000";
+	}
+
+	public String getMode() {	//NG
+		return "mode 0,1,200";
+	}
 }
 	
 

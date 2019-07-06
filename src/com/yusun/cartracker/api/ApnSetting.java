@@ -33,7 +33,7 @@ public class ApnSetting {
 	public ApnSetting(Context context) {
 		mContext = context;	
 
-		mTelephonyMgr = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);// 鍙栧緱鐩稿叧绯荤粺鏈嶅姟
+		mTelephonyMgr = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);// 閸欐牕绶遍惄绋垮彠缁崵绮洪張宥呭
 
 		rxLast = TrafficStats.getMobileRxBytes();
 		txLast = TrafficStats.getMobileTxBytes();
@@ -95,22 +95,22 @@ public class ApnSetting {
 		switch (mTelephonyMgr.getSimState()) {
 
 		case TelephonyManager.SIM_STATE_UNKNOWN:
-			Log.i(TAG, "鏈煡鐘舵��");
+			Log.i(TAG, "閺堫亞鐓￠悩鑸碉拷锟�");
 			break;
 		case TelephonyManager.SIM_STATE_ABSENT:
-			Log.i(TAG, "鏃犲崱");
+			Log.i(TAG, "閺冪姴宕�");
 			break;
 		case TelephonyManager.SIM_STATE_PIN_REQUIRED:
-			Log.i(TAG, "闇�瑕丳IN瑙ｉ攣");
+			Log.i(TAG, "闂囷拷鐟曚赋IN鐟欙綁鏀�");
 			break;
 		case TelephonyManager.SIM_STATE_PUK_REQUIRED:
-			Log.i(TAG, "闇�瑕丳UK瑙ｉ攣");
+			Log.i(TAG, "闂囷拷鐟曚赋UK鐟欙綁鏀�");
 			break;
 		case TelephonyManager.SIM_STATE_NETWORK_LOCKED:
-			Log.i(TAG, "闇�瑕丯etworkPIN瑙ｉ攣");
+			Log.i(TAG, "闂囷拷鐟曚腐etworkPIN鐟欙綁鏀�");
 			break;
 		case TelephonyManager.SIM_STATE_READY:
-			Log.i(TAG, "鑹ソ");
+			Log.i(TAG, "閼诡垰銈�");
 			break;
 		}
 		return state;
@@ -177,13 +177,13 @@ public class ApnSetting {
 	}
 	
 	private void initApnList() {
-		MyPreference preference = new MyPreference(mContext);		
-		String apnStr = preference.getString(MyPreference.KEY_APN_LIST);
+		//MyPreference preference = new MyPreference(mContext);		
+		String apnStr ="null";// preference.getString(MyPreference.KEY_APN_LIST);
 		
 		if (apnStr == "null") {
-			apnStr = "[{\"carrier\":\"骞垮窞鐗╄仈缃�(ChinaUnicom)\",\"mcc\":\"460\",\"mnc\":\"06\",\"apn\":\"UNIM2M.GZM2MAPN\"},"
-					+ "{\"carrier\":\"鍗椾含鐗╄仈缃�(ChinaUnicom)\",\"mcc\":\"460\",\"mnc\":\"06\",\"apn\":\"UNIM2M.NJM2MAPN\"},"
-					+ "{\"carrier\":\"璇鐗╄仈缃�(ChinaUnicom)\",\"mcc\":\"460\",\"mnc\":\"06\",\"apn\":\"zjjxyjqc01.clfu.njm2mapn\"}]";
+			apnStr = "[{\"carrier\":\"楠炲灝绐為悧鈺勪粓缂冿拷(ChinaUnicom)\",\"mcc\":\"460\",\"mnc\":\"06\",\"apn\":\"UNIM2M.GZM2MAPN\"},"
+					+ "{\"carrier\":\"閸楁ぞ鍚悧鈺勪粓缂冿拷(ChinaUnicom)\",\"mcc\":\"460\",\"mnc\":\"06\",\"apn\":\"UNIM2M.NJM2MAPN\"},"
+					+ "{\"carrier\":\"鐠囶厼顣ㄩ悧鈺勪粓缂冿拷(ChinaUnicom)\",\"mcc\":\"460\",\"mnc\":\"06\",\"apn\":\"zjjxyjqc01.clfu.njm2mapn\"}]";
 		}
 
 		try {
@@ -215,8 +215,8 @@ public class ApnSetting {
 				obj.put("carrier", apn.name);			
 			}
 			String s = arr.toString();			
-			MyPreference preference = new MyPreference(mContext);
-			preference.set(MyPreference.KEY_APN_LIST, s);
+			//MyPreference preference = new MyPreference(mContext);
+			//preference.set(MyPreference.KEY_APN_LIST, s);//NG
 		} catch (JSONException e){
 			e.printStackTrace();
 		}

@@ -1,7 +1,10 @@
 package com.yusun.cartracker.helper;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.yusun.cartracker.model.Fence;
 
 import android.os.Build;
 
@@ -43,5 +46,25 @@ public class Utils {
 //	            || Build.MANUFACTURER.contains("Genymotion")
 //	            || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
 //	            || "google_sdk".equals(Build.PRODUCT);
+	}
+	public static double getLanLong(String flag, String val){
+		double ret = Double.parseDouble(val); 
+		if("S".equals(flag) || "W".equals(flag)){
+			ret *= -1;
+		}
+		return ret;
+	}
+	public static String getLanString(double val){
+		String flag = val > 0 ? "N" : "S";		
+		DecimalFormat df=new DecimalFormat("#.000000");		
+		return flag + df.format(Math.abs(val));		
+	}
+	public static String getLonString(double val){
+		String flag = val < 0 ? "E" : "W";
+		DecimalFormat df=new DecimalFormat("#.000000");		
+		return flag + df.format(Math.abs(val));	
+	}
+	public static Fence getFence(String msg){
+	   return new com.yusun.cartracker.model.sms.FENCE().getFence((msg));
 	}
 }

@@ -22,11 +22,8 @@ public class SERVER implements CmdHandler{
 		String reg = "([0-1]),(.*),(\\d+),([0-1])";
 		Matcher m = Pattern.compile(reg).matcher(msg.content);
 		if(m.find()){			
-			if(Settings.instance().setService(m.group(2), m.group(3))){
-				AppContext.instance().resetNetServer();
-			}else{
-				msg.sendErr();
-			}
+			Settings.instance().setService(m.group(2), m.group(3));
+			AppContext.instance().resetNetServer();			
 		}else{
 			msg.sendFormatErr();
 		}

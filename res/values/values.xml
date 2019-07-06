@@ -1,10 +1,20 @@
-<resources>
-   <string name="ip" translatable="false">www.18gps.net</string>
-   <string name="port" translatable="false">7018</string>
-   <integer name="gps_interval">30</integer>
-   <integer name="lbs_interval">120</integer>
-   <integer name="gps_work_interval">1800</integer>   
-   <string name="sos_num">133123456789,137123456789,137123456789,137123456789</string>
-   <integer name="sensor_time">10</integer>
-   <integer name="alarm_time">30</integer>
+<resources>   
+    <string name="LANGUAGE" translatable="false">1</string>
+	<string name="DEVICETYPE" translatable="false">1</string>
+	<string name="SENSOR_INTERVAL" translatable="false">15</string>
+	<string name="SENDS_TIMEOUT" translatable="false">600</string>
+	<string name="DEFENSE_DELAY" translatable="false">600</string>    
+	<string name="GPS_INTERVAL" translatable="false">30</string>				
+	<string name="LBS_INTERVAL" translatable="false">120</string>				
+	<string name="GPS_WORK_INTERVAL" translatable="false">1800</string>			
+	<string name="SERVICE_IP" translatable="false">www.18gps.net</string>
+	<string name="SERVICE_PORT" translatable="false">7018</string>
+	<string name="SOS_NUMBER" translatable="false">18676696011,18676696012,18676696013,18676696014</string>
+	<string name="GPS_POWER" translatable="false">on</string>
+	<string name="PASSWORD" translatable="false">666666</string>
+	<string name="ADMIN_PASSWORD" translatable="false">811208</string>
+	<string name="MONITOR" translatable="false">false</string>
+	<string name="VIRBATION" translatable="false">true</string>   
+	<string name="GPS_ANALYSE_URL" translatable="false">www.18gps.net</string>
+	<string name="FENCE" translatable="false">ON,1,N23,W114,N24,E114</string>
 </resources>

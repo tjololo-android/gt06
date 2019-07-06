@@ -1,121 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string-array name="voice_tips">
-        <item></item>
-        <item>请注意右前门未关</item>
-        <item>请注意左前门未关</item>
-        <item>请注意左后门未关</item>
-        <item>请注意右后门未关</item>
-        <item>请注意后备箱未关</item>
-        <item>请注意引擎盖未关</item>
-        <item>请注意大灯未关</item>
+    <string-array name="setting_tab_fields">
+        <item>空</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
     </string-array>
     
-    <string-array name="bsname">
-        <item>车速</item>
-        <item>里程</item>
-        <item>续航里程</item>
-        <item>剩余油量</item>
-        <item>油耗</item>
-        <item>水温</item>
-        <item>电压</item>
-        <item>转速</item>
-    </string-array>
-    
-    <string-array name="radar_name">
-        <item>后左雷</item>
-        <item>后中左雷</item>
-        <item>后中右雷</item>
-        <item>后右雷</item>
-        <item>前左雷</item>
-        <item>前中左雷</item>
-        <item>前中右雷</item>
-        <item>前右雷</item>
-        <item>右前</item>
-        <item>右中前雷</item>
-        <item>右中后雷</item>
-        <item>右后雷</item>
-        <item>左前雷</item>
-        <item>左中前雷</item>
-        <item>左中后雷</item>
-        <item>左后雷</item>
-        <item>后雷</item>
-        <item>前雷</item>
-        <item>右雷</item>
-        <item>左雷</item>
-        <item>后中雷</item>
-        <item>前中雷</item>
-        <item>右中雷</item>
-        <item>左中雷</item>
-    </string-array>
-    
-    <string-array name="air_conditon_name">
-        <item>菜单</item>
-        <item>开关</item>
-        <item>ac</item>
-        <item>循环</item>
-        <item>auto</item>
-        <item>auto2</item>
-        <item>sync</item>
-        <item>dual</item>
-        <item>acMax</item>
-        <item>后区开关</item>
-        <item>Max Front</item>
-        <item>AQS</item>
-        <item>ECON</item>
-        <item>后除雾</item>
-        <item>前除雾</item>
-        <item>右座加热</item>
-        <item>左座加热</item>
-        <item>主座风/热</item>
-        <item>副座风/热</item>
-        <item>前左温度</item>
-        <item>前右温度</item>
-        <item>后排左温</item>
-        <item>左风模式</item>
-        <item>左风速</item>
-        <item>右风模式</item>
-        <item>右风速</item>
-        <item>前风模式</item>
-        <item>前风速</item>
-        <item>后风模式</item>
-        <item>后风速</item>
-        <item>空气质量</item>
-        <item>自动除雾</item>
-        <item>调光器</item>
-        <item>后排温设</item>
-        <item>风量强度</item>
-        <item>前区开关</item>
-        <item>温度等级</item>
-        <item>单一温区</item>
-        <item>单位</item>
-    </string-array>
-    
-    <string-array name="door_name">
-        <item>右前门</item>
-        <item>左前门</item>
-        <item>左后门</item>
-        <item>右后门</item>
-        <item>后备箱</item>
-        <item>引擎盖</item>
-        <item>大灯</item>
-        <item>左转向灯</item>
-        <item>右转向灯</item>
-    </string-array>
-    <string-array name="onstar_name">
-        <item>状态</item>
-        <item>通话类型</item>
-        <item>通话标志</item>
-        <item>通话时间</item>
-        <item>安剩余时间</item>
-        <item>安有效日期</item>
-        <item>警告状态</item>
-        <item>警告类型</item>
-    </string-array>
-    
-    
-    <string-array name="num_hex">
+    <string-array name="setting_default_values">
         <item>空</item>
         <item>0</item>
         <item>1</item>

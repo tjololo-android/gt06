@@ -17,6 +17,7 @@ package com.yusun.cartracker.position;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,10 +26,15 @@ import android.os.AsyncTask;
 
 import java.util.Date;
 
+import com.yusun.cartracker.R;
+import com.yusun.cartracker.api.Settings;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "traccar.db";
+    public static final String TABLE_SET_NAME = "settings";
+    public static final String TABLE_POS_NAME = "position";
 
     public interface DatabaseHandler<T> {
         void onComplete(boolean success, T result);
@@ -62,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private SQLiteDatabase db;
-
+    private Context mContext;
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         db = getWritableDatabase();
@@ -82,16 +88,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "fixed INTEGER," +  
                 "satellates INTEGER," +  
                 "mock INTEGER)");
+        
+        db.execSQL("CREATE TABLE settings (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +             
+                "key INTEGER TEXT PRIMARY KEY," +
+                "value TEXT )");
+        
+        init();
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS position;");
+        db.execSQL("DROP TABLE IF EXISTS settings;");
         onCreate(db);
     }
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS position;");
+        db.execSQL("DROP TABLE IF EXISTS settings;");
         onCreate(db);
     }
 
@@ -175,6 +188,57 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 return null;
             }
         }.execute();
-    }
+    } 
 
+
+    private void init(){
+//    	String[] fields = mContext.getResources().getStringArray(R.array.setting_tab_fields);
+//    	String[] field_values = mContext.getResources().getStringArray(R.array.setting_default_values);
+//    	for(int i = 0; i < fields.length; i++){
+//    		ContentValues values = new ContentValues();
+//    		values.put("key", fields[i]);
+//    		values.put("value", field_values[i]);
+//    		long result = db.insert(TABLE_SET_NAME, null, values);
+//    		//Log.i(TAG, fields[i] + " : " + field_values[i] + " ,result = " + result);
+//    	}
+    	Resources res = mContext.getResources();
+    	insert(Settings.LANGUAGE, res.getString(R.string.LANGUAGE));
+    	insert(Settings.DEVICETYPE, res.getString(R.string.DEVICETYPE));
+    	insert(Settings.SENSOR_INTERVAL, res.getString(R.string.SENSOR_INTERVAL));
+    	insert(Settings.SENDS_TIMEOUT, res.getString(R.string.SENDS_TIMEOUT));
+    	insert(Settings.DEFENSE_DELAY, res.getString(R.string.DEFENSE_DELAY));
+    	insert(Settings.GPS_INTERVAL, res.getString(R.string.GPS_INTERVAL));				
+    	insert(Settings.LBS_INTERVAL, res.getString(R.string.LBS_INTERVAL));				
+    	insert(Settings.GPS_WORK_INTERVAL, res.getString(R.string.GPS_WORK_INTERVAL));			
+    	insert(Settings.SERVICE_IP, res.getString(R.string.SERVICE_IP));
+    	insert(Settings.SERVICE_PORT, res.getString(R.string.SERVICE_PORT));
+    	insert(Settings.SOS_NUMBER, res.getString(R.string.SOS_NUMBER));
+    	insert(Settings.GPS_POWER, res.getString(R.string.GPS_POWER));
+    	insert(Settings.PASSWORD, res.getString(R.string.PASSWORD));
+    	insert(Settings.ADMIN_PASSWORD, res.getString(R.string.ADMIN_PASSWORD));
+    	insert(Settings.MONITOR, res.getString(R.string.MONITOR));
+    	insert(Settings.VIRBATION, res.getString(R.string.VIRBATION));
+    	insert(Settings.GPS_ANALYSE_URL, res.getString(R.string.GPS_ANALYSE_URL));
+    	insert(Settings.FENCE, res.getString(R.string.FENCE));    	
+    }
+    public void insert(String key, String val){
+    	ContentValues values = new ContentValues();
+		values.put("key", key);
+		values.put("value", val);
+		long result = db.insert(TABLE_SET_NAME, null, values);
+    }
+    public void update(String key, String val) {
+        ContentValues values = new ContentValues();
+        values.put(key, val);
+        if(-1 == db.update(TABLE_SET_NAME, values, "key = ?", new String[]{key})){
+        	insert(key, val);
+        }
+    }
+    public String read(String key){
+		Cursor cursor = db.query(TABLE_SET_NAME, null, "key = ?", new String[]{key}, null, null, null);
+		if(cursor.moveToFirst()){
+			return cursor.getString(cursor.getColumnIndex("value"));		
+		}
+		return null;
+    }
 }

@@ -1,7 +1,5 @@
 package com.yusun.cartracker.model.sms;
 
-import java.text.DecimalFormat;
-
 import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.helper.Utils;
@@ -24,9 +22,8 @@ public class WHERE implements CmdHandler{
 			sb.append("No Data!");
 		}else{
 			Position pos = AppContext.instance().getDatabaseHelper().selectPosition();
-			DecimalFormat df=new DecimalFormat("#.000000");
-			sb.append("Lat:" + (pos.getLatitude() > 0 ? "N" : "S") + df.format(Math.abs(pos.getLatitude())));
-			sb.append(",Lon:" + (pos.getLongitude() < 0 ? "E" : "W") + df.format(Math.abs(pos.getLongitude())));
+			sb.append("Lat:" + Utils.getLanString(pos.getLatitude()));
+			sb.append(",Lon:" + Utils.getLonString(pos.getLongitude()));
 			sb.append(",Course:" + pos.getCourse());
 			sb.append(",Speed:" + pos.getSpeed());
 			sb.append(",DateTime:"+ Utils.getDataTime(pos.getTime()));	

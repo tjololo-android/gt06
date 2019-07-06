@@ -1,6 +1,6 @@
 package com.yusun.cartracker.model;
 
-public abstract class Fence{
+public abstract class Fence extends Object{
 	public static final String FENCE_STATE_ON = "ON";
 	public static final String FENCE_STATE_OFF = "OFF";	
 	public static final String FENCE_TYPE_IN = "IN";
@@ -29,4 +29,5 @@ public abstract class Fence{
 		return sharp;
 	}
 	public abstract boolean inSharp(double lat, double lon);
+	public abstract String toString();
 }

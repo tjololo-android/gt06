@@ -29,10 +29,10 @@ public class SEEFENCE implements CmdHandler{
 			sb.append("FenceType:"+ "Circle" + ";");
 		}else{
 			FenceRectangle fc = (FenceRectangle)fence;
-			sb.append("Lat1:"+get(fc.getLeftTopLan(), true));
-			sb.append("Lon1:"+get(fc.getLeftTopLon(), false));
-			sb.append("Lat2:"+get(fc.getRightBottomLan(), true));
-			sb.append("Lon2:"+get(fc.getRightBottomLon(), false));
+			sb.append("Lat1:"+get(fc.getLan1(), true));
+			sb.append("Lon1:"+get(fc.getLon1(), false));
+			sb.append("Lat2:"+get(fc.getLan2(), true));
+			sb.append("Lon2:"+get(fc.getLon2(), false));
 			sb.append("FenceType:"+ "Rectangle" + ";");
 		}
 		msg.sendAck(sb.toString());

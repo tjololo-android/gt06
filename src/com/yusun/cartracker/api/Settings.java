@@ -1,21 +1,21 @@
 package com.yusun.cartracker.api;
 
+import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.helper.Utils;
 import com.yusun.cartracker.model.Fence;
 
 import android.content.Context;
 
 public class Settings {
-	Context mContext;
-					
-	private int mLanguage = 0x01;				//NG
-	private String DEVICETYPE = "11";			//NG
+	Context mContext;					
+	private int mLanguage;				//NG
+	private String mDeviceType;			//NG
     private int mSensorInterval;
     private int mSendsTimeout;
     private int mDefenseDelay;    
-	private int mGpsInterval = 30;				
-	private int mLbsInterval = 30;				
-	private int mGpsWorkInterval = 30;			
+	private int mGpsInterval;				
+	private int mLbsInterval;				
+	private int mGpsWorkInterval;			
 	private String mIp;
 	private String mPort;
 	private String mSosNumber;
@@ -35,13 +35,8 @@ public class Settings {
 		}
 		return _this;
 	}
-	
-	public void init(){
-		
-	}
-	
-	public String getDeviceType() {
-		return DEVICETYPE;
+	public String getDeviceType() {		
+		return mDeviceType;
 	}
 	public int getLanguage() {
 		return mLanguage;
@@ -50,42 +45,33 @@ public class Settings {
 	public boolean getVibration(){
 		return mVirbation;
 	}
-	
 
 	public int getGpsInterval() {
 		return mGpsInterval;
 	}
-	public void setGpsInterval(int interval) {
-		if(interval != mGpsInterval){			
-			mGpsInterval = interval;		
-		}
+	public void setGpsInterval(int interval) {					
+		mGpsInterval = interval;		
+		update(GPS_INTERVAL, interval);
 	}
 	public int getLbsInterval() {
 		return mLbsInterval;
 	}
-	public void setLbsInterval(int interval) {
-		if(interval != mLbsInterval){						
-			mLbsInterval = interval;			
-		}		
+	public void setLbsInterval(int interval) {								
+		mLbsInterval = interval;
+		update(LBS_INTERVAL, interval);
 	}
 	public int getGpsWorkInterval() {
 		return mGpsWorkInterval;
 	}
-	public void setGpsWorkInterval(int interval) {
-		if(interval != mGpsInterval){						
-			mGpsWorkInterval = interval;			
-		}
+	public void setGpsWorkInterval(int interval) {			
+		mGpsWorkInterval = interval;			
+		update(GPS_WORK_INTERVAL, interval);
 	}
-	public boolean setService(String ip, String port) {
-		if(mIp.equalsIgnoreCase(ip) && mPort.equalsIgnoreCase(port))
-			return false;		
-		int p = Integer.parseInt(port);
-		if(Utils.isValidVrl(ip) && p > 0 && p < 65535){
-			mIp = ip;
-			mPort = port;					
-			return true;
-		}		
-		return false;
+	public void setService(String ip, String port) {
+		mIp = ip;
+		mPort = port;
+		update(SERVICE_IP, ip);
+		update(SERVICE_PORT, port);
 	}
 	public String getIp(){
 		return mIp;
@@ -100,10 +86,9 @@ public class Settings {
 		return mSosNumber;
 	}
 
-	public void setSOS(String sOS) {
-		if(!mSosNumber.equals(sOS)){						
-			mSosNumber = sOS;
-		}		
+	public void setSOS(String sos) {								
+		mSosNumber = sos;
+		update(SOS_NUMBER, sos);		
 	}
 
 	public int getDefenseDelay() {
@@ -115,12 +100,12 @@ public class Settings {
 	}
 
 	public void setSensorInterval(int val) {	//NG interval to check vibrator second
-		if(mSensorInterval != val){
-			mSensorInterval = val;
-		}
+		mSensorInterval = val;
+		update(SENSOR_INTERVAL, val);
 	}
 	public void setSendsTimeout(int val) {	//NG timeout no vibrator to close gps
 		mSendsTimeout = val;
+		update(SENDS_TIMEOUT, val);
 	}
 
 	public boolean isGpsPowerOn() {	
@@ -129,6 +114,7 @@ public class Settings {
 	
 	public boolean setGPSAnalyseUrl(String content) {
 		mGpsAnalyseUrl = content;
+		update(GPS_ANALYSE_URL, content);
 		return false;
 	}
 
@@ -136,7 +122,7 @@ public class Settings {
 		return mGpsAnalyseUrl;
 	}
 
-	public boolean turnOnGps(boolean on) {		//NG
+	public boolean turnOnGps(boolean on) {
 		mGpsPower = on;
 		return true;
 	}
@@ -146,7 +132,8 @@ public class Settings {
 	}
 
 	public void modifyPass(String password) {
-		mPassword = password;		
+		mPassword = password;
+		update(PASSWORD, password);
 	}
 	public void setmContext(Context mContext) {
 		this.mContext = mContext;
@@ -159,25 +146,90 @@ public class Settings {
 		return mAdminPassword.equals(password);
 	}
 
-	public void resetPass() {		//NG
-				
+	public void resetPass() {//NG
+		
 	}
 
-	public void switchMonitor() {	//NG
+	public void switchMonitor() {
 		mMonitor = true;
+		update(MONITOR, mMonitor);
 	}
-	public void setVibration(boolean virbation) {	//NG	
+	public void setVibration(boolean virbation) {	
 		mVirbation = virbation;
+		update(VIRBATION, virbation);
 	}
 	public void setDefenseDelay(int delay) {		
-		if(mDefenseDelay != delay){
-			mDefenseDelay = delay;
-		}
+		mDefenseDelay = delay;
+		update(DEFENSE_DELAY, delay);
 	}
 	public void setFence(Fence fence) {
-		mFence = fence;		//NG		
+		mFence = fence;
+		update(FENCE, fence);
 	}
 	public Fence getFence(){
 		return mFence;
 	}
+	
+/******************************************************************************************/
+/******************************begin of setting db***************************************/
+/******************************************************************************************/
+	public static final String LANGUAGE = "LANGUAGE";
+    public static final String DEVICETYPE = "DEVICETYPE";
+    public static final String SENSOR_INTERVAL = "SENSOR_INTERVAL";
+    public static final String SENDS_TIMEOUT = "SENDS_TIMEOUT";
+    public static final String DEFENSE_DELAY = "DEFENSE_DELAY";    
+    public static final String GPS_INTERVAL = "GPS_INTERVAL";				
+    public static final String LBS_INTERVAL = "LBS_INTERVAL";				
+    public static final String GPS_WORK_INTERVAL = "GPS_WORK_INTERVAL";			
+    public static final String SERVICE_IP = "SERVICE_IP";
+    public static final String SERVICE_PORT = "SERVICE_PORT";
+    public static final String SOS_NUMBER = "SOS_NUMBER";
+    public static final String GPS_POWER = "GPS_POWER";
+    public static final String PASSWORD = "PASSWORD";
+    public static final String ADMIN_PASSWORD = "ADMIN_PASSWORD";
+    public static final String MONITOR = "MONITOR";
+    public static final String VIRBATION = "VIRBATION";   
+    public static final String GPS_ANALYSE_URL = "GPS_ANALYSE_URL";
+    public static final String FENCE = "FENCE";
+    public void init(){
+    	mLanguage = Integer.parseInt(read(LANGUAGE));
+    	mDeviceType = (read(DEVICETYPE));
+    	mSensorInterval = Integer.parseInt(read(SENSOR_INTERVAL));
+    	mSendsTimeout = Integer.parseInt(read(SENDS_TIMEOUT));
+    	mDefenseDelay = Integer.parseInt(read(DEFENSE_DELAY));
+    	mGpsInterval = Integer.parseInt(read(GPS_INTERVAL));
+    	mLbsInterval = Integer.parseInt(read(LBS_INTERVAL));
+    	mGpsWorkInterval = Integer.parseInt(read(GPS_WORK_INTERVAL));
+    	mIp = (read(SERVICE_IP));
+    	mPort = (read(SERVICE_PORT));
+    	mSosNumber = (read(SOS_NUMBER));
+    	mGpsPower = Boolean.parseBoolean(read(GPS_POWER));
+    	mPassword = (read(PASSWORD));
+    	mAdminPassword = (read(ADMIN_PASSWORD));
+    	mMonitor = Boolean.parseBoolean(read(MONITOR));
+    	mVirbation = Boolean.parseBoolean(read(VIRBATION));
+    	mGpsAnalyseUrl = (read(GPS_ANALYSE_URL));
+    	mFence = Utils.getFence(read(FENCE)); 
+	}
+    void update(String key, String val){
+    	AppContext.instance().getDatabaseHelper().update(key, val);
+    }
+    void update(String key, int val){
+    	update(key, String.valueOf(val));
+    }
+    void update(String key, double val){
+    	update(key, String.valueOf(val));
+    }
+    void update(String key, boolean val){
+    	update(key, String.valueOf(val));
+    }
+    void update(String key, Object val){
+    	update(key, String.valueOf(val));
+    }
+    String read(String key){
+    	return AppContext.instance().getDatabaseHelper().read(key);
+    }  
+/******************************************************************************************/
+/************************************end of setting db***********************************/
+/******************************************************************************************/
 }

@@ -6,6 +6,7 @@ import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.helper.Utils;
 import com.yusun.cartracker.model.Fence;
 import com.yusun.cartracker.model.TimeZone;
+import com.yusun.cartracker.position.Position;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -43,6 +44,8 @@ public class Hardware {
     private boolean mRecharge;
     private boolean mAcc;
     private int mFenceNum;
+    private Position mLastPos;
+    
 	private Hardware(){}
 	private static Hardware _this;
 	public static Hardware instance(){
@@ -220,7 +223,11 @@ public class Hardware {
 	public String getMode() {	//NG
 		return "mode 0,1,200";
 	}
-}
 	
-
-
+	public Position getLastPos(){
+		return mLastPos;
+	}
+	public void setLastPos(Position pos){
+		mLastPos = pos;
+	}
+}

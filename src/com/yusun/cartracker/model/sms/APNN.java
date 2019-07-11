@@ -18,7 +18,7 @@ public class APNN implements CmdHandler{
 	}
 
 	@Override
-	public void doCmd(MSG msg) {		
+	public void doCmd(MSG msg) {		//NG
 		//APN,666666,CMNET,admin,123456,0,0.0.0.0#		
 		Pattern p = Pattern.compile(reg);
 		Matcher m = p.matcher(msg.content);

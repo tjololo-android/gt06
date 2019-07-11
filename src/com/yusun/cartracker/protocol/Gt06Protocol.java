@@ -118,6 +118,7 @@ public class Gt06Protocol extends BaseProtocol{
 		}
 	}
     
+	@Override
     public void alarm(){
     	int fence = Hardware.instance().getFenceType();
     	Position pos = getPosition();

@@ -27,9 +27,9 @@ public class FENCE implements CmdHandler{
 //		ON,0,N23,W114,10,IN
 //		ON,0,0,0,10
 		Fence fence = getFence(msg.content);
-		if(null != fence){
-			msg.sendAck("OK");
+		if(null != fence){			
 			Settings.instance().setFence(fence);
+			msg.sendOK();
 		}else{
 			msg.sendFormatErr();
 		}

@@ -5,6 +5,7 @@ import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.netty.NettyClient;
 import com.yusun.cartracker.netty.NettyServer;
+import com.yusun.cartracker.position.DatabaseHelper;
 import com.yusun.cartracker.position.NetworkManager;
 import com.yusun.cartracker.position.NetworkManager.NetworkHandler;
 import com.yusun.cartracker.position.PositionWriter;
@@ -69,6 +70,10 @@ public class MainService extends Service implements NetworkHandler {
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
         wakeLock.acquire(3*60*1000);
         
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        AppContext.instance().setContext(MainService.this.getApplicationContext());
+        AppContext.instance().setDatabaseHelper(databaseHelper);
+        
         Hardware.instance().setmContext(getApplicationContext());
         Hardware.instance().init();
         Settings.instance().setmContext(getApplicationContext());
@@ -79,9 +84,8 @@ public class MainService extends Service implements NetworkHandler {
         positionWriter = new PositionWriter(this);
 		positionWriter.start();
 		
-		client = new NettyClient();
-				
-		AppContext.instance().setContext(MainService.this.getApplicationContext());
+		client = new NettyClient();				
+		
 		AppContext.instance().init();
 		AppContext.instance().setClient(client);
 		AppContext.instance().setNetWorkManager(networkManager);

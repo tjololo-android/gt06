@@ -6,6 +6,7 @@ import com.yusun.cartracker.model.sms.abs.CmdManager;
 import com.yusun.cartracker.netty.NettyClient;
 import com.yusun.cartracker.position.DatabaseHelper;
 import com.yusun.cartracker.position.NetworkManager;
+import com.yusun.cartracker.protocol.AlarmMgr;
 import com.yusun.cartracker.protocol.abs.BaseProtocol;
 import com.yusun.cartracker.protocol.abs.ProtocolMgr;
 
@@ -19,13 +20,15 @@ public class AppContext{
 		if(null == mContext){
 			throw new IllegalArgumentException("set context first");
 		}
-		mApnSetting = new ApnSetting(getContext());
-		databaseHelper = new DatabaseHelper(getContext());
+		mApnSetting = new ApnSetting(getContext());		
 		mSmsCmdManager = new CmdManager();
 		mSmsCmdManager.init();		
 
 		mProtocol = ProtocolMgr.getProtocol();
-		mProtocol.init();	
+		mProtocol.init();
+		
+		mAlarmMgr = new AlarmMgr();
+		mAlarmMgr.init();
 		
 		logger.info("init---");
 	}
@@ -33,6 +36,10 @@ public class AppContext{
 	public void uninit(){
 		logger.info("uninit+++");
 
+		if(null != mAlarmMgr){
+			mAlarmMgr.uninit();
+		}
+		
 		if(null != mProtocol){
 			mProtocol.uninit();
 		}
@@ -41,6 +48,12 @@ public class AppContext{
 		}
 		logger.info("uninit---");
 	}
+	
+	private AlarmMgr mAlarmMgr;
+	public AlarmMgr getAlarmMgr(){
+		return mAlarmMgr;
+	}
+	
 	private CmdManager mSmsCmdManager;
 	public CmdManager getSmsCmdManager(){
 		return mSmsCmdManager;
@@ -80,9 +93,12 @@ public class AppContext{
 	public Context getContext(){
 		return mContext;
 	}
-	private DatabaseHelper databaseHelper;
+	private DatabaseHelper mDatabaseHelper;
 	public DatabaseHelper getDatabaseHelper() {
-		return databaseHelper;
+		return mDatabaseHelper;
+	}
+	public void setDatabaseHelper(DatabaseHelper database){
+		mDatabaseHelper = database;
 	}
 
 	public void resetNetServer() {

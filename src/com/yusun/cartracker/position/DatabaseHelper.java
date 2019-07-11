@@ -35,6 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "traccar.db";
     public static final String TABLE_SET_NAME = "settings";
     public static final String TABLE_POS_NAME = "position";
+    private static boolean isFirstInit = false;
 
     public interface DatabaseHandler<T> {
         void onComplete(boolean success, T result);
@@ -71,7 +72,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private Context mContext;
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mContext = context;
         db = getWritableDatabase();
+        if(isFirstInit){
+        	init();
+        	isFirstInit = false;
+        }
     }
 
     @Override
@@ -91,10 +97,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         
         db.execSQL("CREATE TABLE settings (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +             
-                "key INTEGER TEXT PRIMARY KEY," +
-                "value TEXT )");
-        
-        init();
+                "key TEXT," +
+                "value TEXT )");        
+        isFirstInit = true;
     }
 
     @Override
@@ -192,15 +197,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     private void init(){
-//    	String[] fields = mContext.getResources().getStringArray(R.array.setting_tab_fields);
-//    	String[] field_values = mContext.getResources().getStringArray(R.array.setting_default_values);
-//    	for(int i = 0; i < fields.length; i++){
-//    		ContentValues values = new ContentValues();
-//    		values.put("key", fields[i]);
-//    		values.put("value", field_values[i]);
-//    		long result = db.insert(TABLE_SET_NAME, null, values);
-//    		//Log.i(TAG, fields[i] + " : " + field_values[i] + " ,result = " + result);
-//    	}
     	Resources res = mContext.getResources();
     	insert(Settings.LANGUAGE, res.getString(R.string.LANGUAGE));
     	insert(Settings.DEVICETYPE, res.getString(R.string.DEVICETYPE));
@@ -221,7 +217,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     	insert(Settings.GPS_ANALYSE_URL, res.getString(R.string.GPS_ANALYSE_URL));
     	insert(Settings.FENCE, res.getString(R.string.FENCE));    	
     }
-    public void insert(String key, String val){
+    private void insert(String key, String val){
     	ContentValues values = new ContentValues();
 		values.put("key", key);
 		values.put("value", val);
@@ -229,8 +225,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public void update(String key, String val) {
         ContentValues values = new ContentValues();
-        values.put(key, val);
-        if(-1 == db.update(TABLE_SET_NAME, values, "key = ?", new String[]{key})){
+        values.put("key", key);
+        values.put("value", val);
+        if(-1 == db.update(TABLE_SET_NAME, values, "key=?", new String[]{key})){
         	insert(key, val);
         }
     }
@@ -240,5 +237,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			return cursor.getString(cursor.getColumnIndex("value"));		
 		}
 		return null;
+    }
+    public void resetPassword(){
+    	update(Settings.PASSWORD, mContext.getResources().getString(R.string.PASSWORD));
     }
 }

@@ -20,6 +20,7 @@ public class VIBRATION implements CmdHandler{
 		Matcher m = Pattern.compile("(ON|OFF)").matcher(msg.content);
 		if(m.find()){
 			Settings.instance().setVibration("ON".equals(m.group(1)));
+			msg.sendOK();
 		}else{
 			msg.sendFormatErr();
 		}

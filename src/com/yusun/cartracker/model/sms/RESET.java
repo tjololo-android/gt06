@@ -13,6 +13,6 @@ public class RESET implements CmdHandler{
 
 	@Override
 	public void doCmd(MSG msg) {		
-		msg.sendAck("The terminal will restart after 1 minute!");
+		msg.sendAck("The terminal will restart after 1 minute!");	//NG
 	}	
 }

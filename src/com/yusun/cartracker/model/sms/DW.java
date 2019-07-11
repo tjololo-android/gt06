@@ -15,6 +15,6 @@ public class DW implements CmdHandler{
 
 	@Override
 	public void doCmd(MSG msg) {
-		AppContext.instance().getProtocol().doCmd(Gt06ProtocolConstant.CMD_REQUEST_ADDRESS, msg);	
+		AppContext.instance().getProtocol().doCmd(Gt06ProtocolConstant.CMD_REQUEST_ADDRESS, msg);
 	}	
 }

@@ -17,13 +17,10 @@ public class PASSWORD implements CmdHandler{
 
 	@Override
 	public void doCmd(MSG msg) {
-		Matcher m = Pattern.compile("(\\d+),(\\d+)").matcher(msg.content);
-		if(m.find()){
-			if(Settings.instance().checkPass(m.group(1))){
-				Settings.instance().modifyPass(m.group(2));
-			}else{
-				msg.sendPassErr();
-			}
+		Matcher m = Pattern.compile("(\\d{6})").matcher(msg.content);
+		if(m.find()){			
+			Settings.instance().modifyPass(m.group(1));
+			msg.sendOK();			
 		}else{
 			msg.sendFormatErr();
 		}

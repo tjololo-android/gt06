@@ -22,6 +22,7 @@ public class GMT implements CmdHandler{
 		Matcher m = Pattern.compile(reg).matcher(msg.content);
 		if(m.find()){
 			Hardware.instance().setTimeZone(m.group(1), Integer.parseInt(m.group(2)));
+			msg.sendOK();
 		}else{
 			msg.sendFormatErr();
 		}

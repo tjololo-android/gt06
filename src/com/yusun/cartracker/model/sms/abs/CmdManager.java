@@ -47,8 +47,6 @@ public class CmdManager {
 				SmsQueues.add(sMsg);
 				SmsQueues.notifyAll();	
 			}			
-		}else{
-			SMS.sendMsg(num, "format error!");
 		}
 	}
 	

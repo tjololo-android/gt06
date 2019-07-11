@@ -17,6 +17,7 @@ package com.yusun.cartracker.position;
 
 import java.util.Date;
 
+import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.helper.Logger;
 
@@ -81,6 +82,7 @@ public class TrackingController implements PositionProvider.PositionListener, Ne
     public void onPositionUpdate(Position position) {
      
         if (position != null) {
+       		Hardware.instance().setLastPos(position);
             write(position);
         }
     }

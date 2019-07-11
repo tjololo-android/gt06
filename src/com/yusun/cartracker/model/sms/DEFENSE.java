@@ -20,6 +20,7 @@ public class DEFENSE implements CmdHandler{
 		Matcher m = Pattern.compile("(\\d+)").matcher(msg.content);
 		if(m.find()){
 			Settings.instance().setDefenseDelay(Integer.parseInt(m.group(1))*60);
+			msg.sendOK();
 		}else{
 			msg.sendFormatErr();
 		}

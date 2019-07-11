@@ -20,6 +20,7 @@ public class RELAY implements CmdHandler{
 		Matcher m = Pattern.compile("([0-1])").matcher(msg.content);
 		if(m.find()){
 			Hardware.instance().setOilPowerControl("1".equals(m.group(1)));
+			msg.sendOK();
 		}else{
 			msg.sendFormatErr();
 		}

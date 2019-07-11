@@ -146,15 +146,16 @@ public class Settings {
 		return mAdminPassword.equals(password);
 	}
 
-	public void resetPass() {//NG
-		
+	public void resetPass() {
+		resetPassword();
+		mPassword = (read(PASSWORD));
 	}
 
 	public void switchMonitor() {
 		mMonitor = true;
 		update(MONITOR, mMonitor);
 	}
-	public void setVibration(boolean virbation) {	
+	public void setVibration(boolean virbation) {	//NG
 		mVirbation = virbation;
 		update(VIRBATION, virbation);
 	}
@@ -228,7 +229,10 @@ public class Settings {
     }
     String read(String key){
     	return AppContext.instance().getDatabaseHelper().read(key);
-    }  
+    }
+    void resetPassword(){
+    	AppContext.instance().getDatabaseHelper().resetPassword();
+    }
 /******************************************************************************************/
 /************************************end of setting db***********************************/
 /******************************************************************************************/

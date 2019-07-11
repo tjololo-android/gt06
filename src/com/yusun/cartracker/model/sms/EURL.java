@@ -15,7 +15,7 @@ public class EURL implements CmdHandler{
 	@Override
 	public void doCmd(MSG msg) {		
 		if(Settings.instance().setGPSAnalyseUrl(msg.content)){
-			msg.sendAck("OK");
+			msg.sendOK();
 		}else{
 			msg.sendAck("ERROR");
 		}

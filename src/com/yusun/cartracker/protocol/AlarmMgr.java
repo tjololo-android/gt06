@@ -10,8 +10,18 @@ import com.yusun.cartracker.model.Fence;
 import com.yusun.cartracker.position.Position;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
 
 public class AlarmMgr {
+	public static final String ACTION_ALARM = "yusun.intent.action.ACTION_ALARM";
+	public static final String ALARM_TYPE = "ALARM_TYPE"; 
+    public static final int ALARM_TYPE_NORMAL = 0; //正常
+    public static final int ALARM_TYPE_VIBRATION = 1; //震动
+    public static final int ALARM_TYPE_OIL_POWER_OFF = 2; //断电
+    public static final int ALARM_TYPE_BATTERY_LOW = 3; //低电
+    public static final int ALARM_TYPE_SOS = 4; //SOS	
+	
 	boolean running = true;
 	Semaphore event = new Semaphore(0);
 	public void start(){
@@ -28,9 +38,11 @@ public class AlarmMgr {
 	private void waitForEven(){	
 		while(running){
 			waitEvent(3000);
-			checkSos();
 			checkPower();
-			checkVibration();			
+			if(0 != Hardware.instance().getAlarmType()){
+				alarm();
+				Hardware.instance().resetAlarmType();
+			}
 		}
 	}
 	
@@ -49,16 +61,11 @@ public class AlarmMgr {
 		event.release();
 	}
 	
-	void checkSos(){
-		
-	}
 	void checkPower(){
 		if(Hardware.instance().getBATTERY() < 10){
-			alarm();
+			Hardware.instance().setAlarmType(ALARM_TYPE_BATTERY_LOW);		
+			raseEvent();
 		}
-	}
-	void checkVibration(){
-		
 	}
 	void checkFence(){		//NG
 		Fence fence = Settings.instance().getFence();
@@ -67,18 +74,26 @@ public class AlarmMgr {
 			alarm();
 		}
 	}
-	BroadcastReceiver receiver = new BroadcastReceiver(){ //NG
+	BroadcastReceiver receiver = new BroadcastReceiver(){
 		public void onReceive(android.content.Context context, android.content.Intent intent) {
-			if(intent.getAction().equals("sos_key")){
-				//sos
-				raseEvent();
+			if(intent.getAction().equals(ACTION_ALARM)){
+				int type = intent.getIntExtra(ALARM_TYPE, -1);
+				if(-1 != type){
+					Hardware.instance().setAlarmType(type);
+					raseEvent();
+				}
 			}
 		};
 	};
 	public void init() {
+		Context ctx = AppContext.instance().getContext();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ACTION_ALARM);
+		ctx.registerReceiver(receiver, filter);
 		start();		
 	}
 	public void uninit() {
+		AppContext.instance().getContext().unregisterReceiver(receiver);
 		stop();
 	}
 }

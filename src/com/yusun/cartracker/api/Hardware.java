@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.yusun.cartracker.helper.Logger;
 import com.yusun.cartracker.helper.Utils;
-import com.yusun.cartracker.model.Fence;
 import com.yusun.cartracker.model.TimeZone;
 import com.yusun.cartracker.position.Position;
 
@@ -18,6 +17,7 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
+
 
 public class Hardware {
 	Context mContext;
@@ -45,6 +45,7 @@ public class Hardware {
     private boolean mAcc;
     private int mFenceNum;
     private Position mLastPos;
+    private SystemSetting mSystemSetting;
     
 	private Hardware(){}
 	private static Hardware _this;
@@ -126,6 +127,7 @@ public class Hardware {
 			MCC="460";
 			MNC="01";
 		}
+		mSystemSetting = new SystemSetting();
 		logger.info("imei="+IMEI+"\nIMSI="+IMSI+"\nICCID="+ICCID+"\nCID="+CID+" LAC="+LAC+" MCC="+MCC+" MNC="+MNC);		
 		
 	}
@@ -184,7 +186,13 @@ public class Hardware {
 	}
 	public int getPreTime() {		
 		return PRETIME;
-	}	
+	}
+	public void resetAlarmType() {		
+		mAlarmType = 0;
+	}
+	public void setAlarmType(int alarmType) {		
+		mAlarmType |= alarmType;
+	}
 	public int getAlarmType() {		
 		return mAlarmType;
 	}
@@ -229,5 +237,81 @@ public class Hardware {
 	}
 	public void setLastPos(Position pos){
 		mLastPos = pos;
+	}
+	
+	private boolean mGpsPower;
+	public boolean turnOnGps(boolean on) {
+		mGpsPower = on;	
+		mSystemSetting.turnOnGps(on);
+		return true;
+	}
+	public boolean isGpsPowerOn() {	
+		return mGpsPower;
+	}	
+	
+	final private class SystemSetting{
+	    public static final String ACTION_AIRPLANE_MODE_SET = "com.yusun.service.intent.ACTION_AIRPLANE_MODE_SET"; 
+	    public static final String ACTION_REBOOT_SYSTEM = "com.yusun.service.intent.action.ACTION_REBOOT_SYSTEM";    
+	    public static final String ACTION_SET_GPS_STATUS = "com.yusun.service.intent.action.ACTION_SET_GPS_STATUS"; 
+	    public static final String ACTION_SET_SYSTEM_SETTINGS = "com.yusun.service.intent.action.ACTION_SET_SYSTEM_SETTINGS";
+	    public static final String ACTION_DATA_MODE_SET = "com.yusun.service.intent.ACTION_DATA_MODE_SET";
+	    public static final String ACTION_YUSUN_SET_APN = "com.yusun.intent.action.ACTION_SET_APN"; 
+	    public static final String ACTION_RECORY_FACTORY = "com.yusun.service.intent.action.ACTION_RECORY_FACTORY";
+	    public static final String ACTION_GOTO_SLEEP = "com.yusun.service.intent.action.ACTION_GOTOSLEEP";    
+		public static final String ACTION_SET_SYSTEM_TIME = "com.yusun.service.intent.action.ACTION_SET_SYSTEM_TIME";
+		
+		public void turnOnGps(boolean on){
+			Intent intent = new Intent(ACTION_SET_GPS_STATUS);
+		    intent.putExtra("on", true);
+		    sendBroadcast(intent);
+		}
+		public void turnOnAirMode(boolean on){
+			Intent intent = new Intent(ACTION_AIRPLANE_MODE_SET);
+		    intent.putExtra("on", true);
+		    sendBroadcast(intent);
+		}
+		public void truenOnDataConnection(boolean on){
+			Intent intent = new Intent(ACTION_DATA_MODE_SET);
+		    intent.getBooleanExtra("on", true);
+		    sendBroadcast(intent);
+		}
+		public void rebootSystem(boolean on){
+			Intent intent = new Intent(ACTION_REBOOT_SYSTEM);
+		    sendBroadcast(intent);
+		}
+		public void resetFactory(){
+			Intent intent = new Intent(ACTION_RECORY_FACTORY);
+		    sendBroadcast(intent);
+		}		
+		public void gotoSleep(){
+			Intent intent = new Intent(ACTION_GOTO_SLEEP);
+		    sendBroadcast(intent);
+		}
+		public void setSystemTime(int[] time){
+			Intent intent = new Intent(ACTION_SET_SYSTEM_TIME);
+		    intent.putExtra("time", time);
+		    sendBroadcast(intent);
+		}
+		public void setSystemSetting(String name, int val, String str){
+			Intent intent = new Intent(ACTION_SET_SYSTEM_SETTINGS);
+		    intent.putExtra("name", name);
+		    if(-1 != val){
+		      intent.putExtra("intParam", val);
+		    }else{
+		      intent.putExtra("stringParam", str);
+		    }			
+		    sendBroadcast(intent);
+		}
+		public void setApn(String mnc, String mcc, String apn, String name){
+			Intent intent = new Intent(ACTION_YUSUN_SET_APN);
+			 intent.putExtra("mnc", mnc);
+		     intent.putExtra("mcc", mcc);
+		     intent.putExtra("apn", apn);
+		     intent.putExtra("name", name);
+		    sendBroadcast(intent);
+		}		
+	}
+	public void sendBroadcast(Intent intent){
+		mContext.sendBroadcast(intent);
 	}
 }

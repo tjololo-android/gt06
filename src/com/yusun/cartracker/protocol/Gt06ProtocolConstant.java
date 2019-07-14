@@ -73,13 +73,7 @@ public class Gt06ProtocolConstant {
 	    public static final int ALARM_INFO20 = 0x16; //声控报警
 	    public static final int ALARM_INFO21 = 0x17; //伪基站报警
 	    public static final int ALARM_INFO22 = 0xFF; //ACC 关GPS 定位终端简明通讯协议
-	    public static final int ALARM_INFO23 = 0xFE; //ACC 开
-	    
-	    public static final int ALARM_TYPE_N0 = 0; //正常
-	    public static final int ALARM_TYPE_N1 = 1; //震动
-	    public static final int ALARM_TYPE_N2 = 2; //断电
-	    public static final int ALARM_TYPE_N3 = 3; //低电
-	    public static final int ALARM_TYPE_N4 = 4; //SOS	    
+	    public static final int ALARM_INFO23 = 0xFE; //ACC 开  
 	    	    
 		public static final int CMD_REQUEST_ADDRESS = 200;
 }

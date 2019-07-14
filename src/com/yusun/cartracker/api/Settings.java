@@ -18,8 +18,7 @@ public class Settings {
 	private int mGpsWorkInterval;			
 	private String mIp;
 	private String mPort;
-	private String mSosNumber;
-    private boolean mGpsPower;
+	private String mSosNumber; 
     private String mPassword;
     private String mAdminPassword;
     private boolean mMonitor;
@@ -106,12 +105,7 @@ public class Settings {
 	public void setSendsTimeout(int val) {	//NG timeout no vibrator to close gps
 		mSendsTimeout = val;
 		update(SENDS_TIMEOUT, val);
-	}
-
-	public boolean isGpsPowerOn() {	
-		return mGpsPower;
-	}
-	
+	}	
 	public boolean setGPSAnalyseUrl(String content) {
 		mGpsAnalyseUrl = content;
 		update(GPS_ANALYSE_URL, content);
@@ -121,12 +115,6 @@ public class Settings {
 	public String getGPSAnalyseUrl() {
 		return mGpsAnalyseUrl;
 	}
-
-	public boolean turnOnGps(boolean on) {
-		mGpsPower = on;
-		return true;
-	}
-
 	public boolean checkPass(String password) {
 		return password.equals(mPassword);
 	}
@@ -204,7 +192,6 @@ public class Settings {
     	mIp = (read(SERVICE_IP));
     	mPort = (read(SERVICE_PORT));
     	mSosNumber = (read(SOS_NUMBER));
-    	mGpsPower = Boolean.parseBoolean(read(GPS_POWER));
     	mPassword = (read(PASSWORD));
     	mAdminPassword = (read(ADMIN_PASSWORD));
     	mMonitor = Boolean.parseBoolean(read(MONITOR));

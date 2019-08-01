@@ -6,7 +6,6 @@ import com.yusun.cartracker.model.sms.abs.CmdManager;
 import com.yusun.cartracker.netty.NettyClient;
 import com.yusun.cartracker.position.DatabaseHelper;
 import com.yusun.cartracker.position.NetworkManager;
-import com.yusun.cartracker.protocol.AlarmMgr;
 import com.yusun.cartracker.protocol.abs.BaseProtocol;
 import com.yusun.cartracker.protocol.abs.ProtocolMgr;
 
@@ -30,9 +29,12 @@ public class AppContext{
 		mAlarmMgr = new AlarmMgr();
 		mAlarmMgr.init();
 		
+		mMotionMgr = new MotionMgr(mContext);
+		mMotionMgr.start();
+		
 		logger.info("init---");
 	}
-	
+	private MotionMgr mMotionMgr;
 	public void uninit(){
 		logger.info("uninit+++");
 
@@ -45,6 +47,9 @@ public class AppContext{
 		}
 		if(null != mSmsCmdManager){
 			mSmsCmdManager.uninit();
+		}
+		if(null != mMotionMgr){
+			mMotionMgr.stop();
 		}
 		logger.info("uninit---");
 	}

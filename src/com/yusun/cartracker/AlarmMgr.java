@@ -1,9 +1,8 @@
-package com.yusun.cartracker.protocol;
+package com.yusun.cartracker;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import com.yusun.cartracker.AppContext;
 import com.yusun.cartracker.api.Hardware;
 import com.yusun.cartracker.api.Settings;
 import com.yusun.cartracker.model.Fence;

@@ -158,6 +158,13 @@ public class Settings {
 	public Fence getFence(){
 		return mFence;
 	}
+	private int mCollisionLevel = 5;
+	public int getCollisionLevel() {
+		return mCollisionLevel;
+	}
+	public void setCollisionLevel(int collisionLevel) {
+		mCollisionLevel = collisionLevel;
+	}
 	
 /******************************************************************************************/
 /******************************begin of setting db***************************************/

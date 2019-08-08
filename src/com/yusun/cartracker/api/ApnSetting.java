@@ -43,6 +43,7 @@ public class ApnSetting {
 
 	private static int count = 0;
 	private void bytesCheckingStart() {
+		//getCurrentApnInfo();
 		new Thread(new Runnable() {
 			public void run() {
 				initApnList();
@@ -127,13 +128,13 @@ public class ApnSetting {
 	private String NAME = "name";
 
 	public APN getCurrentApnInfo() {
-		if(true){		//NG
-			APN apn = new APN();
-			apn.name = "xxx";
-			apn.numeric = "46001";
-			apn.ip= "10.0.0.1";
-			return apn;
-		}
+//		if(true){		//NG
+//			APN apn = new APN();
+//			apn.name = "xxx";
+//			apn.numeric = "46001";
+//			apn.ip= "10.0.0.1";
+//			return apn;
+//		}
 
 		APN mApn = null;
 
@@ -267,7 +268,7 @@ public class ApnSetting {
 		String apn = mApn.apn;
 		String name = mApn.name;
 
-		Intent apnIntent = new Intent("ACTION_IME_SET_APN");
+		Intent apnIntent = new Intent("com.yusun.intent.action.ACTION_SET_APN");
 		apnIntent.putExtra("mnc", mnc);
 		apnIntent.putExtra("mcc", mcc);
 		apnIntent.putExtra("apn", apn);
